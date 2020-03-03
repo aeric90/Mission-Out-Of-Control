@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2954235192651830331
+--- !u!1 &4281278986827213700
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7832673357491725550}
-  - component: {fileID: 1023723891765750533}
-  - component: {fileID: 5905939916517359956}
+  - component: {fileID: 4281278986827213707}
+  - component: {fileID: 4281278986827213705}
+  - component: {fileID: 4281278986827213706}
   m_Layer: 5
-  m_Name: Large Control Panel
+  m_Name: Medium Control V Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &7832673357491725550
+--- !u!224 &4281278986827213707
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2954235192651830331}
+  m_GameObject: {fileID: 4281278986827213700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,23 +35,23 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 320, y: 320}
+  m_SizeDelta: {x: 167.5, y: 335}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1023723891765750533
+--- !u!222 &4281278986827213705
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2954235192651830331}
+  m_GameObject: {fileID: 4281278986827213700}
   m_CullTransparentMesh: 0
---- !u!114 &5905939916517359956
+--- !u!114 &4281278986827213706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2954235192651830331}
+  m_GameObject: {fileID: 4281278986827213700}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
