@@ -6,14 +6,14 @@ public class ParentControl : MonoBehaviour
 {
     public class Control
     {
-        public int value;
+        public string value;
 
         public Control()
         {
-            value = 0;
+            value = "";
         }
 
-        public int GetValue()
+        public string GetValue()
         {
             return value;
         }
