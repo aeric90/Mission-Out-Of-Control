@@ -7,6 +7,8 @@ public class keypad_controller : MonoBehaviour
     public TMPro.TextMeshProUGUI screenText;
     private string keyPadValue;
 
+    public bool controlActive = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,15 +23,18 @@ public class keypad_controller : MonoBehaviour
 
     public void KeyClick(string keyName)
     {
-        if(keyName == "clear")
+        if (controlActive)
         {
-            ClearScreen();
-        }
-        else
-        {
-            if(keyPadValue.Length < 3)
+            if (keyName == "clear")
             {
-                keyPadValue += keyName;
+                ClearScreen();
+            }
+            else
+            {
+                if (keyPadValue.Length < 3)
+                {
+                    keyPadValue += keyName;
+                }
             }
         }
     }
@@ -37,5 +42,10 @@ public class keypad_controller : MonoBehaviour
     private void ClearScreen()
     {
         keyPadValue = "";
+    }
+
+    public string GetValue()
+    {
+        return keyPadValue;
     }
 }

@@ -26,9 +26,10 @@ public class ui_controller : MonoBehaviour
 
     }
 
-    public void AddComputerLine(string lineText)
+    public void AddComputerLine(string lineText, bool newLine)
     {
         computerText.text += lineText;
+        if(newLine) computerText.text += "\n";
     }
 
     public void ConfirmPressed()
