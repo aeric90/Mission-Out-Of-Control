@@ -26,7 +26,7 @@ public class SliderScript : MonoBehaviour
 
     public void UpdateUI()
     {
-        slider.value = (int)sliderUI.value;
-        valueText.text = slider.value.ToString();
+        slider.value = sliderUI.value.ToString();
+        valueText.text = slider.value;
     }
 }
