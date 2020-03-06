@@ -2,24 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static ParentControl;
 
 public class SliderScript : MonoBehaviour
 {
-    public class Control
-    {
-        public int value;
-
-        public Control()
-        {
-            value = 0;
-        }
-
-        public int GetValue()
-        {
-            return value;
-        }
-    }
-
     public class SliderControl : Control
     {
         public SliderControl()
@@ -28,17 +14,17 @@ public class SliderScript : MonoBehaviour
         }
     }
 
-    SliderControl slider = new SliderControl();
-    public Text valueText;
-    public Slider sliderUI;
+    public SliderControl slider = new SliderControl();
+    private Text valueText;
+    private Slider sliderUI;
 
     void Start()
     {
-        valueText = transform.GetChild(0).gameObject.GetComponent<Text>();
-        sliderUI = transform.GetChild(1).gameObject.GetComponent<Slider>();
+        sliderUI = GetComponent<Slider>();
+        valueText = transform.GetChild(1).gameObject.GetComponent<Text>();
     }
 
-    void Update()
+    public void UpdateUI()
     {
         slider.value = (int)sliderUI.value;
         valueText.text = slider.value.ToString();
