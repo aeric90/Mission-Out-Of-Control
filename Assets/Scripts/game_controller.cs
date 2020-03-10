@@ -91,8 +91,13 @@ public class game_controller : MonoBehaviour
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
         gameInstructions[3].AddStep(0, "444");
 
-        gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
+        gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
+        gameInstructions[4].AddStep(3, "5");
+        gameInstructions[4].AddStep(4, "2");
         gameInstructions[4].AddStep(0, "555");
+
+        gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
+        gameInstructions[5].AddStep(0, "666");
 
         StartCoroutine(CountDown());
     }

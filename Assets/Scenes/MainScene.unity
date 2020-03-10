@@ -2881,6 +2881,26 @@ PrefabInstance:
       propertyPath: m_textInfo.spaceCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6720996803820256725, guid: d6fe6a77b6e49564199dfa7ff5a9cc87,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720996803820256725, guid: d6fe6a77b6e49564199dfa7ff5a9cc87,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720996803820256725, guid: d6fe6a77b6e49564199dfa7ff5a9cc87,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720996803820256725, guid: d6fe6a77b6e49564199dfa7ff5a9cc87,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6fe6a77b6e49564199dfa7ff5a9cc87, type: 3}
 --- !u!224 &2004827923 stripped
@@ -3389,26 +3409,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Knob Control
-      objectReference: {fileID: 0}
-    - target: {fileID: 4474067988388723584, guid: d6fe6a77b6e49564199dfa7ff5a9cc87,
-        type: 3}
-      propertyPath: m_text
-      value: KNOB 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4474067988388723584, guid: d6fe6a77b6e49564199dfa7ff5a9cc87,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4474067988388723584, guid: d6fe6a77b6e49564199dfa7ff5a9cc87,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4474067988388723584, guid: d6fe6a77b6e49564199dfa7ff5a9cc87,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6fe6a77b6e49564199dfa7ff5a9cc87, type: 3}
