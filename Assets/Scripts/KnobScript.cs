@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using static ParentControl;
 
-public class KnobScript : MonoBehaviour
-{
-    public Control knob = new Control();
-    public Transform handle;
+public class KnobScript : ParentControl
+{    public Transform handle;
     public Text valueText;
 
     public void OnKnobTurn()
@@ -26,7 +24,7 @@ public class KnobScript : MonoBehaviour
                 r.z = 0.1f;
                 r.w = -1.0f;
 
-                knob.value = valueText.text = "1";
+                this.value = valueText.text = "1";
             }
 
             else if (r.z < 0.9f && r.z > 0.0f && r.w < -0.4f)
@@ -34,7 +32,7 @@ public class KnobScript : MonoBehaviour
                 r.z = 0.7f;
                 r.w = -0.8f;
 
-                knob.value = valueText.text = "2";
+                this.value = valueText.text = "2";
             }
 
             else if (r.z < 1.0f && r.z > 0.0f && r.w < 0.0f)
@@ -42,7 +40,7 @@ public class KnobScript : MonoBehaviour
                 r.z = 0.9f;
                 r.w = -0.3f;
 
-                knob.value = valueText.text = "3";
+                this.value = valueText.text = "3";
             }
 
             else if (r.z > 0.9f && r.w > 0.0f)
@@ -50,7 +48,7 @@ public class KnobScript : MonoBehaviour
                 r.z = 1.0f;
                 r.w = 0.2f;
 
-                knob.value = valueText.text = "4";
+                this.value = valueText.text = "4";
             }
 
             else if (r.z < 0.0f && r.w < 0.0f)
@@ -58,7 +56,7 @@ public class KnobScript : MonoBehaviour
                 r.z = -0.7f;
                 r.w = -0.7f;
 
-                knob.value = valueText.text = "5";
+                this.value = valueText.text = "5";
             }
 
             handle.rotation = r;
