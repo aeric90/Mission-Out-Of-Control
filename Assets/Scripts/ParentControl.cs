@@ -12,7 +12,7 @@ public class ParentControl : MonoBehaviour
     {
         value = "";
     }
-
+ 
     public string GetValue()
     {
         return value;
