@@ -7,8 +7,6 @@ public class keypad_controller : ParentControl
 {
     public TMPro.TextMeshProUGUI screenText;
 
-    public bool controlActive = true;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +21,7 @@ public class keypad_controller : ParentControl
 
     public void KeyClick(string keyName)
     {
-        if (controlActive)
+        if (this.GetActive())
         {
             if (keyName == "clear")
             {

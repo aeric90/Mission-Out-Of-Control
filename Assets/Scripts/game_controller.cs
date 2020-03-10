@@ -72,11 +72,13 @@ public class game_controller : MonoBehaviour
     private int currentInstruction = 0;
     private List<GameInstruction> gameInstructions = new List<GameInstruction>();
 
+    private void Awake()
+    {
+        if (gameInstance == null) { gameInstance = this; }
+    }
+
     void Start()
     {
-
-        if (gameInstance == null) { gameInstance = this; }
-
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
         gameInstructions[0].AddStep(0, "111");
 
@@ -100,6 +102,8 @@ public class game_controller : MonoBehaviour
         gameInstructions[5].AddStep(0, "666");
 
         StartCoroutine(CountDown());
+
+        NextInstruction();
     }
 
     private IEnumerator CountDown()
@@ -130,9 +134,9 @@ public class game_controller : MonoBehaviour
     {
         bool instructionSucceeded = true;
 
-        // Disable UI Controls
+        ui_controller.uiInstance.EnableControls(false);
 
-        GameInstruction current = gameInstructions[currentInstruction];
+       GameInstruction current = gameInstructions[currentInstruction];
 
         // Loop through each step in the instruction and update the succeeded value.
         for (int i = 0; i < current.GetStepCount(); i++)
@@ -143,22 +147,20 @@ public class game_controller : MonoBehaviour
 
         if (instructionSucceeded) 
         {
-            ui_controller.uiInstance.AddComputerLine("", true);
-            ui_controller.uiInstance.AddComputerLine("CORRECT", true);
+            ui_controller.uiInstance.AddComputerLine(" CORRECT", false);
+            currentInstruction++;
             NextInstruction();
         }
         else
         {
-            ui_controller.uiInstance.AddComputerLine(" INCORRECT", true);
-            ui_controller.uiInstance.AddComputerLine("\t WAITING FOR INPUT >", false);
+            ui_controller.uiInstance.AddComputerLine(" INCORRECT\n\t WAITING FOR INPUT >", false);
         }
 
-        // Reactivate the UI
+        ui_controller.uiInstance.EnableControls(true);
     }
 
     private void NextInstruction()
     {
-        currentInstruction++;
 
         if (currentInstruction >= gameInstructions.Count)
         {
@@ -168,10 +170,13 @@ public class game_controller : MonoBehaviour
         {
             if(currentInstruction > 0)
             {
-
+                ui_controller.uiInstance.ClearComputer();
             }
-            ui_controller.uiInstance.AddComputerLine((currentInstruction + 1) + " - " + gameInstructions[currentInstruction].GetTitle(), true);
-            ui_controller.uiInstance.AddComputerLine("\t WAITING FOR INPUT >", false);
+            string outPutText;
+            outPutText = (currentInstruction + 1) + " - " + gameInstructions[currentInstruction].GetTitle();
+            outPutText += "\n";
+            outPutText += "\t WAITING FOR INPUT >";
+            ui_controller.uiInstance.AddComputerLine(outPutText, false);
         }
     }
 
