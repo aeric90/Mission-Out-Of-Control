@@ -6,6 +6,7 @@ public class ParentControl : MonoBehaviour
 {
 
     public string value;
+    private bool controlActive = true;
 
     public ParentControl()
     {
@@ -15,6 +16,16 @@ public class ParentControl : MonoBehaviour
     public string GetValue()
     {
         return value;
+    }
+
+    public bool GetActive()
+    {
+        return controlActive;
+    }
+
+    public void SetActive(bool setting)
+    {
+        controlActive = setting;
     }
 
 }

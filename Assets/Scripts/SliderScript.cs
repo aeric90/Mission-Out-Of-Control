@@ -15,6 +15,11 @@ public class SliderScript : ParentControl
         sliderUI = slider.GetComponent<Slider>();
     }
 
+    private void Update()
+    {
+        sliderUI.interactable = this.GetActive();
+    }
+
     public void UpdateUI()
     {
         this.value = sliderUI.value.ToString();
