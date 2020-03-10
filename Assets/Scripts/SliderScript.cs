@@ -6,15 +6,8 @@ using static ParentControl;
 
 public class SliderScript : MonoBehaviour
 {
-    public class SliderControl : Control
-    {
-        public SliderControl()
-        {
+    public Control slider = new Control();
 
-        }
-    }
-
-    public SliderControl slider = new SliderControl();
     private Text valueText;
     private Slider sliderUI;
 
@@ -26,7 +19,6 @@ public class SliderScript : MonoBehaviour
 
     public void UpdateUI()
     {
-        slider.value = sliderUI.value.ToString();
-        valueText.text = slider.value;
+        slider.value = valueText.text = sliderUI.value.ToString();
     }
 }
