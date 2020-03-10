@@ -22,7 +22,6 @@ public class SliderScript : ParentControl
 
     public void UpdateUI()
     {
-        this.value = sliderUI.value.ToString();
-        valueText.text = this.value;
+       this.value = valueText.text = sliderUI.value.ToString();
     }
 }
