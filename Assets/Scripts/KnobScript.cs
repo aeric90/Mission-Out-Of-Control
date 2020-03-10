@@ -23,7 +23,7 @@ public class KnobScript : MonoBehaviour
 
             if (r.z < 0.7f && r.z > 0.0f && r.w < -0.7f)
             {
-                r.z = 0.0f;
+                r.z = 0.1f;
                 r.w = -1.0f;
 
                 knob.value = valueText.text = "1";
@@ -31,7 +31,7 @@ public class KnobScript : MonoBehaviour
 
             else if (r.z < 0.9f && r.z > 0.0f && r.w < -0.4f)
             {
-                r.z = 0.6f;
+                r.z = 0.7f;
                 r.w = -0.8f;
 
                 knob.value = valueText.text = "2";
@@ -40,7 +40,7 @@ public class KnobScript : MonoBehaviour
             else if (r.z < 1.0f && r.z > 0.0f && r.w < 0.0f)
             {
                 r.z = 0.9f;
-                r.w = -0.4f;
+                r.w = -0.3f;
 
                 knob.value = valueText.text = "3";
             }
