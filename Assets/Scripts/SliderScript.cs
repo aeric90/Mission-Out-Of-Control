@@ -4,28 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using static ParentControl;
 
-public class SliderScript : MonoBehaviour
+public class SliderScript : ParentControl
 {
-    public class SliderControl : Control
-    {
-        public SliderControl()
-        {
-
-        }
-    }
-
-    public SliderControl slider = new SliderControl();
     public Text valueText;
+    public GameObject slider;
     private Slider sliderUI;
 
     void Start()
     {
-        sliderUI = GetComponent<Slider>();
+        sliderUI = slider.GetComponent<Slider>();
     }
 
     public void UpdateUI()
     {
-        slider.value = sliderUI.value.ToString();
-        valueText.text = slider.value;
+        this.value = sliderUI.value.ToString();
+        valueText.text = this.value;
     }
 }

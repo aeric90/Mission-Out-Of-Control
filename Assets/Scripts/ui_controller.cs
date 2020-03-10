@@ -22,7 +22,7 @@ public class ui_controller : MonoBehaviour
 
     public string GetControlValue(int controlID)
     {
-        return controls[controlID].GetComponent<keypad_controller>().GetValue();
+        return controls[controlID].GetComponent<ParentControl>().GetValue();
 
     }
 

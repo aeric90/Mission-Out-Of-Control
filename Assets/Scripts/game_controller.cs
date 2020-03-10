@@ -64,7 +64,6 @@ public class GameInstruction
 public class game_controller : MonoBehaviour
 {
     public static game_controller gameInstance;
-    private ui_controller uiController = ui_controller.uiInstance;
 
     public int gameTimer;
 
@@ -83,9 +82,11 @@ public class game_controller : MonoBehaviour
 
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
         gameInstructions[1].AddStep(0, "222");
+        gameInstructions[1].AddStep(1, "2");
 
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
         gameInstructions[2].AddStep(0, "333");
+        gameInstructions[2].AddStep(2, "3");
 
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
         gameInstructions[3].AddStep(0, "444");
@@ -137,14 +138,14 @@ public class game_controller : MonoBehaviour
 
         if (instructionSucceeded) 
         {
-            uiController.AddComputerLine("", true);
-            uiController.AddComputerLine("CORRECT", true);
+            ui_controller.uiInstance.AddComputerLine("", true);
+            ui_controller.uiInstance.AddComputerLine("CORRECT", true);
             NextInstruction();
         }
         else
         {
-            uiController.AddComputerLine(" INCORRECT", true);
-            uiController.AddComputerLine("\t WAITING FOR INPUT >", false);
+            ui_controller.uiInstance.AddComputerLine(" INCORRECT", true);
+            ui_controller.uiInstance.AddComputerLine("\t WAITING FOR INPUT >", false);
         }
 
         // Reactivate the UI
@@ -160,8 +161,8 @@ public class game_controller : MonoBehaviour
         }
         else
         {
-            uiController.AddComputerLine((currentInstruction + 1) + " - " + gameInstructions[currentInstruction].GetTitle(), true);
-            uiController.AddComputerLine("\t WAITING FOR INPUT >", false);
+            ui_controller.uiInstance.AddComputerLine((currentInstruction + 1) + " - " + gameInstructions[currentInstruction].GetTitle(), true);
+            ui_controller.uiInstance.AddComputerLine("\t WAITING FOR INPUT >", false);
         }
     }
 

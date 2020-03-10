@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class ParentControl : MonoBehaviour
 {
-    public class Control
+
+    public string value;
+
+    public ParentControl()
     {
-        public string value;
-
-        public Control()
-        {
-            value = "";
-        }
-
-        public string GetValue()
-        {
-            return value;
-        }
+        value = "";
     }
+
+    public string GetValue()
+    {
+        return value;
+    }
+
 }
