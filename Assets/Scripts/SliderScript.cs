@@ -15,13 +15,12 @@ public class SliderScript : MonoBehaviour
     }
 
     public SliderControl slider = new SliderControl();
-    private Text valueText;
+    public Text valueText;
     private Slider sliderUI;
 
     void Start()
     {
         sliderUI = GetComponent<Slider>();
-        valueText = transform.GetChild(1).gameObject.GetComponent<Text>();
     }
 
     public void UpdateUI()
