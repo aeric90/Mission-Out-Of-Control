@@ -62,7 +62,7 @@ public class KnobScript : ParentControl
 
             handle.rotation = r;
 
-            Debug.Log(r);
+            // Debug.Log(r);
             
         }
     }
