@@ -26,6 +26,11 @@ public class ui_controller : MonoBehaviour
 
     }
 
+    public void ClearComputer()
+    {
+        computerText.text = "";
+    }
+
     public void AddComputerLine(string lineText, bool newLine)
     {
         computerText.text += lineText;

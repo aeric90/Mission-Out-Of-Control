@@ -166,6 +166,10 @@ public class game_controller : MonoBehaviour
         }
         else
         {
+            if(currentInstruction > 0)
+            {
+
+            }
             ui_controller.uiInstance.AddComputerLine((currentInstruction + 1) + " - " + gameInstructions[currentInstruction].GetTitle(), true);
             ui_controller.uiInstance.AddComputerLine("\t WAITING FOR INPUT >", false);
         }

@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using static ParentControl;
 
 public class KnobScript : ParentControl
-{    public Transform handle;
+{    
+    public Transform handle;
     public Text valueText;
 
     public void OnKnobTurn()
