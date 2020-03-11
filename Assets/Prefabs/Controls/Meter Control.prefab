@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 
+  labelText: {fileID: 3096281603661905044}
   valueText: {fileID: 3557628789618495490}
   meter: {fileID: 7921660781606995952}
 --- !u!1 &2996439210319828766

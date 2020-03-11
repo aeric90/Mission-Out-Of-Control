@@ -6,21 +6,28 @@ public class ParentControl : MonoBehaviour
 {
 
     public string value;
+    public TMPro.TextMeshProUGUI labelText;
+
     private bool controlActive = true;
 
     public ParentControl()
     {
         value = "";
     }
- 
-    public void SetValue(string input)
+
+    public void SetLabel(string label)
     {
-        value = input;
+        labelText.text = label;
     }
 
     public string GetValue()
     {
         return value;
+    }
+
+    public void SetValue(string input)
+    {
+        value = input;
     }
 
     public bool GetActive()

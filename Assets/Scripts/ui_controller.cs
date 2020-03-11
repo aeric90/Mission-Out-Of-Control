@@ -19,6 +19,11 @@ public class ui_controller : MonoBehaviour
     {
         countDownText.text = timerString;
     }
+    
+    public void SetControlLabel(int controlID, string label)
+    {
+        controls[controlID].GetComponent<ParentControl>().SetLabel(label);
+    }
 
     public void SetControlValue(int controlID, string value)
     {

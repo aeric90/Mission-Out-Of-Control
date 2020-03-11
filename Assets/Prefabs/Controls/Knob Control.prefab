@@ -381,6 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 
+  labelText: {fileID: 4474067988388723584}
   handle: {fileID: 4474067987496954236}
   valueText: {fileID: 4474067987483572937}
 --- !u!114 &4474067987929107768

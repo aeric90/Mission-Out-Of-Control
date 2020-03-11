@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 
+  labelText: {fileID: 5609017410000410887}
 --- !u!1 &4202540672004832687
 GameObject:
   m_ObjectHideFlags: 0
