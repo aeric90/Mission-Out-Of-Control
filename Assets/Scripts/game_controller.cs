@@ -79,6 +79,8 @@ public class game_controller : MonoBehaviour
 
     void Start()
     {
+        ui_controller.uiInstance.SetControlValue(5, "2");
+
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
         gameInstructions[0].AddStep(0, "111");
 

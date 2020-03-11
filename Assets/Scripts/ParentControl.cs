@@ -13,6 +13,11 @@ public class ParentControl : MonoBehaviour
         value = "";
     }
  
+    public void SetValue(string input)
+    {
+        value = input;
+    }
+
     public string GetValue()
     {
         return value;

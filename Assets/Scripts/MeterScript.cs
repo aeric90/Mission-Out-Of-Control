@@ -14,9 +14,9 @@ public class MeterScript : ParentControl
         meterUI = meter.GetComponent<Slider>();
     }
 
-    public void SetMeterValue(int value)
+    private void Update()
     {
-        meterUI.value = value;
+        meterUI.value = float.Parse(GetValue());
     }
 
     public void UpdateUI()
