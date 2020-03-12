@@ -18,10 +18,40 @@ public class GameStep
     {
         return controlID;
     }
+    public void SetControlID(int controlID)
+    {
+        this.controlID = controlID;
+    }
+
+    public void SetAnswer(string answer)
+    {
+        this.answer = answer;
+    }
 
     public bool CheckStep(string controlValue)
     {
         return controlValue == answer;   
+    }
+}
+
+public struct DependantValues
+{
+    public string answer1, answer2;
+
+    public DependantValues(string answer1, string answer2)
+    {
+        this.answer1 = answer1;
+        this.answer2 = answer2;
+    }
+}
+public class DependantGameStep : GameStep
+{
+    private int dependantControlID;
+    private List<DependantValues> answerButton = new List<DependantValues>();
+
+    public DependantGameStep(int controlID, int dependantControlID) : base (controlID, "")
+    {
+        this.dependantControlID = dependantControlID;
     }
 }
 
@@ -108,8 +138,8 @@ public class game_controller : MonoBehaviour
 
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
         gameInstructions[5].AddStep(6, "666");
-        gameInstructions[1].AddStep(8, "0");
-        gameInstructions[1].AddStep(2, "4");
+        gameInstructions[5].AddStep(8, "0");
+        gameInstructions[5].AddStep(2, "4");
 
         StartCoroutine(CountDown());
 
