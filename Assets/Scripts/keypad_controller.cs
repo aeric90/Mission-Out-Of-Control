@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ParentControl;
 
-public class keypad_controller : MonoBehaviour
+public class keypad_controller : ParentControl
 {
     public TMPro.TextMeshProUGUI screenText;
-    private string keyPadValue;
-
-    public bool controlActive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -18,12 +16,12 @@ public class keypad_controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        screenText.text = keyPadValue;
+        screenText.text = this.value;
     }
 
     public void KeyClick(string keyName)
     {
-        if (controlActive)
+        if (this.GetActive())
         {
             if (keyName == "clear")
             {
@@ -31,9 +29,9 @@ public class keypad_controller : MonoBehaviour
             }
             else
             {
-                if (keyPadValue.Length < 3)
+                if (this.value.Length < 3)
                 {
-                    keyPadValue += keyName;
+                    this.value += keyName;
                 }
             }
         }
@@ -41,11 +39,6 @@ public class keypad_controller : MonoBehaviour
 
     private void ClearScreen()
     {
-        keyPadValue = "";
-    }
-
-    public string GetValue()
-    {
-        return keyPadValue;
+        this.value = "";
     }
 }

@@ -64,7 +64,6 @@ public class GameInstruction
 public class game_controller : MonoBehaviour
 {
     public static game_controller gameInstance;
-    private ui_controller uiController = ui_controller.uiInstance;
 
     public int gameTimer;
 
@@ -73,27 +72,41 @@ public class game_controller : MonoBehaviour
     private int currentInstruction = 0;
     private List<GameInstruction> gameInstructions = new List<GameInstruction>();
 
+    private void Awake()
+    {
+        if (gameInstance == null) { gameInstance = this; }
+    }
+
     void Start()
     {
-
-        if (gameInstance == null) { gameInstance = this; }
+        ui_controller.uiInstance.SetControlValue(5, "2");
+        ui_controller.uiInstance.SetControlLabel(5, "JAM LEVELS");
 
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
         gameInstructions[0].AddStep(0, "111");
 
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
         gameInstructions[1].AddStep(0, "222");
+        gameInstructions[1].AddStep(1, "2");
 
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
         gameInstructions[2].AddStep(0, "333");
+        gameInstructions[2].AddStep(2, "3");
 
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
         gameInstructions[3].AddStep(0, "444");
 
-        gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
+        gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
+        gameInstructions[4].AddStep(3, "5");
+        gameInstructions[4].AddStep(4, "2");
         gameInstructions[4].AddStep(0, "555");
 
+        gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
+        gameInstructions[5].AddStep(0, "666");
+
         StartCoroutine(CountDown());
+
+        NextInstruction();
     }
 
     private IEnumerator CountDown()
@@ -124,9 +137,9 @@ public class game_controller : MonoBehaviour
     {
         bool instructionSucceeded = true;
 
-        // Disable UI Controls
+        ui_controller.uiInstance.EnableControls(false);
 
-        GameInstruction current = gameInstructions[currentInstruction];
+       GameInstruction current = gameInstructions[currentInstruction];
 
         // Loop through each step in the instruction and update the succeeded value.
         for (int i = 0; i < current.GetStepCount(); i++)
@@ -137,22 +150,20 @@ public class game_controller : MonoBehaviour
 
         if (instructionSucceeded) 
         {
-            uiController.AddComputerLine("", true);
-            uiController.AddComputerLine("CORRECT", true);
+            ui_controller.uiInstance.AddComputerLine(" CORRECT", false);
+            currentInstruction++;
             NextInstruction();
         }
         else
         {
-            uiController.AddComputerLine(" INCORRECT", true);
-            uiController.AddComputerLine("\t WAITING FOR INPUT >", false);
+            ui_controller.uiInstance.AddComputerLine(" INCORRECT\n\t WAITING FOR INPUT >", false);
         }
 
-        // Reactivate the UI
+        ui_controller.uiInstance.EnableControls(true);
     }
 
     private void NextInstruction()
     {
-        currentInstruction++;
 
         if (currentInstruction >= gameInstructions.Count)
         {
@@ -160,8 +171,15 @@ public class game_controller : MonoBehaviour
         }
         else
         {
-            uiController.AddComputerLine((currentInstruction + 1) + " - " + gameInstructions[currentInstruction].GetTitle(), true);
-            uiController.AddComputerLine("\t WAITING FOR INPUT >", false);
+            if(currentInstruction > 0)
+            {
+                ui_controller.uiInstance.ClearComputer();
+            }
+            string outPutText;
+            outPutText = (currentInstruction + 1) + " - " + gameInstructions[currentInstruction].GetTitle();
+            outPutText += "\n";
+            outPutText += "\t WAITING FOR INPUT >";
+            ui_controller.uiInstance.AddComputerLine(outPutText, false);
         }
     }
 
