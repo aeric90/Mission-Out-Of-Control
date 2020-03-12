@@ -6,29 +6,34 @@ using static ParentControl;
 
 public class light_controller : ParentControl
 {
-    public GameObject light;
+    public GameObject lightPanel;
+
+    private void Start()
+    {
+        numStates = 5;
+    }
 
     private void Update()
     {
-        if(value == "red")
+        if(value == "1")
         {
-            light.GetComponent<Image>().color = Color.red;
+            lightPanel.GetComponent<Image>().color = Color.red;
         }
-        if(value == "blue")
+        if(value == "2")
         {
-            light.GetComponent<Image>().color = Color.blue;
+            lightPanel.GetComponent<Image>().color = Color.blue;
         }
-        if (value == "green")
+        if (value == "3")
         {
-            light.GetComponent<Image>().color = Color.green;
+            lightPanel.GetComponent<Image>().color = Color.green;
         }
-        if (value == "yellow")
+        if (value == "4")
         {
-            light.GetComponent<Image>().color = Color.yellow;
+            lightPanel.GetComponent<Image>().color = Color.yellow;
         }
-        if (value == "off")
+        if (value == "0")
         {
-            light.GetComponent<Image>().color = Color.grey;
+            lightPanel.GetComponent<Image>().color = Color.grey;
         }
     }
 }

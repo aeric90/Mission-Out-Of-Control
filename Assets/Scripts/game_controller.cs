@@ -82,7 +82,9 @@ public class game_controller : MonoBehaviour
         ui_controller.uiInstance.SetControlValue(5, "2");
         ui_controller.uiInstance.SetControlLabel(5, "JAM LEVELS");
 
-        ui_controller.uiInstance.SetControlValue(6, "blue");
+        ui_controller.uiInstance.SetControlValue(6, "3");
+
+        ui_controller.uiInstance.SetConnectedControls(2, 5);
 
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
         gameInstructions[0].AddStep(0, "111");
@@ -100,7 +102,7 @@ public class game_controller : MonoBehaviour
 
         gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
         gameInstructions[4].AddStep(3, "5");
-        gameInstructions[4].AddStep(4, "2");
+        gameInstructions[4].AddStep(4, "5");
         gameInstructions[4].AddStep(0, "555");
 
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
