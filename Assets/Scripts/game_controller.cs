@@ -18,40 +18,10 @@ public class GameStep
     {
         return controlID;
     }
-    public void SetControlID(int controlID)
-    {
-        this.controlID = controlID;
-    }
-
-    public void SetAnswer(string answer)
-    {
-        this.answer = answer;
-    }
 
     public bool CheckStep(string controlValue)
     {
         return controlValue == answer;   
-    }
-}
-
-public struct DependantValues
-{
-    public string answer1, answer2;
-
-    public DependantValues(string answer1, string answer2)
-    {
-        this.answer1 = answer1;
-        this.answer2 = answer2;
-    }
-}
-public class DependantGameStep : GameStep
-{
-    private int dependantControlID;
-    private List<DependantValues> answerButton = new List<DependantValues>();
-
-    public DependantGameStep(int controlID, int dependantControlID) : base (controlID, "")
-    {
-        this.dependantControlID = dependantControlID;
     }
 }
 
@@ -109,37 +79,30 @@ public class game_controller : MonoBehaviour
 
     void Start()
     {
-        ui_controller.uiInstance.SetControlValue(2, "0");
-        ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
-
-        ui_controller.uiInstance.SetConnectedControls(7, 2);
-
-        ui_controller.uiInstance.SetControlValue(4, "2");
+        ui_controller.uiInstance.SetControlValue(5, "2");
+        ui_controller.uiInstance.SetControlLabel(5, "JAM LEVELS");
 
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
-        gameInstructions[0].AddStep(6, "111");
+        gameInstructions[0].AddStep(0, "111");
 
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
-        gameInstructions[1].AddStep(6, "222");
-        gameInstructions[1].AddStep(8, "1");
+        gameInstructions[1].AddStep(0, "222");
+        gameInstructions[1].AddStep(1, "2");
 
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
-        gameInstructions[2].AddStep(6, "333");
-        gameInstructions[2].AddStep(7, "3");
+        gameInstructions[2].AddStep(0, "333");
+        gameInstructions[2].AddStep(2, "3");
 
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
-        gameInstructions[3].AddStep(6, "444");
-        gameInstructions[3].AddStep(0, "1");
+        gameInstructions[3].AddStep(0, "444");
 
         gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
-        gameInstructions[4].AddStep(1, "5");
-        gameInstructions[4].AddStep(9, "2");
-        gameInstructions[4].AddStep(6, "555");
+        gameInstructions[4].AddStep(3, "5");
+        gameInstructions[4].AddStep(4, "2");
+        gameInstructions[4].AddStep(0, "555");
 
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
-        gameInstructions[5].AddStep(6, "666");
-        gameInstructions[5].AddStep(8, "0");
-        gameInstructions[5].AddStep(2, "4");
+        gameInstructions[5].AddStep(0, "666");
 
         StartCoroutine(CountDown());
 
@@ -218,11 +181,6 @@ public class game_controller : MonoBehaviour
             outPutText += "\t WAITING FOR INPUT >";
             ui_controller.uiInstance.AddComputerLine(outPutText, false);
         }
-    }
-
-    public bool GetGameOver()
-    {
-        return gameOver;
     }
 
 }

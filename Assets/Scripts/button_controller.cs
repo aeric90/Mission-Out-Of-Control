@@ -1,29 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using static ParentControl;
 
 public class button_controller : ParentControl
 {
-    public Text onOff;
-
+    // Start is called before the first frame update
     void Start()
     {
-        value = "0";
+        
     }
 
-    public void OnButtonPress()
+    // Update is called once per frame
+    void Update()
     {
-        if(value == "0")
-        {
-            value = "1";
-            onOff.text = "ON";
-        }
-
-        else
-        {
-            value = "0";
-            onOff.text = "OFF";
-        }
+        
     }
 }

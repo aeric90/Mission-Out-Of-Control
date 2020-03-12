@@ -10,7 +10,6 @@ public class keypad_controller : ParentControl
     // Start is called before the first frame update
     void Start()
     {
-        numStates = 0;
         ClearScreen();
     }
 

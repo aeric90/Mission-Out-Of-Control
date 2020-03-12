@@ -11,19 +11,17 @@ public class MeterScript : ParentControl
 
     void Start()
     {
-        numStates = 5;
-        minState = 0;
         meterUI = meter.GetComponent<Slider>();
     }
 
     private void Update()
     {
-        meterUI.value = float.Parse(value);
+        meterUI.value = float.Parse(GetValue());
     }
 
     public void UpdateUI()
     {
-        valueText.text = meterUI.value.ToString();
+        this.value = valueText.text = meterUI.value.ToString();
     }
 }
 
