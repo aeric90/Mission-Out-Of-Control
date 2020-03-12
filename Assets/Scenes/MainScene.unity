@@ -904,6 +904,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &668943039 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1240300143219519403, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+    type: 3}
+  m_PrefabInstance: {fileID: 1174943793}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &687444395
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,6 +2155,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6342187258713089798}
     m_Modifications:
+    - target: {fileID: 498741136919953279, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498741136919953279, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498741136919953279, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 498741136919953279, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1814143526967586224, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2273,6 +2305,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4219406045793777698, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: switchSprite
+      value: 
+      objectReference: {fileID: 668943039}
     - target: {fileID: 5609017410000410887, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -2291,6 +2328,26 @@ PrefabInstance:
     - target: {fileID: 5609017410000410887, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
         type: 3}
       propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460270129832083661, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460270129832083661, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460270129832083661, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460270129832083661, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
