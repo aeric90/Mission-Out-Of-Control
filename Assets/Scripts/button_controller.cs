@@ -1,19 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static ParentControl;
 
 public class button_controller : ParentControl
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    GameObject button;
+
+    // when the button has been pressed do this.
+    void OnMouseDown()
     {
-        
+        Debug.Log("buttonClicked");
     }
 }
