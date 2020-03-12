@@ -82,6 +82,8 @@ public class game_controller : MonoBehaviour
         ui_controller.uiInstance.SetControlValue(5, "2");
         ui_controller.uiInstance.SetControlLabel(5, "JAM LEVELS");
 
+        ui_controller.uiInstance.SetControlValue(6, "blue");
+
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
         gameInstructions[0].AddStep(0, "111");
 

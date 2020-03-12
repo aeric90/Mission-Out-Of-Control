@@ -6,35 +6,29 @@ using static ParentControl;
 
 public class light_controller : ParentControl
 {
+    public GameObject light;
 
-    // string lightUI;
-
-    private void Start()
+    private void Update()
     {
-
-    }
-
-    // Is the light on or off?
-    public void LightOnOff()
-    {
-        // the control has been activated
-        if (this.GetActive())
+        if(value == "red")
         {
-            this.GetValue();
-
-            // If the value string is 0, the light will shut off (turn grey)
-            if (this.value == "0")
-            {
-                Debug.Log(" value is 0, Lights Out!");
-                GetComponent<Image>().color = Color.grey;
-            }
-
-            // If the value string is 1, the light will turn on (turn white). 
-            else if (this.value == "1")
-            {
-                Debug.Log("value is 1 Lights On!");
-                GetComponent<Image>().color = Color.white;
-            }
+            light.GetComponent<Image>().color = Color.red;
+        }
+        if(value == "blue")
+        {
+            light.GetComponent<Image>().color = Color.blue;
+        }
+        if (value == "green")
+        {
+            light.GetComponent<Image>().color = Color.green;
+        }
+        if (value == "yellow")
+        {
+            light.GetComponent<Image>().color = Color.yellow;
+        }
+        if (value == "off")
+        {
+            light.GetComponent<Image>().color = Color.grey;
         }
     }
 }
