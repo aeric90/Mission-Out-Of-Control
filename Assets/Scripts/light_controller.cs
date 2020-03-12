@@ -6,35 +6,53 @@ using static ParentControl;
 
 public class light_controller : ParentControl
 {
-
-    // string lightUI;
+    public GameObject lightPanel;
+    private Color lightColor;
 
     private void Start()
     {
-
+        numStates = 5;
+        minState = 0;
+        StartCoroutine(FlashLight());
     }
 
-    // Is the light on or off?
-    public void LightOnOff()
+    IEnumerator FlashLight()
     {
-        // the control has been activated
-        if (this.GetActive())
+        while (!game_controller.gameInstance.GetGameOver())
         {
-            this.GetValue();
-
-            // If the value string is 0, the light will shut off (turn grey)
-            if (this.value == "0")
+            if (lightPanel.GetComponent<Image>().color == lightColor)
             {
-                Debug.Log(" value is 0, Lights Out!");
-                GetComponent<Image>().color = Color.grey;
+                lightPanel.GetComponent<Image>().color = Color.black;
             }
-
-            // If the value string is 1, the light will turn on (turn white). 
-            else if (this.value == "1")
+            else
             {
-                Debug.Log("value is 1 Lights On!");
-                GetComponent<Image>().color = Color.white;
+                lightPanel.GetComponent<Image>().color = lightColor;
             }
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if(value == "1")
+        {
+            lightColor = Color.red;
+        }
+        if(value == "2")
+        {
+            lightColor = Color.blue;
+        }
+        if (value == "3")
+        {
+            lightColor = Color.green;
+        }
+        if (value == "4")
+        {
+            lightColor = Color.yellow;
+        }
+        if (value == "0")
+        {
+            lightColor = Color.grey;
         }
     }
 }

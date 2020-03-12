@@ -12,16 +12,19 @@ public class SliderScript : ParentControl
 
     void Start()
     {
+        numStates = 5;
+        minState = 1;
         sliderUI = slider.GetComponent<Slider>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         sliderUI.interactable = this.GetActive();
     }
 
     public void UpdateUI()
     {
+       this.valueChange = true;
        this.value = valueText.text = sliderUI.value.ToString();
     }
 }
