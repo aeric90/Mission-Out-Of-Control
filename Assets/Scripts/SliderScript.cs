@@ -17,7 +17,7 @@ public class SliderScript : ParentControl
         sliderUI = slider.GetComponent<Slider>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         sliderUI.interactable = this.GetActive();
     }

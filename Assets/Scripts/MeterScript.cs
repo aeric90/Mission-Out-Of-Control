@@ -18,12 +18,12 @@ public class MeterScript : ParentControl
 
     private void Update()
     {
-        meterUI.value = float.Parse(GetValue());
+        meterUI.value = float.Parse(value);
     }
 
     public void UpdateUI()
     {
-        this.value = valueText.text = meterUI.value.ToString();
+        valueText.text = meterUI.value.ToString();
     }
 }
 

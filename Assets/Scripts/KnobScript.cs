@@ -9,6 +9,12 @@ public class KnobScript : ParentControl
     public Transform handle;
     public Text valueText;
 
+    private void Start()
+    {
+        numStates = 5;
+        minState = 1;
+    }
+
     public void OnKnobTurn()
     {
         if (GetActive())
@@ -64,7 +70,7 @@ public class KnobScript : ParentControl
 
 
                 // Debug.Log(r);
-            
+                this.valueChange = true;
                 handle.rotation = r;
             }
 

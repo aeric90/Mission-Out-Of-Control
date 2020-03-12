@@ -25,8 +25,6 @@ public class ParentControl : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(labelText.text);
-
         if (valueChange)
         {
             // Do I have a connected control?

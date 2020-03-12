@@ -7,33 +7,52 @@ using static ParentControl;
 public class light_controller : ParentControl
 {
     public GameObject lightPanel;
+    private Color lightColor;
 
     private void Start()
     {
         numStates = 5;
+        minState = 0;
+        StartCoroutine(FlashLight());
     }
 
-    private void Update()
+    IEnumerator FlashLight()
+    {
+        while (!game_controller.gameInstance.GetGameOver())
+        {
+            if (lightPanel.GetComponent<Image>().color == lightColor)
+            {
+                lightPanel.GetComponent<Image>().color = Color.black;
+            }
+            else
+            {
+                lightPanel.GetComponent<Image>().color = lightColor;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private void LateUpdate()
     {
         if(value == "1")
         {
-            lightPanel.GetComponent<Image>().color = Color.red;
+            lightColor = Color.red;
         }
         if(value == "2")
         {
-            lightPanel.GetComponent<Image>().color = Color.blue;
+            lightColor = Color.blue;
         }
         if (value == "3")
         {
-            lightPanel.GetComponent<Image>().color = Color.green;
+            lightColor = Color.green;
         }
         if (value == "4")
         {
-            lightPanel.GetComponent<Image>().color = Color.yellow;
+            lightColor = Color.yellow;
         }
         if (value == "0")
         {
-            lightPanel.GetComponent<Image>().color = Color.grey;
+            lightColor = Color.grey;
         }
     }
 }
