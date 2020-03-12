@@ -2,16 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static ParentControl;
 
 public class button_controller : ParentControl
 {
+    public Text onOff;
 
-    GameObject button;
-
-    // when the button has been pressed do this.
-    void OnMouseDown()
+    void Start()
     {
-        Debug.Log("buttonClicked");
+        value = "0";
+    }
+
+    public void OnButtonPress()
+    {
+        if(value == "0")
+        {
+            value = "1";
+            onOff.text = "ON";
+        }
+
+        else
+        {
+            value = "0";
+            onOff.text = "OFF";
+        }
     }
 }
