@@ -270,8 +270,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 
+  numStates: 0
   labelText: {fileID: 5609017410000410887}
-  light: {fileID: 6962623257767971442}
+  lightPanel: {fileID: 6962623257767971442}
 --- !u!1 &4202540672004832687
 GameObject:
   m_ObjectHideFlags: 0
