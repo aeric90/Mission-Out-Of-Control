@@ -277,7 +277,7 @@ public class game_controller : MonoBehaviour
 
         if (currentInstruction >= gameInstructions.Count)
         {
-            // GAME OVER WIN!!
+            gameOver = true;
         }
         else
         {
