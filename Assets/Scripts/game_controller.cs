@@ -230,6 +230,11 @@ public class game_controller : MonoBehaviour
         gameInstructions[5].AddStep(6, "531");
         gameInstructions[5].AddStep(3, "1");
         gameInstructions[5].AddStep(8, "0");
+        dependantStepID = gameInstructions[5].AddStep(5, 4);
+        gameInstructions[5].AddDependantAnswer(dependantStepID, "2", "1");
+        gameInstructions[5].AddDependantAnswer(dependantStepID, "3", "2");
+        gameInstructions[5].AddDependantAnswer(dependantStepID, "4", "3");
+        gameInstructions[5].AddDependantAnswer(dependantStepID, "5", "4");
         gameInstructions[5].AddStep(2, "0");
 
         StartCoroutine(CountDown());
