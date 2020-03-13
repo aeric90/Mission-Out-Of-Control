@@ -11,6 +11,8 @@ public class KnobScript : ParentControl
 
     private void Start()
     {
+        value = "1";
+
         numStates = 5;
         minState = 1;
     }

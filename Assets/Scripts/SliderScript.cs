@@ -12,6 +12,8 @@ public class SliderScript : ParentControl
 
     void Start()
     {
+        value = "1";
+
         numStates = 5;
         minState = 1;
         sliderUI = slider.GetComponent<Slider>();

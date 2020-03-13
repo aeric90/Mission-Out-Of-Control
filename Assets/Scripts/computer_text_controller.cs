@@ -22,6 +22,16 @@ public class computer_text_controller : MonoBehaviour
                 computerText.text = textBuffer;
                 yield return new WaitForSeconds(0.10f);
             }
+            
+            if(inputString == " CORRECT")
+            {
+                // Do nothing.
+            }
+
+            else
+            {
+                ui_controller.uiInstance.EnableConfirmButton(true);
+            }
 
             textUpdating = false;
         }

@@ -313,7 +313,7 @@ public class game_controller : MonoBehaviour
 
     private IEnumerator PauseOnCorrect()
     {
-        yield return new WaitForSeconds(3.00f);
+        yield return new WaitForSeconds(3.8f);
 
         currentInstruction++;
         NextInstruction();

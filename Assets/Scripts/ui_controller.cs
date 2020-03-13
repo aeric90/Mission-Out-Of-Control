@@ -46,6 +46,8 @@ public class ui_controller : MonoBehaviour
 
     public void AddComputerLine(string lineText, bool newLine)
     {
+        EnableConfirmButton(false);
+
         if(newLine) lineText += "\n";
         computerText.GetComponent<computer_text_controller>().AddText(lineText);
     }
