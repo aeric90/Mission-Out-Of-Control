@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.69268423, g: 0.7242004, b: 0.8113208, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -381,6 +381,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 
+  numStates: 0
+  minState: 0
+  connectedControl: -1
+  valueChange: 0
   labelText: {fileID: 4474067988388723584}
   handle: {fileID: 4474067987496954236}
   valueText: {fileID: 4474067987483572937}

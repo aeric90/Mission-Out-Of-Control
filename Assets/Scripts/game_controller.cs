@@ -28,9 +28,14 @@ public class GameStep
         this.answer = answer;
     }
 
-    public bool CheckStep(string controlValue)
+    virtual public bool CheckStep(string controlValue)
     {
         return controlValue == answer;   
+    }
+
+    virtual public void AddAnswers(string answer1, string answer2)
+    {
+
     }
 }
 
@@ -47,12 +52,26 @@ public struct DependantValues
 public class DependantGameStep : GameStep
 {
     private int dependantControlID;
-    private List<DependantValues> answerButton = new List<DependantValues>();
+    private List<DependantValues> answerMapping = new List<DependantValues>();
 
     public DependantGameStep(int controlID, int dependantControlID) : base (controlID, "")
     {
         this.dependantControlID = dependantControlID;
     }
+
+    override public void AddAnswers(string answer1, string answer2)
+    {
+        answerMapping.Add(new DependantValues(answer1, answer2));
+    }
+
+    override public bool CheckStep(string controlValue)
+    {
+        string currentAnswer = ui_controller.uiInstance.GetControlValue(dependantControlID);
+        string expectedAnswer = answerMapping.Find(x => x.answer1 == controlValue).answer2;
+
+        return currentAnswer==expectedAnswer;
+    }
+
 }
 
 // This class contains the title and steps for a game instruction
@@ -74,6 +93,17 @@ public class GameInstruction
     public void AddStep(int controlID, string answer)
     {
         instructionSteps.Add(new GameStep(controlID, answer));
+    }
+
+    public int AddStep(int controlID1, int controlID2)
+    {
+        instructionSteps.Add(new DependantGameStep(controlID1, controlID2));
+        return instructionSteps.Count - 1;
+    }
+
+    public void AddDependantAnswer(int stepID, string answer1, string answer2)
+    {
+        instructionSteps[stepID].AddAnswers(answer1, answer2);
     }
 
     public int GetStepCount()
@@ -114,7 +144,7 @@ public class game_controller : MonoBehaviour
 
         ui_controller.uiInstance.SetConnectedControls(7, 2);
 
-        ui_controller.uiInstance.SetControlValue(4, "2");
+        ui_controller.uiInstance.SetControlValue(4, "3");
 
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
         gameInstructions[0].AddStep(6, "111");
@@ -122,6 +152,13 @@ public class game_controller : MonoBehaviour
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
         gameInstructions[1].AddStep(6, "222");
         gameInstructions[1].AddStep(8, "1");
+        int dependantStepID = gameInstructions[1].AddStep(5, 4);
+            gameInstructions[1].AddDependantAnswer(dependantStepID, "1", "0");
+            gameInstructions[1].AddDependantAnswer(dependantStepID, "2", "1");
+            gameInstructions[1].AddDependantAnswer(dependantStepID, "3", "2");
+            gameInstructions[1].AddDependantAnswer(dependantStepID, "4", "3");
+            gameInstructions[1].AddDependantAnswer(dependantStepID, "5", "4");
+
 
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
         gameInstructions[2].AddStep(6, "333");
