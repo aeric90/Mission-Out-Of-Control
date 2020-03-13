@@ -1364,6 +1364,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4219406045793777698, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: switchOff
+      value: 
+      objectReference: {fileID: 21300000, guid: ee1834ec3b9a48f478ef69ef3584499b,
+        type: 3}
+    - target: {fileID: 4219406045793777698, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
+        type: 3}
+      propertyPath: switchOn
+      value: 
+      objectReference: {fileID: 21300000, guid: e166313210c43be468259971b6f224f5,
+        type: 3}
     - target: {fileID: 5609017410000410887, guid: 3d2feffef006d0d4e85b61fb4ecb0a25,
         type: 3}
       propertyPath: m_textInfo.characterCount

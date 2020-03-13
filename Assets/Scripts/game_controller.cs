@@ -176,6 +176,8 @@ public class game_controller : MonoBehaviour
         ui_controller.uiInstance.SetControlValue(2, "0");
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
 
+        ui_controller.uiInstance.SetControlValue(3, "1");
+
         ui_controller.uiInstance.SetConnectedControls(3, 4, "random");
         ui_controller.uiInstance.SetConnectedControls(7, 2, "mapped");
 
@@ -225,7 +227,7 @@ public class game_controller : MonoBehaviour
 
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
         gameInstructions[5].AddStep(6, "531");
-        gameInstructions[5].AddStep(3, "0");
+        gameInstructions[5].AddStep(3, "1");
         gameInstructions[5].AddStep(8, "0");
         gameInstructions[5].AddStep(2, "0");
 

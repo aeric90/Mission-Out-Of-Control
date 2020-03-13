@@ -10,12 +10,16 @@ public class switch_controller : ParentControl
     public Sprite switchOn;
     public Sprite switchOff;
 
-    // Start is called before the first frame update
-    //0 off, 1 on.
-    void Start()
+    private void LateUpdate()
     {
-        value = "0";
-        switchSprite.overrideSprite = switchOff;
+        if (value == "1")
+        {
+            switchSprite.overrideSprite = switchOn;
+        }
+        else if (value == "0")
+        {
+            switchSprite.overrideSprite = switchOff;
+        }
     }
 
     public void OnButtonPress()
@@ -24,12 +28,10 @@ public class switch_controller : ParentControl
 
         if (value == "0")
         {
-            switchSprite.overrideSprite = switchOn;
             value = "1";
         }
         else if (value == "1")
         {
-            switchSprite.overrideSprite = switchOff;
             value = "0";
         }
     }
