@@ -10,6 +10,7 @@ public class button_controller : ParentControl
     void Start()
     {
         value = "0";
+        onOff.text = "OFF";
     }
 
     public void OnButtonPress()
@@ -20,7 +21,7 @@ public class button_controller : ParentControl
             onOff.text = "ON";
         }
 
-        else
+        else if (value == "1")
         {
             value = "0";
             onOff.text = "OFF";
