@@ -31,6 +31,7 @@ public class GameStep
 
     virtual public bool CheckStep(string controlValue)
     {
+        Debug.Log(controlValue + " " + answer);
         return controlValue == answer;   
     }
 
@@ -66,10 +67,10 @@ public class DependantGameStep : GameStep
 
     override public bool CheckStep(string controlValue)
     {
-        string currentAnswer = ui_controller.uiInstance.GetControlValue(dependantControlID);
-        string expectedAnswer = answerMapping.Find(x => x.answer1 == controlValue).answer2;
-        Debug.Log(currentAnswer + " " + expectedAnswer);
-        return currentAnswer==expectedAnswer;
+        string dependantControlValue = ui_controller.uiInstance.GetControlValue(dependantControlID);
+        string expectedAnswer = answerMapping.Find(x => x.answer2 == dependantControlValue).answer1;
+        Debug.Log(controlValue + " " + dependantControlValue + " " + expectedAnswer);
+        return controlValue == expectedAnswer;
     }
 
 }
@@ -172,6 +173,8 @@ public class game_controller : MonoBehaviour
     void Start()
     {
         int dependantStepID;
+
+        ui_controller.uiInstance.SetConnectedControls(3, 4, "random");
 
         ui_controller.uiInstance.SetControlValue(2, "0");
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");

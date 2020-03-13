@@ -11,6 +11,7 @@ public class MeterScript : ParentControl
 
     void Start()
     {
+        value = "0";
         numStates = 5;
         minState = 0;
         meterUI = meter.GetComponent<Slider>();
