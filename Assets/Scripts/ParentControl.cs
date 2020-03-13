@@ -47,9 +47,11 @@ public class ParentControl : MonoBehaviour
                     int max = ui_controller.uiInstance.GetControlNumStates(connectedControl);
                     if (min == 0) max -= 1;
 
-                    int randomValue = (int)Random.Range(1.0f, max + 1);
-                    newValue = randomValue.ToString();
-
+                    do
+                    {
+                        int randomValue = (int)Random.Range(1.0f, max + 1);
+                        newValue = randomValue.ToString();
+                    } while (newValue == value);
                 }
 
                 ui_controller.uiInstance.SetControlValue(connectedControl, newValue);

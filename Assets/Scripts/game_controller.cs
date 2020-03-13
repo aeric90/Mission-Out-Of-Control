@@ -171,6 +171,8 @@ public class game_controller : MonoBehaviour
 
     void Start()
     {
+        int dependantStepID;
+
         ui_controller.uiInstance.SetControlValue(2, "0");
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
 
@@ -180,14 +182,11 @@ public class game_controller : MonoBehaviour
         ui_controller.uiInstance.SetControlValue(4, "3");
 
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
-        gameInstructions[0].AddStep(6, "111");
-
+        gameInstructions[0].AddStep(3, "0");
 
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
-        gameInstructions[1].AddStep(6, "222");
         gameInstructions[1].AddStep(8, "1");
-        int dependantStepID = gameInstructions[1].AddStep(5, 4);
-            gameInstructions[1].AddDependantAnswer(dependantStepID, "1", "0");
+        dependantStepID = gameInstructions[1].AddStep(5, 4);
             gameInstructions[1].AddDependantAnswer(dependantStepID, "2", "1");
             gameInstructions[1].AddDependantAnswer(dependantStepID, "3", "2");
             gameInstructions[1].AddDependantAnswer(dependantStepID, "4", "3");
@@ -196,18 +195,28 @@ public class game_controller : MonoBehaviour
         gameInstructions[1].AddSuccessTrigger("UpdatePlanet", "ALPHA IV");
 
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
-        gameInstructions[2].AddStep(6, "333");
         gameInstructions[2].AddStep(7, "3");
-        
+        dependantStepID = gameInstructions[2].AddStep(6, 2);
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "497", "0");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "512", "1");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "244", "2");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "919", "3");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "711", "4");
+        dependantStepID = gameInstructions[2].AddStep(1, 5);
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "1", "1");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "2", "2");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "3", "3");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "4", "4");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "5", "5");
 
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
-        gameInstructions[3].AddStep(6, "444");
+
         gameInstructions[3].AddStep(0, "1");
 
         gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
         gameInstructions[4].AddStep(1, "5");
         gameInstructions[4].AddStep(9, "2");
-        gameInstructions[4].AddStep(6, "555");
+        gameInstructions[4].AddStep(6, "174");
 
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
         gameInstructions[5].AddStep(6, "666");
