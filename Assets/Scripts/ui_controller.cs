@@ -5,7 +5,6 @@ using UnityEngine;
 public class ui_controller : MonoBehaviour
 {
     public static ui_controller uiInstance;
-    public GameObject screenControl;
     public GameObject[] controls;
 
     public TMPro.TextMeshProUGUI countDownText;
@@ -74,14 +73,5 @@ public class ui_controller : MonoBehaviour
     public int GetControlMinState(int controlID)
     {
         return controls[controlID].GetComponent<ParentControl>().GetMinState();
-    }
-
-    public void SetScreenPlanetText(string planetText)
-    {
-        screenControl.GetComponent<screen_controller>().SetPlanetText(planetText);
-    }
-    public void SetScreenSystemText(string systemText)
-    {
-        screenControl.GetComponent<screen_controller>().SetSystemText(systemText);
     }
 }
