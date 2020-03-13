@@ -249,7 +249,7 @@ public class game_controller : MonoBehaviour
         {
             if(gameTimer<=0)
             {
-                gameOver = true;
+                GameOver(false);
             }
 
             yield return new WaitForSeconds(1.0f);
@@ -300,7 +300,7 @@ public class game_controller : MonoBehaviour
 
         if (currentInstruction >= gameInstructions.Count)
         {
-            gameOver = true;
+            GameOver(true);
         }
         else
         {
@@ -324,6 +324,20 @@ public class game_controller : MonoBehaviour
         NextInstruction();
 
         StopCoroutine(PauseOnCorrect());
+    }
+
+    public void GameOver(bool win)
+    {
+        gameOver = true;
+
+        if (win)
+        {
+            ui_controller.uiInstance.AddComputerLine("\n\nYOU WIN!", false);
+        }
+        else
+        {
+            ui_controller.uiInstance.AddComputerLine("\n\nYOU LOST!", false);
+        }
     }
 
     public bool GetGameOver()
