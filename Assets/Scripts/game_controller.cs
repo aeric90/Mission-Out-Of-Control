@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 // This class contains the relevant control and the expected answer
@@ -38,7 +39,6 @@ public class GameStep
 
     }
 }
-
 public struct DependantValues
 {
     public string answer1, answer2;
@@ -79,6 +79,7 @@ public class GameInstruction
 {
     private string instructionTitle;
     private List<GameStep> instructionSteps = new List<GameStep>();
+    private List<string[]> successTriggers = new List<string[]>();
 
     public GameInstruction(string instructionTitle)
     {
@@ -119,6 +120,37 @@ public class GameInstruction
     {
         return instructionSteps[stepID].CheckStep(controlValue);
     }
+
+    public void AddSuccessTrigger(string successMethod, string successParams)
+    {
+        string[] successTrigger = new string[] { successMethod, successParams };
+        successTriggers.Add(successTrigger);
+    }
+
+    public bool CheckSuccessTrigger()
+    {
+        return successTriggers.Count > 0;
+    }
+
+    public void TriggerSuccess()
+    {
+        foreach (string[] trigger in successTriggers)
+        {
+            MethodInfo foundMethod = this.GetType().GetMethod(trigger[0]);
+            foundMethod.Invoke(this, new object[] { trigger[1] });
+        }
+    }
+
+    public void UpdateSystem(string systemText)
+    {
+        ui_controller.uiInstance.SetScreenSystemText(systemText);
+    }
+
+    public void UpdatePlanet(string planetText)
+    {
+        ui_controller.uiInstance.SetScreenPlanetText(planetText);
+    }
+
 }
 
 public class game_controller : MonoBehaviour
@@ -149,6 +181,7 @@ public class game_controller : MonoBehaviour
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
         gameInstructions[0].AddStep(6, "111");
 
+
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
         gameInstructions[1].AddStep(6, "222");
         gameInstructions[1].AddStep(8, "1");
@@ -158,11 +191,13 @@ public class game_controller : MonoBehaviour
             gameInstructions[1].AddDependantAnswer(dependantStepID, "3", "2");
             gameInstructions[1].AddDependantAnswer(dependantStepID, "4", "3");
             gameInstructions[1].AddDependantAnswer(dependantStepID, "5", "4");
-
+        gameInstructions[1].AddSuccessTrigger("UpdateSystem", "POLLUX");
+        gameInstructions[1].AddSuccessTrigger("UpdatePlanet", "ALPHA IV");
 
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
         gameInstructions[2].AddStep(6, "333");
         gameInstructions[2].AddStep(7, "3");
+        
 
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
         gameInstructions[3].AddStep(6, "444");
@@ -224,6 +259,7 @@ public class game_controller : MonoBehaviour
 
         if (instructionSucceeded) 
         {
+            if (current.CheckSuccessTrigger()) current.TriggerSuccess();
             ui_controller.uiInstance.AddComputerLine(" CORRECT", false);
             currentInstruction++;
             NextInstruction();
