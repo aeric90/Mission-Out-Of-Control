@@ -20,7 +20,6 @@ public class SwitchScript : MonoBehaviour
 
     public void changeButton()
     {
-        
         counter++;
         if(counter % 2 == 1)
         {

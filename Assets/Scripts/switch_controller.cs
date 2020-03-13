@@ -19,7 +19,6 @@ public class switch_controller : ParentControl
 
     public void OnButtonPress()
     {
-        valueChange = true;
         if (value == "0")
         {
             switchSprite.overrideSprite = switchOn;

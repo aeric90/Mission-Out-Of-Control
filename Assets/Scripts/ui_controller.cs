@@ -61,9 +61,9 @@ public class ui_controller : MonoBehaviour
         }
     }
 
-    public void SetConnectedControls(int controlID1, int controlID2, string type)
+    public void SetConnectedControls(int controlID1, int controlID2)
     {
-        controls[controlID1].GetComponent<ParentControl>().SetConnectedControl(controlID2, type);
+        controls[controlID1].GetComponent<ParentControl>().SetConnectedControl(controlID2);
     }
 
     public int GetControlNumStates(int controlID)
