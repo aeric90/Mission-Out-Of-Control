@@ -261,8 +261,7 @@ public class game_controller : MonoBehaviour
         {
             if (current.CheckSuccessTrigger()) current.TriggerSuccess();
             ui_controller.uiInstance.AddComputerLine(" CORRECT", false);
-            currentInstruction++;
-            NextInstruction();
+            StartCoroutine(PauseOnCorrect());
         }
         else
         {
@@ -291,6 +290,16 @@ public class game_controller : MonoBehaviour
             outPutText += "\t WAITING FOR INPUT >";
             ui_controller.uiInstance.AddComputerLine(outPutText, false);
         }
+    }
+
+    private IEnumerator PauseOnCorrect()
+    {
+        yield return new WaitForSeconds(3.00f);
+
+        currentInstruction++;
+        NextInstruction();
+
+        StopCoroutine(PauseOnCorrect());
     }
 
     public bool GetGameOver()
