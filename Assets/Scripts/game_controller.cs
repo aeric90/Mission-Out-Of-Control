@@ -68,7 +68,7 @@ public class DependantGameStep : GameStep
     {
         string currentAnswer = ui_controller.uiInstance.GetControlValue(dependantControlID);
         string expectedAnswer = answerMapping.Find(x => x.answer1 == controlValue).answer2;
-
+        Debug.Log(currentAnswer + " " + expectedAnswer);
         return currentAnswer==expectedAnswer;
     }
 
@@ -197,11 +197,11 @@ public class game_controller : MonoBehaviour
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
         gameInstructions[2].AddStep(7, "3");
         dependantStepID = gameInstructions[2].AddStep(6, 2);
-        gameInstructions[2].AddDependantAnswer(dependantStepID, "497", "0");
-        gameInstructions[2].AddDependantAnswer(dependantStepID, "512", "1");
-        gameInstructions[2].AddDependantAnswer(dependantStepID, "244", "2");
-        gameInstructions[2].AddDependantAnswer(dependantStepID, "919", "3");
-        gameInstructions[2].AddDependantAnswer(dependantStepID, "711", "4");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "490", "0");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "491", "1");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "492", "2");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "493", "3");
+        gameInstructions[2].AddDependantAnswer(dependantStepID, "494", "4");
         dependantStepID = gameInstructions[2].AddStep(1, 5);
         gameInstructions[2].AddDependantAnswer(dependantStepID, "1", "1");
         gameInstructions[2].AddDependantAnswer(dependantStepID, "2", "2");
@@ -210,8 +210,13 @@ public class game_controller : MonoBehaviour
         gameInstructions[2].AddDependantAnswer(dependantStepID, "5", "5");
 
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
-
-        gameInstructions[3].AddStep(0, "1");
+        gameInstructions[3].AddStep(5, "5");
+        gameInstructions[3].AddStep(7, "5");
+        dependantStepID = gameInstructions[3].AddStep(0, 4);
+        gameInstructions[3].AddDependantAnswer(dependantStepID, "0", "1");
+        gameInstructions[3].AddDependantAnswer(dependantStepID, "1", "2");
+        gameInstructions[3].AddDependantAnswer(dependantStepID, "1", "3");
+        gameInstructions[3].AddDependantAnswer(dependantStepID, "1", "4");
 
         gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
         gameInstructions[4].AddStep(1, "5");
@@ -219,9 +224,10 @@ public class game_controller : MonoBehaviour
         gameInstructions[4].AddStep(6, "174");
 
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
-        gameInstructions[5].AddStep(6, "666");
+        gameInstructions[5].AddStep(6, "531");
+        gameInstructions[5].AddStep(3, "0");
         gameInstructions[5].AddStep(8, "0");
-        gameInstructions[5].AddStep(2, "4");
+        gameInstructions[5].AddStep(2, "0");
 
         StartCoroutine(CountDown());
 
