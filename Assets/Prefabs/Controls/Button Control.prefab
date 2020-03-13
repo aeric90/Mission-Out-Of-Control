@@ -272,6 +272,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 
+  numStates: 0
+  minState: 0
+  connectedControl: -1
+  valueChange: 0
   labelText: {fileID: 5609017410000410887}
   onOff: {fileID: 3587426896974405440}
 --- !u!114 &7276213134425881060
@@ -489,7 +493,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2922467394450776472
 CanvasRenderer:
@@ -512,7 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.69411767, g: 0.7254902, b: 0.8117647, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
