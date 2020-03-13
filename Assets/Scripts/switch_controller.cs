@@ -15,6 +15,7 @@ public class switch_controller : ParentControl
     void Start()
     {
         value = "0";
+        switchSprite.overrideSprite = switchOff;
     }
 
     public void OnButtonPress()
@@ -26,7 +27,7 @@ public class switch_controller : ParentControl
             switchSprite.overrideSprite = switchOn;
             value = "1";
         }
-        else
+        else if (value == "1")
         {
             switchSprite.overrideSprite = switchOff;
             value = "0";
