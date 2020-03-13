@@ -174,7 +174,8 @@ public class game_controller : MonoBehaviour
         ui_controller.uiInstance.SetControlValue(2, "0");
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
 
-        ui_controller.uiInstance.SetConnectedControls(7, 2);
+        ui_controller.uiInstance.SetConnectedControls(3, 4, "random");
+        ui_controller.uiInstance.SetConnectedControls(7, 2, "mapped");
 
         ui_controller.uiInstance.SetControlValue(4, "3");
 

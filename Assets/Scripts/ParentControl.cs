@@ -11,6 +11,7 @@ public class ParentControl : MonoBehaviour
     public int minState;
 
     public int connectedControl = -1;
+    public string connectionType = "";
 
     public bool valueChange;
 
@@ -27,24 +28,41 @@ public class ParentControl : MonoBehaviour
     {
         if (valueChange)
         {
-            // Do I have a connected control?
             if(connectedControl > 0)
             {
-                int toLow = ui_controller.uiInstance.GetControlMinState(connectedControl);
-                int toHigh = toLow + ui_controller.uiInstance.GetControlNumStates(connectedControl) - 1;
+                string newValue = "";
 
-                string mapedValue = map(int.Parse(value), minState, minState + numStates - 1, toLow, toHigh).ToString();
+                if (connectionType == "mapped")
+                {
+                    int toLow = ui_controller.uiInstance.GetControlMinState(connectedControl);
+                    int toHigh = toLow + ui_controller.uiInstance.GetControlNumStates(connectedControl) - 1;
 
-                ui_controller.uiInstance.SetControlValue(connectedControl, mapedValue);
+                    newValue = map(int.Parse(value), minState, minState + numStates - 1, toLow, toHigh).ToString();
+                }
+
+                if(connectionType == "random")
+                {
+                    int min = ui_controller.uiInstance.GetControlMinState(connectedControl);
+                    int max = ui_controller.uiInstance.GetControlNumStates(connectedControl);
+                    if (min == 0) max -= 1;
+
+                    int randomValue = (int)Random.Range(1.0f, max + 1);
+                    newValue = randomValue.ToString();
+
+                }
+
+                ui_controller.uiInstance.SetControlValue(connectedControl, newValue);
             }
 
             valueChange = false;
         }
     }
 
-    public void SetConnectedControl(int controlID)
+    public void SetConnectedControl(int controlID, string type)
     {
         connectedControl = controlID;
+        connectionType = type;
+
     }
 
     public void SetLabel(string label)
