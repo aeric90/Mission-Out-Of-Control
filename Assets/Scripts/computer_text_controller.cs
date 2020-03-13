@@ -29,7 +29,6 @@ public class computer_text_controller : MonoBehaviour
 
     public void AddText(string inputString)
     {
-        Debug.Log(inputString);
         this.inputString = inputString;
         StartCoroutine(UpdateComputerText());
     }

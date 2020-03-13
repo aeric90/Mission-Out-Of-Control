@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ui_controller : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class ui_controller : MonoBehaviour
 
     public TMPro.TextMeshProUGUI countDownText;
     public TMPro.TextMeshProUGUI computerText;
+    public Button confirmButton;
 
     private void Awake()
     {
@@ -83,5 +85,10 @@ public class ui_controller : MonoBehaviour
     public void SetScreenSystemText(string systemText)
     {
         screenControl.GetComponent<screen_controller>().SetSystemText(systemText);
+    }
+
+    public void EnableConfirmButton(bool value)
+    {
+        confirmButton.interactable = value;
     }
 }

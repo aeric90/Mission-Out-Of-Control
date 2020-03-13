@@ -31,7 +31,6 @@ public class GameStep
 
     virtual public bool CheckStep(string controlValue)
     {
-        Debug.Log(controlValue + " " + answer);
         return controlValue == answer;   
     }
 
@@ -69,7 +68,6 @@ public class DependantGameStep : GameStep
     {
         string dependantControlValue = ui_controller.uiInstance.GetControlValue(dependantControlID);
         string expectedAnswer = answerMapping.Find(x => x.answer2 == dependantControlValue).answer1;
-        Debug.Log(controlValue + " " + dependantControlValue + " " + expectedAnswer);
         return controlValue == expectedAnswer;
     }
 

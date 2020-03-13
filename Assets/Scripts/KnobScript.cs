@@ -68,8 +68,6 @@ public class KnobScript : ParentControl
                     this.value = valueText.text = "5";
                 }
 
-
-                // Debug.Log(r);
                 this.valueChange = true;
                 handle.rotation = r;
             }
