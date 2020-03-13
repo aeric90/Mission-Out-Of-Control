@@ -357,8 +357,8 @@ MonoBehaviour:
   valueChange: 0
   labelText: {fileID: 5609017410000410887}
   switchSprite: {fileID: 1240300143219519403}
-  switchOn: {fileID: 21300000, guid: e166313210c43be468259971b6f224f5, type: 3}
-  switchOff: {fileID: 21300000, guid: ee1834ec3b9a48f478ef69ef3584499b, type: 3}
+  switchOn: {fileID: 21300000, guid: ee1834ec3b9a48f478ef69ef3584499b, type: 3}
+  switchOff: {fileID: 21300000, guid: e166313210c43be468259971b6f224f5, type: 3}
 --- !u!1 &3571212831714976485
 GameObject:
   m_ObjectHideFlags: 0
