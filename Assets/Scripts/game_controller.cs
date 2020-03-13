@@ -332,11 +332,11 @@ public class game_controller : MonoBehaviour
 
         if (win)
         {
-            ui_controller.uiInstance.AddComputerLine("\n\nYOU WIN!", false);
+            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU WIN!", false);
         }
         else
         {
-            ui_controller.uiInstance.AddComputerLine("\n\nYOU LOST!", false);
+            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU LOST!", false);
         }
     }
 
