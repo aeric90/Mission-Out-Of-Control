@@ -9,10 +9,14 @@ public class light_controller : ParentControl
     public GameObject lightPanel;
     private Color lightColor;
 
+    private void Awake()
+    {
+        maxValue = 4;
+        minValue = 0;
+    }
+
     private void Start()
     {
-        numStates = 5;
-        minState = 0;
         StartCoroutine(FlashLight());
     }
 

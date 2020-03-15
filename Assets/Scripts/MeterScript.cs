@@ -9,12 +9,17 @@ public class MeterScript : ParentControl
     public GameObject meter;
     private Slider meterUI;
 
-    void Start()
+    private void Awake()
     {
         value = "0";
-        numStates = 5;
-        minState = 0;
+        maxValue = 4;
+        minValue = 0;
         meterUI = meter.GetComponent<Slider>();
+    }
+
+    void Start()
+    {
+
     }
 
     private void Update()

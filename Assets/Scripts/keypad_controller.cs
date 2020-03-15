@@ -7,14 +7,17 @@ public class keypad_controller : ParentControl
 {
     public TMPro.TextMeshProUGUI screenText;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        maxValue = 999;
+        minValue = 0;
+    }
+
     void Start()
     {
-        numStates = 0;
         ClearScreen();
     }
 
-    // Update is called once per frame
     void Update()
     {
         screenText.text = this.value;

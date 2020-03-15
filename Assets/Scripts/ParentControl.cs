@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class ParentControl : MonoBehaviour
 {
-
-    public string value;
+    public string type;
     
-    public int numStates;
-    public int minState;
+    public int maxValue;
+    public int minValue;
+    public string value;
+    public bool valueChange;
 
     public int connectedControl = -1;
     public string connectionType = "";
-
-    public bool valueChange;
 
     public TMPro.TextMeshProUGUI labelText;
 
@@ -35,16 +34,16 @@ public class ParentControl : MonoBehaviour
 
                 if (connectionType == "mapped")
                 {
-                    int toLow = ui_controller.uiInstance.GetControlMinState(connectedControl);
-                    int toHigh = toLow + ui_controller.uiInstance.GetControlNumStates(connectedControl) - 1;
+                    int toLow = ui_controller.uiInstance.GetControlMinValue(connectedControl);
+                    int toHigh = ui_controller.uiInstance.GetControlMaxValue(connectedControl);
 
-                    newValue = map(int.Parse(value), minState, minState + numStates - 1, toLow, toHigh).ToString();
+                    newValue = map(int.Parse(value), minValue, maxValue, toLow, toHigh).ToString();
                 }
 
                 if (connectionType == "random")
                 {
-                    int min = ui_controller.uiInstance.GetControlMinState(connectedControl);
-                    int max = ui_controller.uiInstance.GetControlNumStates(connectedControl);
+                    int min = ui_controller.uiInstance.GetControlMinValue(connectedControl);
+                    int max = ui_controller.uiInstance.GetControlMaxValue(connectedControl);
                     if (min == 0) max -= 1;
 
                     do
@@ -92,19 +91,26 @@ public class ParentControl : MonoBehaviour
         controlActive = setting;
     }
 
-    public int GetNumStates()
+    public int GetMaxValue()
     {
-        return numStates;
+        return maxValue;
     }
 
-    public int GetMinState()
+    public int GetMinValue()
     {
-        return minState;
+        return minValue;
     }
 
     private static int map(int value, int fromLow, int fromHigh, int toLow, int toHigh)
     {
         return (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
+    }
+
+    virtual public string GetRandomAnswer()
+    {
+        int randomValue = Random.Range(minValue, maxValue + 1);
+        
+        return randomValue.ToString();
     }
 
 }

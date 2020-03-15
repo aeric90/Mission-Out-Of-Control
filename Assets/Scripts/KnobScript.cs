@@ -9,12 +9,12 @@ public class KnobScript : ParentControl
     public Transform handle;
     public Text valueText;
 
-    private void Start()
+    private void Awake()
     {
         value = "1";
 
-        numStates = 5;
-        minState = 1;
+        maxValue = 5;
+        minValue = 1;
     }
 
     public void OnKnobTurn()

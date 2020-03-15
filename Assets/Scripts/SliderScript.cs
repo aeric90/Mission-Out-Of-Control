@@ -10,13 +10,17 @@ public class SliderScript : ParentControl
     public GameObject slider;
     private Slider sliderUI;
 
-    void Start()
+    private void Awake()
     {
         value = "1";
-
-        numStates = 5;
-        minState = 1;
+        maxValue = 5;
+        minValue = 1;
         sliderUI = slider.GetComponent<Slider>();
+    }
+
+    void Start()
+    {
+
     }
 
     private void LateUpdate()

@@ -70,14 +70,19 @@ public class ui_controller : MonoBehaviour
         controls[controlID1].GetComponent<ParentControl>().SetConnectedControl(controlID2, type);
     }
 
-    public int GetControlNumStates(int controlID)
+    public int GetControlMaxValue(int controlID)
     {
-        return controls[controlID].GetComponent<ParentControl>().GetNumStates();
+        return controls[controlID].GetComponent<ParentControl>().GetMaxValue();
     }
 
-    public int GetControlMinState(int controlID)
+    public int GetControlMinValue(int controlID)
     {
-        return controls[controlID].GetComponent<ParentControl>().GetMinState();
+        return controls[controlID].GetComponent<ParentControl>().GetMinValue();
+    }
+
+    public string GetControlRandomAnswer(int controlID)
+    {
+        return controls[controlID].GetComponent<ParentControl>().GetRandomAnswer();
     }
 
     public void SetScreenPlanetText(string planetText)

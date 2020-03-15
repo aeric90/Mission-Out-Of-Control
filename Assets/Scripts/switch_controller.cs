@@ -10,6 +10,13 @@ public class switch_controller : ParentControl
     public Sprite switchOn;
     public Sprite switchOff;
 
+    private void Awake()
+    {
+        value = "0";
+        minValue = 0;
+        maxValue = 1;
+    }
+
     private void LateUpdate()
     {
         if (value == "1")
