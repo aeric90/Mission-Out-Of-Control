@@ -9,7 +9,6 @@ public class button_controller : ParentControl
 
     private void Awake()
     {
-        value = "0";
         maxValue = 1;
         minValue = 0;
         onOff.text = "OFF";
