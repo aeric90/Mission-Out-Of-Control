@@ -107,4 +107,12 @@ public class ui_controller : MonoBehaviour
     {
         return controls[controlID].GetComponent<ParentControl>().GetDependantTarget();
     }
+
+    public int GetControlRange(int controlID)
+    {
+        int minValue = controls[controlID].GetComponent<ParentControl>().GetMinValue();
+        int maxValue = controls[controlID].GetComponent<ParentControl>().GetMaxValue();
+
+        return maxValue - minValue + 1;
+    }
 }
