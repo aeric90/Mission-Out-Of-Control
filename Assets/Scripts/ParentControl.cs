@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ParentControl : MonoBehaviour
 {
-    public string type;
-    
-    public int maxValue;
-    public int minValue;
-    public string value;
-    public bool valueChange;
+    protected string type;
 
-    public int connectedControl = -1;
-    public string connectionType = "";
+    protected int maxValue;
+    protected int minValue;
+    protected string value;
+    protected bool valueChange;
+
+    protected int connectedControl = -1;
+    protected string connectionType = "";
+
+    protected bool dependantSource;
+    protected bool dependantTarget;
 
     public TMPro.TextMeshProUGUI labelText;
 
@@ -111,6 +114,11 @@ public class ParentControl : MonoBehaviour
         int randomValue = Random.Range(minValue, maxValue + 1);
         
         return randomValue.ToString();
+    }
+
+    public bool GetDependantTarget()
+    {
+        return dependantTarget;
     }
 
 }

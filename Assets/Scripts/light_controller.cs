@@ -13,6 +13,8 @@ public class light_controller : ParentControl
     {
         maxValue = 4;
         minValue = 0;
+        dependantSource = false;
+        dependantTarget = true;
     }
 
     private void Start()

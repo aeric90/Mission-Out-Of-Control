@@ -12,6 +12,8 @@ public class button_controller : ParentControl
         value = "0";
         maxValue = 1;
         minValue = 0;
+        dependantSource = true;
+        dependantTarget = true;
         onOff.text = "OFF";
     }
 

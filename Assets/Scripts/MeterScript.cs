@@ -14,6 +14,9 @@ public class MeterScript : ParentControl
         value = "0";
         maxValue = 4;
         minValue = 0;
+        dependantSource = false;
+        dependantTarget = true;
+
         meterUI = meter.GetComponent<Slider>();
     }
 

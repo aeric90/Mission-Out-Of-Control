@@ -11,6 +11,8 @@ public class keypad_controller : ParentControl
     {
         maxValue = 999;
         minValue = 0;
+        dependantSource = true;
+        dependantTarget = false;
     }
 
     void Start()
@@ -44,5 +46,12 @@ public class keypad_controller : ParentControl
     private void ClearScreen()
     {
         this.value = "";
+    }
+
+    override public string GetRandomAnswer()
+    {
+        int randomValue = Random.Range(minValue, maxValue + 1);
+
+        return randomValue.ToString("D3");
     }
 }

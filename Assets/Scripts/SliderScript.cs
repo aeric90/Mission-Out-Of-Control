@@ -15,6 +15,8 @@ public class SliderScript : ParentControl
         value = "1";
         maxValue = 5;
         minValue = 1;
+        dependantSource = true;
+        dependantTarget = true;
         sliderUI = slider.GetComponent<Slider>();
     }
 

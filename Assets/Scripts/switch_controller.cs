@@ -15,6 +15,8 @@ public class switch_controller : ParentControl
         value = "0";
         minValue = 0;
         maxValue = 1;
+        dependantSource = true;
+        dependantTarget = true;
     }
 
     private void LateUpdate()
