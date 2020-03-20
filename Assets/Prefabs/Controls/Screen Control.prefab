@@ -184,7 +184,7 @@ RectTransform:
   m_GameObject: {fileID: 2680752761445514613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 2680752759971359733}
   m_Father: {fileID: 0}
@@ -192,8 +192,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 450}
+  m_AnchoredPosition: {x: 102.4, y: -91.8}
+  m_SizeDelta: {x: 515, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2680752761445514504
 CanvasRenderer:
@@ -248,4 +248,4 @@ MonoBehaviour:
   noEngineText: 4
   systemText: 
   planetText: 
-  screenText: {fileID: 0}
+  screenText: {fileID: 2680752759971359626}
