@@ -23,6 +23,10 @@ public class ui_controller : MonoBehaviour
         countDownText.text = timerString;
     }
     
+    public int GetControlsCount()
+    {
+        return controls.Length;
+    }
     public void SetControlLabel(int controlID, string label)
     {
         controls[controlID].GetComponent<ParentControl>().SetLabel(label);
@@ -97,5 +101,10 @@ public class ui_controller : MonoBehaviour
     public void EnableConfirmButton(bool value)
     {
         confirmButton.interactable = value;
+    }
+
+    public bool GetControlDependantTarget(int controlID)
+    {
+        return controls[controlID].GetComponent<ParentControl>().GetDependantTarget();
     }
 }
