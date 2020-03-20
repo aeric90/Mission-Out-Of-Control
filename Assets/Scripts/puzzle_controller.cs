@@ -13,6 +13,8 @@ public class GameStep
     {
         this.controlID = controlID;
         this.answer = ui_controller.uiInstance.GetControlRandomAnswer(controlID);
+
+        Debug.Log(controlID + " " + answer);
     }
 
     public int GetControlID()
@@ -98,19 +100,86 @@ public class GameInstruction
         return instructionSteps.Count - 1;
     }
 
-    public void AddDependantStep(int controlID)
+    public void AddDependantSteps(int controlID1)
     {
-        int controlID2;
+        int controlID2 = 0;
+        List<int> checkedControls = new List<int>();
 
         do
         {
             controlID2 = Random.Range(0, ui_controller.uiInstance.GetControlsCount());
 
-        } while (controlID != controlID2 && ui_controller.uiInstance.GetControlDependantTarget(controlID2));
+            if(!checkedControls.Contains(controlID2))
+            {
+                if(controlID1 == controlID2 && !ui_controller.uiInstance.GetControlDependantTarget(controlID2))
+                {
+                    checkedControls.Add(controlID2);
+                    if(checkedControls.Count >= ui_controller.uiInstance.GetControlsCount())
+                    {
+                        // No available control to depend on, generate an independant step.
+                        AddStep(controlID1);
+                        return;
+                    }
+                    controlID2 = -1;
+                }
+            }
+            else
+            {
+                controlID2 = -1;
+            }
 
+        } while (controlID2 < 0);
 
+        int control2Range = ui_controller.uiInstance.GetControlRange(controlID2);
 
-
+        switch (ui_controller.uiInstance.GetControlRange(controlID1))
+        {
+            case 2:
+                if(control2Range == 2)
+                {
+                    GenerateMappingDependancy(controlID1, controlID2);
+                }
+                else if(control2Range == 5)
+                {
+                    // Range
+                }
+                else
+                {
+                    AddStep(controlID1);
+                    return;
+                }
+                break;
+            case 5:
+                if (control2Range == 2)
+                {
+                    // Random 
+                }
+                else if (control2Range == 5)
+                {
+                    GenerateMappingDependancy(controlID1, controlID2);
+                }
+                else
+                {
+                    AddStep(controlID1);
+                    return;
+                }
+                break;
+            case 1000:
+                if (control2Range == 2)
+                {
+                    // Random 
+                }
+                else if (control2Range == 5)
+                {
+                    // Replacement
+                }
+                else
+                {
+                    AddStep(controlID1);
+                    return;
+                }
+                break;
+        }
     }
 
     public void AddDependantAnswer(int stepID, string answer1, string answer2)
@@ -155,6 +224,37 @@ public class GameInstruction
     {
         ui_controller.uiInstance.SetScreenPlanetText(planetText);
     }
+
+    private void GenerateMappingDependancy(int controlID1, int controlID2)
+    {
+        int dependantStepID = AddStep(controlID1, controlID2);
+
+        int direction = Random.Range(0, 2);
+
+        int control1min = ui_controller.uiInstance.GetControlMinValue(controlID1);
+        int control1max = ui_controller.uiInstance.GetControlMaxValue(controlID1);
+        int control2min = ui_controller.uiInstance.GetControlMinValue(controlID2);
+        int control2max = ui_controller.uiInstance.GetControlMaxValue(controlID2);
+
+
+        for (int value1 = 0; value1 < control1max; value1++)
+        {
+            int answer1 = control1min + value1;
+            int answer2 = 0;
+
+            if(direction == 0)
+            {
+                answer2 = control2max - value1;
+            }
+            else
+            {
+                answer2 = control2min + value1;
+            }
+            Debug.Log(controlID1 + " " + value1.ToString() + " " + controlID2 + " " + answer2.ToString());
+            AddDependantAnswer(dependantStepID, answer1.ToString(), answer2.ToString());
+        }
+
+    }
 }
 
 public class puzzle_controller : MonoBehaviour
@@ -195,12 +295,15 @@ public class puzzle_controller : MonoBehaviour
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
         // BUTTON 2 is set to 1
         gameInstructions[1].AddStep(8);
+        gameInstructions[1].AddDependantSteps(5);
+        /*
         // SLIDER 1 is set based on the value of LIGHT
         dependantStepID = gameInstructions[1].AddStep(5, 4);
         gameInstructions[1].AddDependantAnswer(dependantStepID, "2", "1");
         gameInstructions[1].AddDependantAnswer(dependantStepID, "3", "2");
         gameInstructions[1].AddDependantAnswer(dependantStepID, "4", "3");
         gameInstructions[1].AddDependantAnswer(dependantStepID, "5", "4");
+        */
         // Add functions to trigger when the instruction is completed correctly
         gameInstructions[1].AddSuccessTrigger("UpdateSystem", "POLLUX");
         gameInstructions[1].AddSuccessTrigger("UpdatePlanet", "ALPHA IV");
@@ -213,12 +316,15 @@ public class puzzle_controller : MonoBehaviour
         gameInstructions[2].AddDependantAnswer(dependantStepID, "492", "2");
         gameInstructions[2].AddDependantAnswer(dependantStepID, "493", "3");
         gameInstructions[2].AddDependantAnswer(dependantStepID, "494", "4");
+        gameInstructions[1].AddDependantSteps(1);
+        /*
         dependantStepID = gameInstructions[2].AddStep(1, 5);
         gameInstructions[2].AddDependantAnswer(dependantStepID, "1", "1");
         gameInstructions[2].AddDependantAnswer(dependantStepID, "2", "2");
         gameInstructions[2].AddDependantAnswer(dependantStepID, "3", "3");
         gameInstructions[2].AddDependantAnswer(dependantStepID, "4", "4");
         gameInstructions[2].AddDependantAnswer(dependantStepID, "5", "5");
+        */
 
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
         gameInstructions[3].AddStep(5);
@@ -238,11 +344,14 @@ public class puzzle_controller : MonoBehaviour
         gameInstructions[5].AddStep(6);
         gameInstructions[5].AddStep(3);
         gameInstructions[5].AddStep(8);
+        gameInstructions[1].AddDependantSteps(5);
+        /*
         dependantStepID = gameInstructions[5].AddStep(5, 4);
         gameInstructions[5].AddDependantAnswer(dependantStepID, "2", "1");
         gameInstructions[5].AddDependantAnswer(dependantStepID, "3", "2");
         gameInstructions[5].AddDependantAnswer(dependantStepID, "4", "3");
         gameInstructions[5].AddDependantAnswer(dependantStepID, "5", "4");
+        */
         gameInstructions[5].AddStep(2);
     }
 
