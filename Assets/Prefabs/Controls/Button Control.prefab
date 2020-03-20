@@ -168,7 +168,6 @@ GameObject:
   - component: {fileID: 1814143526967586225}
   - component: {fileID: 3065927392585646204}
   - component: {fileID: 3148644115071338243}
-  - component: {fileID: 7276213134425881060}
   m_Layer: 5
   m_Name: Button Control
   m_TagString: Untagged
@@ -271,41 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f441e8d076ba947a0331cf30bce5b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 
-  numStates: 0
-  minState: 0
-  connectedControl: -1
-  valueChange: 0
   labelText: {fileID: 5609017410000410887}
   onOff: {fileID: 3587426896974405440}
---- !u!114 &7276213134425881060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814143526967586231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &4202540672004832687
 GameObject:
   m_ObjectHideFlags: 0

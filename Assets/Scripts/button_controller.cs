@@ -7,8 +7,9 @@ public class button_controller : ParentControl
 {
     public Text onOff;
 
-    private void Awake()
+    void Awake()
     {
+        value = "0";
         maxValue = 1;
         minValue = 0;
         dependantSource = true;
