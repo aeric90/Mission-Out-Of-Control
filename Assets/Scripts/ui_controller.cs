@@ -102,7 +102,7 @@ public class ui_controller : MonoBehaviour
     {
         confirmButton.interactable = value;
     }
-
+        
     public bool GetControlDependantTarget(int controlID)
     {
         return controls[controlID].GetComponent<ParentControl>().GetDependantTarget();
