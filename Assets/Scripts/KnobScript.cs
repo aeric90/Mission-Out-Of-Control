@@ -11,7 +11,16 @@ public class KnobScript : ParentControl
 
     private void Awake()
     {
+        Vector3 mousePos = Input.mousePosition;
+        Vector2 dir = mousePos - handle.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        angle = (angle <= 0) ? (360 + angle) : angle;
+
+        Quaternion r = Quaternion.AngleAxis(angle + 135f, Vector3.forward);
+
         value = "1";
+        r.z = 0.1f;
+        r.w = -1.0f;
 
         maxValue = 5;
         minValue = 1;
@@ -72,8 +81,8 @@ public class KnobScript : ParentControl
                     this.value = valueText.text = "5";
                 }
 
-                this.valueChange = true;
                 handle.rotation = r;
+                this.valueChange = true;
             }
 
         }
