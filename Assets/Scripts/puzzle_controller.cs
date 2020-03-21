@@ -16,7 +16,6 @@ public class GameStep
 
         Debug.Log(controlID + " " + answer);
     }
-
     public GameStep(int controlID, string answer)
     {
         this.controlID = controlID;
@@ -31,17 +30,14 @@ public class GameStep
     {
         this.controlID = controlID;
     }
-
     public void SetAnswer(string answer)
     {
         this.answer = answer;
     }
-
     virtual public bool CheckStep(string controlValue)
     {
         return controlValue == answer;
     }
-
     virtual public void AddAnswers(string answer1, string answer2)
     {
 
@@ -71,7 +67,6 @@ public class DependantGameStep : GameStep
     {
         answerMapping.Add(new DependantValues(answer1, answer2));
     }
-
     override public bool CheckStep(string controlValue)
     {
         Debug.Log("CHECKING DEPENDANT STEP");
@@ -109,7 +104,6 @@ public class GameInstruction
         instructionSteps.Add(new DependantGameStep(controlID1, controlID2));
         return instructionSteps.Count - 1;
     }
-
     public void AddDependantSteps(int controlID1)
     {
         int controlID2 = 0;
@@ -191,12 +185,10 @@ public class GameInstruction
                 break;
         }
     }
-
     public void AddDependantAnswer(int stepID, string answer1, string answer2)
     {
         instructionSteps[stepID].AddAnswers(answer1, answer2);
     }
-
     public int GetStepCount()
     {
         return instructionSteps.Count;
@@ -353,17 +345,14 @@ public class GameInstruction
 public class puzzle_controller : MonoBehaviour
 {
     public static puzzle_controller puzzleInstance;
-
     private List<GameInstruction> gameInstructions = new List<GameInstruction>();
 
     private void Awake()
     {
         if (puzzleInstance == null) { puzzleInstance = this; }
     }
-
     private void Start()
     {
-        int dependantStepID;
 
         // Set METER conrol to a value of 0 and change the label to JAM LEVELS 
         ui_controller.uiInstance.SetControlValue(2, "0");
