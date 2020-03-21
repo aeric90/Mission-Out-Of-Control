@@ -120,6 +120,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &38301975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2680752761445514613, guid: 35e7dbc1fb10a5b46be5453a63c863f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1660040496}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &148664670 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4573137438626218202, guid: 8d247158429e8b6499cd8a0ac44422c8,
@@ -1543,19 +1549,9 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5255504969740456996, guid: 681ad8fac5a8d9d458b3d96fe2d7d0e5,
         type: 3}
-      propertyPath: controls.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5255504969740456996, guid: 681ad8fac5a8d9d458b3d96fe2d7d0e5,
-        type: 3}
-      propertyPath: countDownText
+      propertyPath: screenControl
       value: 
-      objectReference: {fileID: 4573137438494912901}
-    - target: {fileID: 5255504969740456996, guid: 681ad8fac5a8d9d458b3d96fe2d7d0e5,
-        type: 3}
-      propertyPath: computerText
-      value: 
-      objectReference: {fileID: 4142168777050207020}
+      objectReference: {fileID: 38301975}
     - target: {fileID: 5255504969740456996, guid: 681ad8fac5a8d9d458b3d96fe2d7d0e5,
         type: 3}
       propertyPath: controls.Array.data[0]
@@ -1608,9 +1604,14 @@ PrefabInstance:
       objectReference: {fileID: 250002485}
     - target: {fileID: 5255504969740456996, guid: 681ad8fac5a8d9d458b3d96fe2d7d0e5,
         type: 3}
-      propertyPath: screenControl
+      propertyPath: countDownText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4573137438494912901}
+    - target: {fileID: 5255504969740456996, guid: 681ad8fac5a8d9d458b3d96fe2d7d0e5,
+        type: 3}
+      propertyPath: computerText
+      value: 
+      objectReference: {fileID: 4142168777050207020}
     - target: {fileID: 5255504969740456996, guid: 681ad8fac5a8d9d458b3d96fe2d7d0e5,
         type: 3}
       propertyPath: confirmButton
