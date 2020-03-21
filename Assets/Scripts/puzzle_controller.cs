@@ -276,7 +276,7 @@ public class GameInstruction
 
         int pivot = Random.Range(control2min, control2max) + 1;
 
-        for (int value = control2min; value < control2max; value++)
+        for (int value = control2min; value <= (control2max - control2min) + 1; value++)
         {
             int answer1 = 0;
 
@@ -329,7 +329,7 @@ public class GameInstruction
 
         int replacementChar = Random.Range(0, answer.Length);
                 
-        for (int value = control2min; value < control2max; value++)
+        for (int value = control2min; value <= (control2max - control2min) + 1; value++)
         {
             string answer1 = "";
             for(int i = 0; i < answer.Length; i++)
