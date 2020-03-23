@@ -22,8 +22,8 @@ public class light_controller : ParentControl
 
     private void Awake()
     {
-        maxValue = 4;
-        minValue = 0;
+        maxValue = 5;
+        minValue = 1;
         dependantSource = false;
         dependantTarget = true;
     }
@@ -58,8 +58,8 @@ public class light_controller : ParentControl
     {
         if(value == "1")
         {
-            lightSprite = red;
-            shadowSprite = redShadow;
+            // lightSprite = ;
+            // shadowSprite = ;
         }
         if(value == "2")
         {
@@ -76,10 +76,10 @@ public class light_controller : ParentControl
             lightSprite = yellow;
             shadowSprite = yellowShadow;
         }
-        if (value == "0")
+        if (value == "5")
         {
-            lightSprite = off;
-            shadowSprite = offShadow;
+            lightSprite = red;
+            shadowSprite = redShadow;
         }
     }
 }
