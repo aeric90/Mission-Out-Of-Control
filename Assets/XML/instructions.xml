@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<instructions>
+
+    <instruction id="1" difficulty="1">
+        <title>DISABLE AUTOMATIC VACUUM PUMPS</title>
+        <step>
+            <control>switch</control>
+            <control>button</control>
+            <default>1</default>
+            <answer>0</answer>
+        </step>
+    </instruction>
+
+    <instruction id="2" difficulty="2">
+        <title>ACTIVATE STELLAR TRIANGULATION MATRIX</title>'
+        <steps>
+            <step>
+                <control>button</control>
+                <default>0</default>
+                <answer>1</answer>
+            </step>
+            <step>
+                <control>slider</control>
+                <control>knob</control>
+                <answer>dependant</answer>
+            </step>
+        </steps>
+        <success_triggers>
+            <triggers>
+                <function>UpdateSystem</function>
+                <parameter>POLLUX</parameter>
+            </triggers>
+            <triggers>
+                <function>UpdatePlanet</function>
+                <parameter>ALPHA IV</parameter>
+            </triggers>
+        </success_triggers>
+    </instruction>
+
+</instructions>
