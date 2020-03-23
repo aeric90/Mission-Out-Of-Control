@@ -1221,31 +1221,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6342187258713089798}
     m_Modifications:
-    - target: {fileID: 1090804009822745074, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1090804009822745074, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1090804009822745074, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1090804009822745074, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1090804009822745074, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1814143526967586224, guid: 37182b643ef2fc34387c50d3890e7b29,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1355,51 +1330,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Light Control
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174078843299477097, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174078843299477097, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174078843299477097, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174078843299477097, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3065927392585646204, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_ChildAlignment
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5609017410000410887, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5609017410000410887, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5609017410000410887, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5609017410000410887, guid: 37182b643ef2fc34387c50d3890e7b29,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37182b643ef2fc34387c50d3890e7b29, type: 3}

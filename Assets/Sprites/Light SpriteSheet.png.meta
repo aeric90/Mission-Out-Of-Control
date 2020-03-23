@@ -1,0 +1,490 @@
+fileFormatVersion: 2
+guid: f81bc8b591ae8d44489a00181f505716
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -906854870144047340
+    second: Green Shadow
+  - first:
+      213: 4022400322290192599
+    second: Green
+  - first:
+      213: -2965845073393810317
+    second: Blue Shadow
+  - first:
+      213: 5627140899447397344
+    second: Blue
+  - first:
+      213: 4447050848804264991
+    second: Yellow
+  - first:
+      213: 8212460063627560353
+    second: Light SpriteSheet_6
+  - first:
+      213: -4804603286184142772
+    second: Icon
+  - first:
+      213: 3012165567725384667
+    second: Light SpriteSheet_8
+  - first:
+      213: -1533024677179806170
+    second: Light SpriteSheet_9
+  - first:
+      213: -1857938718013218628
+    second: Light SpriteSheet_10
+  - first:
+      213: 7729616024589157849
+    second: Yellow Shadow
+  - first:
+      213: -3141234551300029763
+    second: Light SpriteSheet_12
+  - first:
+      213: 7384583622194739846
+    second: Light SpriteSheet_13
+  - first:
+      213: 2549730192905581830
+    second: Orange Shadow
+  - first:
+      213: -4274051472841485391
+    second: Orange
+  - first:
+      213: -1922417273455563661
+    second: Panel
+  - first:
+      213: 2364951811615364305
+    second: Off Shadow
+  - first:
+      213: 8251430727409962602
+    second: Off
+  - first:
+      213: 8290773529886966185
+    second: Green Shadow
+  - first:
+      213: 4302786632837290713
+    second: Green
+  - first:
+      213: 2852920125124804784
+    second: Light SpriteSheet_2
+  - first:
+      213: 2123565166623685893
+    second: Blue Shadow
+  - first:
+      213: 8190176959252161642
+    second: Blue
+  - first:
+      213: -5005334931895072375
+    second: Yellow
+  - first:
+      213: 3506242880113672921
+    second: Icon
+  - first:
+      213: 6035365320567204574
+    second: Yellow Shadow
+  - first:
+      213: 4676997425656309644
+    second: Red Shadow
+  - first:
+      213: 7548241936400856200
+    second: Red
+  - first:
+      213: 1336670980277004253
+    second: Panel
+  - first:
+      213: -3105638777424169486
+    second: Off Shadow
+  - first:
+      213: -6636138625429154664
+    second: Off
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Green Shadow
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 1130
+        width: 153
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eeeee7c508a48b44988bcb566fa38a6
+      internalID: 8290773529886966185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 1108
+        width: 246
+        height: 247
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 211adaf9aa0cc6544a8ffc71ab6ab5b8
+      internalID: 4302786632837290713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Shadow
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 857
+        width: 153
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5bcdf4e02315334e87075734264a609
+      internalID: 2123565166623685893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 835
+        width: 246
+        height: 247
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c29c3f47b4c29a542a22a1c60363e0ad
+      internalID: 8190176959252161642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yellow
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 566
+        width: 246
+        height: 247
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a9f8d4d4b3675f4ab7558741a99c69c
+      internalID: -5005334931895072375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icon
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 653
+        width: 86
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a49effcbe21de6d44b8d76686c05a29a
+      internalID: 3506242880113672921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Light SpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 693
+        width: 14
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3d50c17f0eceb847b2b8039031821c7
+      internalID: -1533024677179806170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Light SpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 693
+        width: 14
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ece65eb90e2f8e24ebda8d27999bb72f
+      internalID: -1857938718013218628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yellow Shadow
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 587
+        width: 153
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7a924093edb95445b2db62b6ff695b4
+      internalID: 6035365320567204574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Red Shadow
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 312
+        width: 153
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a7b05d4e8522b148965450b98c9795c
+      internalID: 4676997425656309644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Red
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 292
+        width: 246
+        height: 247
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cdb2d417342b8d47a05a817f9348036
+      internalID: 7548241936400856200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panel
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 21
+        width: 539
+        height: 538
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c09eb1968b84a44ebd1863d35e00a28
+      internalID: 1336670980277004253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Off Shadow
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 41
+        width: 153
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6375cadc65302c744b163f95405c3461
+      internalID: -3105638777424169486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Off
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 18
+        width: 246
+        height: 247
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81582f82a800b934093fa52c41dd59dd
+      internalID: -6636138625429154664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static ParentControl;
 
 public class light_controller : ParentControl
 {
-    public GameObject lightPanel;
-    private Color lightColor;
+    public GameObject lightObject;
+    private Sprite lightSprite;
+    private Sprite shadowSprite;
+
+    public Sprite green;
+    public Sprite greenShadow;
+    public Sprite blue;
+    public Sprite blueShadow;
+    public Sprite yellow;
+    public Sprite yellowShadow;
+    public Sprite red;
+    public Sprite redShadow;
+    public Sprite off;
+    public Sprite offShadow;
 
     private void Awake()
     {
@@ -19,6 +30,9 @@ public class light_controller : ParentControl
 
     private void Start()
     {
+        lightSprite = lightObject.GetComponent<Image>().sprite;
+        shadowSprite = lightObject.transform.GetChild(0).gameObject.GetComponent<Image>().sprite;
+
         StartCoroutine(FlashLight());
     }
 
@@ -26,13 +40,15 @@ public class light_controller : ParentControl
     {
         while (!game_controller.gameInstance.GetGameOver())
         {
-            if (lightPanel.GetComponent<Image>().color == lightColor)
+            if (lightObject.GetComponent<Image>().sprite == lightSprite)
             {
-                lightPanel.GetComponent<Image>().color = Color.black;
+                lightObject.GetComponent<Image>().sprite = off;
+                lightObject.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = offShadow;
             }
             else
             {
-                lightPanel.GetComponent<Image>().color = lightColor;
+                lightObject.GetComponent<Image>().sprite = lightSprite;
+                lightObject.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = shadowSprite;
             }
             yield return new WaitForSeconds(0.5f);
         }
@@ -42,23 +58,28 @@ public class light_controller : ParentControl
     {
         if(value == "1")
         {
-            lightColor = Color.red;
+            lightSprite = red;
+            shadowSprite = redShadow;
         }
         if(value == "2")
         {
-            lightColor = Color.blue;
+            lightSprite = blue;
+            shadowSprite = blueShadow;
         }
         if (value == "3")
         {
-            lightColor = Color.green;
+            lightSprite = green;
+            shadowSprite = greenShadow;
         }
         if (value == "4")
         {
-            lightColor = Color.yellow;
+            lightSprite = yellow;
+            shadowSprite = yellowShadow;
         }
         if (value == "0")
         {
-            lightColor = Color.grey;
+            lightSprite = off;
+            shadowSprite = offShadow;
         }
     }
 }
