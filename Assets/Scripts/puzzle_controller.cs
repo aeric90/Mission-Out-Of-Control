@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using System.IO;
+using System.Xml;
 
 // This class contains the relevant control and the expected answer
 public class GameStep
@@ -353,6 +355,7 @@ public class puzzle_controller : MonoBehaviour
     }
     private void Start()
     {
+        XMLTest();
 
         // Set METER conrol to a value of 0 and change the label to JAM LEVELS 
         ui_controller.uiInstance.SetControlValue(2, "0");
@@ -406,7 +409,6 @@ public class puzzle_controller : MonoBehaviour
         gameInstructions[5].AddStep(8);
         gameInstructions[5].AddDependantSteps(5);
         gameInstructions[5].AddStep(2);
-  
     }
 
     public int GetGameInstructionCount()
@@ -422,5 +424,16 @@ public class puzzle_controller : MonoBehaviour
     public GameInstruction GetGameInstruction(int instructionID)
     {
         return gameInstructions[instructionID];
+    }
+
+    public void XMLTest()
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.Load("instructions.xml");
+
+        XmlNodeList nodeList;
+        XmlNode root = doc.DocumentElement;
+
+
     }
 }
