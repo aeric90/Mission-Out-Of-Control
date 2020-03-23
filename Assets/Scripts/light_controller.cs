@@ -9,6 +9,8 @@ public class light_controller : ParentControl
     private Sprite lightSprite;
     private Sprite shadowSprite;
 
+    public Sprite purple;
+    public Sprite purpleShadow;
     public Sprite green;
     public Sprite greenShadow;
     public Sprite blue;
@@ -58,8 +60,8 @@ public class light_controller : ParentControl
     {
         if(value == "1")
         {
-            // lightSprite = ;
-            // shadowSprite = ;
+            lightSprite = purple;
+            shadowSprite = purpleShadow;
         }
         if(value == "2")
         {

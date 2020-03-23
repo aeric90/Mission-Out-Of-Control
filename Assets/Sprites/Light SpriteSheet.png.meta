@@ -52,10 +52,10 @@ TextureImporter:
     second: Panel
   - first:
       213: 2364951811615364305
-    second: Off Shadow
+    second: Purple Shadow
   - first:
       213: 8251430727409962602
-    second: Off
+    second: Purple
   - first:
       213: 8290773529886966185
     second: Green Shadow
@@ -91,10 +91,10 @@ TextureImporter:
     second: Panel
   - first:
       213: -3105638777424169486
-    second: Off Shadow
+    second: Purple Shadow
   - first:
       213: -6636138625429154664
-    second: Off
+    second: Purple
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -287,12 +287,12 @@ TextureImporter:
       name: Icon
       rect:
         serializedVersion: 2
-        x: 722
+        x: 521
         y: 653
         width: 86
         height: 74
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.54408723, y: 0.5256199}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -431,7 +431,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Off Shadow
+      name: Purple Shadow
       rect:
         serializedVersion: 2
         x: 53
@@ -452,7 +452,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Off
+      name: Purple
       rect:
         serializedVersion: 2
         x: 232

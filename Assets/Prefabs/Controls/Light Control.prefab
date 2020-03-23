@@ -247,6 +247,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelText: {fileID: 5609017410000410887}
   lightObject: {fileID: 6962623257767971442}
+  purple: {fileID: 8251430727409962602, guid: f81bc8b591ae8d44489a00181f505716, type: 3}
+  purpleShadow: {fileID: 2364951811615364305, guid: f81bc8b591ae8d44489a00181f505716,
+    type: 3}
   green: {fileID: 4022400322290192599, guid: f81bc8b591ae8d44489a00181f505716, type: 3}
   greenShadow: {fileID: -906854870144047340, guid: f81bc8b591ae8d44489a00181f505716,
     type: 3}
@@ -259,8 +262,8 @@ MonoBehaviour:
   red: {fileID: 7548241936400856200, guid: f81bc8b591ae8d44489a00181f505716, type: 3}
   redShadow: {fileID: 4676997425656309644, guid: f81bc8b591ae8d44489a00181f505716,
     type: 3}
-  off: {fileID: 8251430727409962602, guid: f81bc8b591ae8d44489a00181f505716, type: 3}
-  offShadow: {fileID: 2364951811615364305, guid: f81bc8b591ae8d44489a00181f505716,
+  off: {fileID: 8251430727409962602, guid: 1fe0d2b30212791439ccfa0583a78a86, type: 3}
+  offShadow: {fileID: 2364951811615364305, guid: 1fe0d2b30212791439ccfa0583a78a86,
     type: 3}
 --- !u!1 &1959334855916758450
 GameObject:
