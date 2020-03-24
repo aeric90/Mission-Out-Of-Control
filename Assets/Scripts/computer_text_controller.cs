@@ -41,6 +41,12 @@ public class computer_text_controller : MonoBehaviour
         this.textBuffer += inputString;
     }
 
+    public void SetText(string inputString)
+    {
+        computerText.text = inputString;
+        textBuffer = inputString;
+    }
+
     public void ClearText()
     {
         computerText.text = "";

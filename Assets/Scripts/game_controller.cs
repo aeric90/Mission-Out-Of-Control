@@ -12,6 +12,8 @@ public class game_controller : MonoBehaviour
 
     private int currentInstruction = 0;
 
+    private string currentInstructionCaption = "";
+
     private void Awake()
     {
         if (gameInstance == null) { gameInstance = this; }
@@ -52,7 +54,7 @@ public class game_controller : MonoBehaviour
         bool instructionSucceeded = true;
         ui_controller.uiInstance.EnableConfirmButton(false);
         ui_controller.uiInstance.EnableControls(false);
-
+        ui_controller.uiInstance.SetComputerLine(currentInstructionCaption);
         GameInstruction current = puzzle_controller.puzzleInstance.GetGameInstruction(currentInstruction);
 
         // Loop through each step in the instruction and update the succeeded value.
@@ -80,6 +82,7 @@ public class game_controller : MonoBehaviour
         {
             ui_controller.uiInstance.AddComputerLine("\n\t\t\t INSTRUCTION INCOMPLETE");
             ui_controller.uiInstance.EnableConfirmButton(true);
+            StartCoroutine(PauseOnIncorrect());
         }
 
         ui_controller.uiInstance.EnableControls(true);
@@ -97,21 +100,20 @@ public class game_controller : MonoBehaviour
             ui_controller.uiInstance.ClearKeypads();
             ui_controller.uiInstance.ClearComputer();
 
-            string outPutText;
-            outPutText = (currentInstruction + 1) + " - " + puzzle_controller.puzzleInstance.GetGameInstructionTitle(currentInstruction);
+            currentInstructionCaption = (currentInstruction + 1) + " - " + puzzle_controller.puzzleInstance.GetGameInstructionTitle(currentInstruction);
 
             int stepCount = puzzle_controller.puzzleInstance.GetGameStepCount(currentInstruction);
 
             if (stepCount > 1)
             {
-                outPutText += " (" + stepCount + " STEPS)";
+                currentInstructionCaption += " (" + stepCount + " STEPS)";
             }
             else
             {
-                outPutText += " (" + stepCount + " STEP)";
+                currentInstructionCaption += " (" + stepCount + " STEP)";
             }
 
-            ui_controller.uiInstance.AddComputerLine(outPutText);
+            ui_controller.uiInstance.AddComputerLine(currentInstructionCaption);
         }
     }
 
@@ -119,7 +121,24 @@ public class game_controller : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
 
-        Debug.Log(ui_controller.uiInstance.GetComputerUpdatingStatus());
+        while (ui_controller.uiInstance.GetComputerUpdatingStatus())
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        yield return new WaitForSeconds(3.0f);
+
+        ui_controller.uiInstance.EnableConfirmButton(true);
+        currentInstruction++;
+        NextInstruction();
+
+        StopCoroutine(PauseOnCorrect());
+    }
+
+    private IEnumerator PauseOnIncorrect()
+    {
+        yield return new WaitForSeconds(1.0f);
+
         while (ui_controller.uiInstance.GetComputerUpdatingStatus())
         {
             yield return new WaitForSeconds(1.0f);
@@ -129,10 +148,8 @@ public class game_controller : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
 
         ui_controller.uiInstance.EnableConfirmButton(true);
-        currentInstruction++;
-        NextInstruction();
 
-        StopCoroutine(PauseOnCorrect());
+        StopCoroutine(PauseOnIncorrect());
     }
 
     public void GameOver(bool win)
