@@ -5,33 +5,24 @@ using UnityEngine.UI;
 
 public class MeterScript : ParentControl
 {
-    public Text valueText;
+    public TMPro.TextMeshProUGUI valueText;
     public GameObject meter;
     private Slider meterUI;
 
     private void Awake()
     {
+        meterUI = meter.GetComponent<Slider>();
+
         value = "0";
         maxValue = 4;
         minValue = 0;
         dependantSource = false;
         dependantTarget = true;
-
-        meterUI = meter.GetComponent<Slider>();
-    }
-
-    void Start()
-    {
-
     }
 
     private void Update()
     {
         meterUI.value = float.Parse(value);
-    }
-
-    public void UpdateUI()
-    {
         valueText.text = meterUI.value.ToString();
     }
 }

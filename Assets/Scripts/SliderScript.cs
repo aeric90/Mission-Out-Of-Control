@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static ParentControl;
+using System;
 
 public class SliderScript : ParentControl
 {
-    public Text valueText;
     public GameObject slider;
     private Slider sliderUI;
+
+    public TMPro.TextMeshProUGUI screenText;
 
     private void Awake()
     {
@@ -20,11 +21,6 @@ public class SliderScript : ParentControl
         sliderUI = slider.GetComponent<Slider>();
     }
 
-    void Start()
-    {
-
-    }
-
     private void LateUpdate()
     {
         sliderUI.interactable = this.GetActive();
@@ -32,7 +28,17 @@ public class SliderScript : ParentControl
 
     public void UpdateUI()
     {
-       this.valueChange = true;
-       this.value = valueText.text = sliderUI.value.ToString();
+        this.valueChange = true;
+
+        try
+        {
+            this.value = screenText.text = sliderUI.value.ToString();
+        }
+
+        catch (NullReferenceException e)
+        {
+            //
+        }
+        
     }
 }

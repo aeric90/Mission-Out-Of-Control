@@ -7,7 +7,7 @@ using static ParentControl;
 public class KnobScript : ParentControl
 {    
     public Transform handle;
-    public Text valueText;
+    public TMPro.TextMeshProUGUI screenText;
 
     private void Awake()
     {
@@ -46,7 +46,7 @@ public class KnobScript : ParentControl
                     r.z = 0.1f;
                     r.w = -1.0f;
 
-                    this.value = valueText.text = "1";
+                    this.value = screenText.text = "1";
                 }
 
                 else if (r.z < 0.9f && r.z > 0.0f && r.w < -0.4f)
@@ -54,7 +54,7 @@ public class KnobScript : ParentControl
                     r.z = 0.7f;
                     r.w = -0.8f;
 
-                    this.value = valueText.text = "2";
+                    this.value = screenText.text = "2";
                 }
 
                 else if (r.z < 1.0f && r.z > 0.0f && r.w < 0.0f)
@@ -62,7 +62,7 @@ public class KnobScript : ParentControl
                     r.z = 0.9f;
                     r.w = -0.3f;
 
-                    this.value = valueText.text = "3";
+                    this.value = screenText.text = "3";
                 }
 
                 else if (r.z > 0.9f && r.w > 0.0f)
@@ -70,7 +70,7 @@ public class KnobScript : ParentControl
                     r.z = 1.0f;
                     r.w = 0.2f;
 
-                    this.value = valueText.text = "4";
+                    this.value = screenText.text = "4";
                 }
 
                 else if (r.z < 0.0f && r.w < 0.0f)
@@ -78,7 +78,7 @@ public class KnobScript : ParentControl
                     r.z = -0.7f;
                     r.w = -0.7f;
 
-                    this.value = valueText.text = "5";
+                    this.value = screenText.text = "5";
                 }
 
                 handle.rotation = r;

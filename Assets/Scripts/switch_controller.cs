@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class switch_controller : ParentControl
 {
     public Image switchSprite;
+
+    public TMPro.TextMeshProUGUI screenText;
+
     public Sprite switchOn;
     public Sprite switchOff;
 
@@ -38,10 +41,12 @@ public class switch_controller : ParentControl
         if (value == "0")
         {
             value = "1";
+            screenText.text = "ON";
         }
         else if (value == "1")
         {
             value = "0";
+            screenText.text = "OFF";
         }
     }
 }
