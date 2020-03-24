@@ -9,6 +9,7 @@ public class keypad_controller : ParentControl
 
     private void Awake()
     {
+        controlType = "keypad";
         maxValue = 999;
         minValue = 0;
         dependantSource = true;
@@ -43,7 +44,7 @@ public class keypad_controller : ParentControl
         }
     }
 
-    private void ClearScreen()
+    public void ClearScreen()
     {
         this.value = "";
     }

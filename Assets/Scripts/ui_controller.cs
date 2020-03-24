@@ -115,4 +115,16 @@ public class ui_controller : MonoBehaviour
 
         return maxValue - minValue + 1;
     }
+
+    public void ClearKeypads()
+    {
+        for (int i = 0; i < controls.Length; i++)
+        { 
+            if(controls[i].GetComponent<ParentControl>().GetControlType() == "keypad")
+            {
+                controls[i].GetComponent<ParentControl>().ClearValue();
+            }
+        
+        }
+    }
 }

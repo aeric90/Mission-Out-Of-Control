@@ -5,6 +5,29 @@ using UnityEngine;
 using System.IO;
 using System.Xml;
 
+
+public class FileInstructions
+{
+    private string title;
+    private int difficulty;
+    private FileSteps[] fileSteps;
+    private FileSuccessTriggers[] fileSucessTriggers;
+}
+
+public class FileSteps
+{
+    private string[] controls;
+    private string defaultAnswer;
+    private string answerType;
+    private string answerValue;
+}
+
+public class FileSuccessTriggers
+{
+    private string function;
+    private string parameter;
+}
+
 // This class contains the relevant control and the expected answer
 public class GameStep
 {
@@ -355,8 +378,6 @@ public class puzzle_controller : MonoBehaviour
     }
     private void Start()
     {
-        XMLTest();
-
         // Set METER conrol to a value of 0 and change the label to JAM LEVELS 
         ui_controller.uiInstance.SetControlValue(2, "0");
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
@@ -429,7 +450,7 @@ public class puzzle_controller : MonoBehaviour
     public void XMLTest()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load("instructions.xml");
+        doc.Load("/assets/instructions.xml");
 
         XmlNodeList nodeList;
         XmlNode root = doc.DocumentElement;

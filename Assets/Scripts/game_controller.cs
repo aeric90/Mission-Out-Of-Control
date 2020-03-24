@@ -86,7 +86,8 @@ public class game_controller : MonoBehaviour
         }
         else
         {
-            if(currentInstruction > 0)
+            ui_controller.uiInstance.ClearKeypads();
+            if (currentInstruction > 0)
             {
                 ui_controller.uiInstance.ClearComputer();
             }

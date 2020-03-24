@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParentControl : MonoBehaviour
 {
-    protected string type;
+    protected string controlType;
 
     protected int maxValue;
     protected int minValue;
@@ -119,6 +119,16 @@ public class ParentControl : MonoBehaviour
     public bool GetDependantTarget()
     {
         return dependantTarget;
+    }
+
+    public string GetControlType()
+    {
+        return controlType;
+    }
+
+    virtual public void ClearValue()
+    {
+        this.value = "";
     }
 
 }
