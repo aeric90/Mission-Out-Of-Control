@@ -5,50 +5,50 @@ using UnityEngine;
 public class computer_text_controller : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI computerText;
-
     private string textBuffer = "";
-    private bool textUpdating = false;
-    private string inputString;
+    public bool textUpdating = false;
+
+    private void Start()
+    {
+        StartCoroutine(UpdateComputerText());
+    }
 
     IEnumerator UpdateComputerText()
     {
-        textUpdating = true;
-
-        while (textUpdating)
+        while (!game_controller.gameInstance.GetGameOver())
         {
-            for(int i = 0; i < inputString.Length; i++)
+            if (computerText.text != textBuffer)
             {
-                textBuffer += inputString[i];
-                computerText.text = textBuffer;
-                yield return new WaitForSeconds(0.10f);
-            }
-            
-            if(inputString == " CORRECT")
-            {
-                // Do nothing.
-            }
+                textUpdating = true;
 
+                for (int i = computerText.text.Length; i < textBuffer.Length; i++)
+                {
+                    computerText.text += textBuffer[i];
+                    yield return new WaitForSeconds(0.05f);
+                }
+            }
             else
             {
-                ui_controller.uiInstance.EnableConfirmButton(true);
+                textUpdating = false;
             }
 
-            textUpdating = false;
+            yield return null;
         }
     }
 
     public void AddText(string inputString)
     {
-        this.inputString = inputString;
-        StartCoroutine(UpdateComputerText());
+        this.textBuffer += inputString;
     }
 
-    public bool GetTextUpdating()
-    {
-        return textUpdating;
-    }
     public void ClearText()
     {
+        computerText.text = "";
         textBuffer = "";
+    }
+
+    public bool GetTextUpdateStatus()
+    {
+        return textUpdating;
     }
 }

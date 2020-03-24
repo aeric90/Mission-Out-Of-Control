@@ -442,6 +442,11 @@ public class puzzle_controller : MonoBehaviour
         return gameInstructions[instructionID].GetTitle();
     }
 
+    public int GetGameStepCount(int instructionID)
+    {
+        return gameInstructions[instructionID].GetStepCount();
+    }
+
     public GameInstruction GetGameInstruction(int instructionID)
     {
         return gameInstructions[instructionID];
