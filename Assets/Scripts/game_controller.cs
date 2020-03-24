@@ -20,7 +20,6 @@ public class game_controller : MonoBehaviour
     void Start()
     {
         StartCoroutine(CountDown());
-
         NextInstruction();
     }
 
@@ -51,27 +50,36 @@ public class game_controller : MonoBehaviour
     public void ConfirmSteps()
     {
         bool instructionSucceeded = true;
-
+        ui_controller.uiInstance.EnableConfirmButton(false);
         ui_controller.uiInstance.EnableControls(false);
 
-       GameInstruction current = puzzle_controller.puzzleInstance.GetGameInstruction(currentInstruction);
+        GameInstruction current = puzzle_controller.puzzleInstance.GetGameInstruction(currentInstruction);
 
         // Loop through each step in the instruction and update the succeeded value.
         for (int i = 0; i < current.GetStepCount(); i++)
         {
             instructionSucceeded = current.CheckStep(i, ui_controller.uiInstance.GetControlValue(current.GetStepControl(i)));
-            if(!instructionSucceeded) { break; }
+            if (instructionSucceeded)
+            {
+                ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- " + " CORRECT");
+            }
+            else 
+            {
+                ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- " + " INCORRECT");
+                break; 
+            }
         }
 
         if (instructionSucceeded) 
         {
             if (current.CheckSuccessTrigger()) current.TriggerSuccess();
-            ui_controller.uiInstance.AddComputerLine(" CORRECT", false);
+            ui_controller.uiInstance.AddComputerLine("\n\t\t\t INSTRUCTION COMPLETE");
             StartCoroutine(PauseOnCorrect());
         }
         else
         {
-            ui_controller.uiInstance.AddComputerLine(" INCORRECT\n\t WAITING FOR INPUT >", false);
+            ui_controller.uiInstance.AddComputerLine("\n\t\t\t INSTRUCTION INCOMPLETE");
+            ui_controller.uiInstance.EnableConfirmButton(true);
         }
 
         ui_controller.uiInstance.EnableControls(true);
@@ -87,22 +95,40 @@ public class game_controller : MonoBehaviour
         else
         {
             ui_controller.uiInstance.ClearKeypads();
-            if (currentInstruction > 0)
-            {
-                ui_controller.uiInstance.ClearComputer();
-            }
+            ui_controller.uiInstance.ClearComputer();
+
             string outPutText;
             outPutText = (currentInstruction + 1) + " - " + puzzle_controller.puzzleInstance.GetGameInstructionTitle(currentInstruction);
-            outPutText += "\n";
-            outPutText += "\t WAITING FOR INPUT >";
-            ui_controller.uiInstance.AddComputerLine(outPutText, false);
+
+            int stepCount = puzzle_controller.puzzleInstance.GetGameStepCount(currentInstruction);
+
+            if (stepCount > 1)
+            {
+                outPutText += " (" + stepCount + " STEPS)";
+            }
+            else
+            {
+                outPutText += " (" + stepCount + " STEP)";
+            }
+
+            ui_controller.uiInstance.AddComputerLine(outPutText);
         }
     }
 
     private IEnumerator PauseOnCorrect()
     {
-        yield return new WaitForSeconds(3.8f);
+        yield return new WaitForSeconds(1.0f);
 
+        Debug.Log(ui_controller.uiInstance.GetComputerUpdatingStatus());
+        while (ui_controller.uiInstance.GetComputerUpdatingStatus())
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        Debug.Log("Waiting 3 seconds");
+        yield return new WaitForSeconds(3.0f);
+
+        ui_controller.uiInstance.EnableConfirmButton(true);
         currentInstruction++;
         NextInstruction();
 
@@ -115,11 +141,11 @@ public class game_controller : MonoBehaviour
 
         if (win)
         {
-            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU WIN!", false);
+            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU WIN!");
         }
         else
         {
-            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU LOST!", false);
+            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU LOST!");
         }
     }
 

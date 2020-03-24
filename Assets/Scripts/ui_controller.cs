@@ -48,12 +48,14 @@ public class ui_controller : MonoBehaviour
         computerText.GetComponent<computer_text_controller>().ClearText();
     }
 
-    public void AddComputerLine(string lineText, bool newLine)
+    public void AddComputerLine(string lineText)
     {
-        EnableConfirmButton(false);
-
-        if(newLine) lineText += "\n";
         computerText.GetComponent<computer_text_controller>().AddText(lineText);
+    }
+
+    public bool GetComputerUpdatingStatus()
+    {
+        return computerText.GetComponent<computer_text_controller>().GetTextUpdateStatus();
     }
 
     public void ConfirmPressed()
