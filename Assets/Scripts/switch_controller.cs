@@ -15,7 +15,7 @@ public class switch_controller : ParentControl
 
     private void Awake()
     {
-        value = "0";
+        value = "1";
         minValue = 0;
         maxValue = 1;
         dependantSource = true;

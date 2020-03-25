@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class button_controller : ParentControl
 {
-    public Text onOff;
+    public TMPro.TextMeshProUGUI screenText;
 
     void Awake()
     {
@@ -14,7 +14,7 @@ public class button_controller : ParentControl
         minValue = 0;
         dependantSource = true;
         dependantTarget = true;
-        onOff.text = "OFF";
+        screenText.text = "OFF";
     }
 
     public void OnButtonPress()
@@ -22,13 +22,13 @@ public class button_controller : ParentControl
         if(value == "0")
         {
             value = "1";
-            onOff.text = "ON";
+            screenText.text = "ON";
         }
 
         else if (value == "1")
         {
             value = "0";
-            onOff.text = "OFF";
+            screenText.text = "OFF";
         }
     }
 }
