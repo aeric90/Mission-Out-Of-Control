@@ -8,9 +8,10 @@ public class game_controller : MonoBehaviour
 
     public int gameTimer;
 
+    private bool confirmPressed = false;
     private bool gameOver = false;
 
-    private int currentInstruction = 0;
+    private int currentInstruction = -1;
 
     private string currentInstructionCaption = "";
 
@@ -21,16 +22,61 @@ public class game_controller : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(GameLoop());
+    }
+
+    private IEnumerator GameLoop()
+    {
         StartCoroutine(CountDown());
         NextInstruction();
+
+        while (!gameOver)
+        {
+            if (confirmPressed)
+            { 
+                ui_controller.uiInstance.EnableConfirmButton(false);
+                ui_controller.uiInstance.EnableControls(false);
+                ui_controller.uiInstance.SetComputerLine(currentInstructionCaption);
+
+                bool instructionComplete = ConfirmSteps();
+                Debug.Log(instructionComplete);
+                yield return new WaitForSeconds(1.0f);
+
+                while (ui_controller.uiInstance.GetComputerUpdatingStatus())
+                {
+                    yield return null;
+                }
+
+                yield return new WaitForSeconds(3.0f);
+
+                if (instructionComplete)
+                {
+                    Debug.Log("Moving to next instruction");
+                    NextInstruction();
+                }
+
+                yield return new WaitForSeconds(1.0f);
+
+                while (ui_controller.uiInstance.GetComputerUpdatingStatus())
+                {
+                    yield return null;
+                }
+
+                ui_controller.uiInstance.EnableControls(true);
+                ui_controller.uiInstance.EnableConfirmButton(true);
+                confirmPressed = false;
+            }
+
+            yield return null;
+        }
+
     }
 
     private IEnumerator CountDown()
     {
-
-        while(!gameOver)
+        while (!gameOver)
         {
-            if(gameTimer<=0)
+            if (gameTimer <= 0)
             {
                 GameOver(false);
             }
@@ -49,15 +95,12 @@ public class game_controller : MonoBehaviour
         return timerMinutes.ToString("00") + ":" + timerSeconds.ToString("00");
     }
 
-    public void ConfirmSteps()
+    public bool ConfirmSteps()
     {
         bool instructionSucceeded = true;
-        ui_controller.uiInstance.EnableConfirmButton(false);
-        ui_controller.uiInstance.EnableControls(false);
-        ui_controller.uiInstance.SetComputerLine(currentInstructionCaption);
+
         GameInstruction current = puzzle_controller.puzzleInstance.GetGameInstruction(currentInstruction);
 
-        // Loop through each step in the instruction and update the succeeded value.
         for (int i = 0; i < current.GetStepCount(); i++)
         {
             instructionSucceeded = current.CheckStep(i, ui_controller.uiInstance.GetControlValue(current.GetStepControl(i)));
@@ -76,20 +119,18 @@ public class game_controller : MonoBehaviour
         {
             if (current.CheckSuccessTrigger()) current.TriggerSuccess();
             ui_controller.uiInstance.AddComputerLine("\n\t\t\t INSTRUCTION COMPLETE");
-            StartCoroutine(PauseOnCorrect());
         }
         else
         {
             ui_controller.uiInstance.AddComputerLine("\n\t\t\t INSTRUCTION INCOMPLETE");
-            ui_controller.uiInstance.EnableConfirmButton(true);
-            StartCoroutine(PauseOnIncorrect());
         }
 
-        ui_controller.uiInstance.EnableControls(true);
+        return instructionSucceeded;
     }
 
     private void NextInstruction()
     {
+        currentInstruction++;
 
         if (currentInstruction >= puzzle_controller.puzzleInstance.GetGameInstructionCount())
         {
@@ -117,41 +158,6 @@ public class game_controller : MonoBehaviour
         }
     }
 
-    private IEnumerator PauseOnCorrect()
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        while (ui_controller.uiInstance.GetComputerUpdatingStatus())
-        {
-            yield return new WaitForSeconds(1.0f);
-        }
-
-        yield return new WaitForSeconds(3.0f);
-
-        ui_controller.uiInstance.EnableConfirmButton(true);
-        currentInstruction++;
-        NextInstruction();
-
-        StopCoroutine(PauseOnCorrect());
-    }
-
-    private IEnumerator PauseOnIncorrect()
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        while (ui_controller.uiInstance.GetComputerUpdatingStatus())
-        {
-            yield return new WaitForSeconds(1.0f);
-        }
-
-        Debug.Log("Waiting 3 seconds");
-        yield return new WaitForSeconds(3.0f);
-
-        ui_controller.uiInstance.EnableConfirmButton(true);
-
-        StopCoroutine(PauseOnIncorrect());
-    }
-
     public void GameOver(bool win)
     {
         gameOver = true;
@@ -171,4 +177,8 @@ public class game_controller : MonoBehaviour
         return gameOver;
     }
 
+    public void SetConfirmPressed()
+    {
+        confirmPressed = true;
+    }
 }

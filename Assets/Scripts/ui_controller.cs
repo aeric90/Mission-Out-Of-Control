@@ -65,7 +65,7 @@ public class ui_controller : MonoBehaviour
 
     public void ConfirmPressed()
     {
-        game_controller.gameInstance.ConfirmSteps();
+        game_controller.gameInstance.SetConfirmPressed();
     }
 
     public void EnableControls(bool setting)
