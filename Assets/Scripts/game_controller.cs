@@ -39,37 +39,22 @@ public class game_controller : MonoBehaviour
                 ui_controller.uiInstance.SetComputerLine(currentInstructionCaption);
 
                 bool instructionComplete = ConfirmSteps();
-                Debug.Log(instructionComplete);
+
                 yield return new WaitForSeconds(1.0f);
-
-                while (ui_controller.uiInstance.GetComputerUpdatingStatus())
-                {
-                    yield return null;
-                }
-
+                while (ui_controller.uiInstance.GetComputerUpdatingStatus()) yield return null;
                 yield return new WaitForSeconds(3.0f);
 
-                if (instructionComplete)
-                {
-                    Debug.Log("Moving to next instruction");
-                    NextInstruction();
-                }
+                if (instructionComplete) NextInstruction();
 
                 yield return new WaitForSeconds(1.0f);
-
-                while (ui_controller.uiInstance.GetComputerUpdatingStatus())
-                {
-                    yield return null;
-                }
+                while (ui_controller.uiInstance.GetComputerUpdatingStatus()) yield return null;
 
                 ui_controller.uiInstance.EnableControls(true);
                 ui_controller.uiInstance.EnableConfirmButton(true);
                 confirmPressed = false;
             }
-
             yield return null;
         }
-
     }
 
     private IEnumerator CountDown()
