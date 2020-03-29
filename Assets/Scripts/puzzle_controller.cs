@@ -45,6 +45,8 @@ public class GameStep
     {
         this.controlID = controlID;
         this.answer = answer;
+
+        Debug.Log(controlID + " " + this.answer);
     }
 
     public int GetControlID()
@@ -123,6 +125,10 @@ public class GameInstruction
     public void AddStep(int controlID)
     {
         instructionSteps.Add(new GameStep(controlID));
+    }
+    public void AddStep(int controlID, string answer)
+    {
+        instructionSteps.Add(new GameStep(controlID, answer));
     }
     public int AddStep(int controlID1, int controlID2)
     {
@@ -370,7 +376,14 @@ public class GameInstruction
 public class puzzle_controller : MonoBehaviour
 {
     public static puzzle_controller puzzleInstance;
+
     private List<GameInstruction> gameInstructions = new List<GameInstruction>();
+
+    private string modelNo;
+    private string engineType;
+    private string engineNo;
+    private string navSystem;
+    private string navPlanet;
 
     private void Awake()
     {
@@ -378,6 +391,14 @@ public class puzzle_controller : MonoBehaviour
     }
     private void Start()
     {
+        engineType = "Pulse Ion";
+        engineNo = "4";
+        navSystem = "POLLUX";
+        navPlanet = "ALPHA IV";
+
+        ui_controller.uiInstance.SetScreenEngineText(engineType);
+        ui_controller.uiInstance.SetScreenEngineNoText(engineNo);
+
         // Set METER conrol to a value of 0 and change the label to JAM LEVELS 
         ui_controller.uiInstance.SetControlValue(2, "0");
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
@@ -395,15 +416,15 @@ public class puzzle_controller : MonoBehaviour
         // 1st Instruction
         Debug.Log("INSTRUCTION 1");
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
-        gameInstructions[0].AddStep(3);
+        gameInstructions[0].AddStep(3, "0");
 
         // 2nd Instruction
         Debug.Log("INSTRUCTION 2");
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
         gameInstructions[1].AddStep(8);
         gameInstructions[1].AddDependantSteps(5);
-        gameInstructions[1].AddSuccessTrigger("UpdateSystem", "POLLUX");
-        gameInstructions[1].AddSuccessTrigger("UpdatePlanet", "ALPHA IV");
+        gameInstructions[1].AddSuccessTrigger("UpdateSystem", navSystem);
+        gameInstructions[1].AddSuccessTrigger("UpdatePlanet", navPlanet);
 
         Debug.Log("INSTRUCTION 3");
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));

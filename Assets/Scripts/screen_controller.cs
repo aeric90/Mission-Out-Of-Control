@@ -5,8 +5,8 @@ using UnityEngine;
 public class screen_controller : MonoBehaviour
 {
     public string modelText = "3ZF94";
-    public string engineText = "Pulse Ion";
-    public string noEngineText = "4";
+    public string engineText = "";
+    public string noEngineText = "";
     public string systemText = "";
     public string planetText = "";
 
@@ -25,6 +25,16 @@ public class screen_controller : MonoBehaviour
         output += "\tSystem: " + (planetText == "" ? "UNKNOWN" : planetText) + "\n";
 
         screenText.text = output;
+    }
+
+    public void SetEngineText(string engineText)
+    {
+        this.engineText = engineText;
+    }
+
+    public void SetNoEngineText(string noEngineText)
+    {
+        this.noEngineText = noEngineText;
     }
 
     public void SetSystemText(string systemText)

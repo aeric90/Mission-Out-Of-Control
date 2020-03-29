@@ -47,27 +47,22 @@ public class ui_controller : MonoBehaviour
     {
         computerText.GetComponent<computer_text_controller>().ClearText();
     }
-
     public void AddComputerLine(string lineText)
     {
         computerText.GetComponent<computer_text_controller>().AddText(lineText);
     }
-
     public void SetComputerLine(string lineText)
     {
         computerText.GetComponent<computer_text_controller>().SetText(lineText);
     }
-
     public bool GetComputerUpdatingStatus()
     {
         return computerText.GetComponent<computer_text_controller>().GetTextUpdateStatus();
     }
-
     public void ConfirmPressed()
     {
         game_controller.gameInstance.SetConfirmPressed();
     }
-
     public void EnableControls(bool setting)
     {
         for(int i = 0; i < controls.Length; i++)
@@ -75,27 +70,22 @@ public class ui_controller : MonoBehaviour
             controls[i].GetComponent<ParentControl>().SetActive(setting);
         }
     }
-
     public void SetConnectedControls(int controlID1, int controlID2, string type)
     {
         controls[controlID1].GetComponent<ParentControl>().SetConnectedControl(controlID2, type);
     }
-
     public int GetControlMaxValue(int controlID)
     {
         return controls[controlID].GetComponent<ParentControl>().GetMaxValue();
     }
-
     public int GetControlMinValue(int controlID)
     {
         return controls[controlID].GetComponent<ParentControl>().GetMinValue();
     }
-
     public string GetControlRandomAnswer(int controlID)
     {
         return controls[controlID].GetComponent<ParentControl>().GetRandomAnswer();
     }
-
     public void SetScreenPlanetText(string planetText)
     {
         screenControl.GetComponent<screen_controller>().SetPlanetText(planetText);
@@ -104,17 +94,22 @@ public class ui_controller : MonoBehaviour
     {
         screenControl.GetComponent<screen_controller>().SetSystemText(systemText);
     }
-
+    public void SetScreenEngineText(string engineText)
+    {
+        screenControl.GetComponent<screen_controller>().SetEngineText(engineText);
+    }
+    public void SetScreenEngineNoText(string engingNoText)
+    {
+        screenControl.GetComponent<screen_controller>().SetNoEngineText(engingNoText);
+    }
     public void EnableConfirmButton(bool value)
     {
         confirmButton.interactable = value;
     }
-        
     public bool GetControlDependantTarget(int controlID)
     {
         return controls[controlID].GetComponent<ParentControl>().GetDependantTarget();
     }
-
     public int GetControlRange(int controlID)
     {
         int minValue = controls[controlID].GetComponent<ParentControl>().GetMinValue();
@@ -122,7 +117,6 @@ public class ui_controller : MonoBehaviour
 
         return maxValue - minValue + 1;
     }
-
     public void ClearKeypads()
     {
         for (int i = 0; i < controls.Length; i++)
@@ -133,5 +127,31 @@ public class ui_controller : MonoBehaviour
             }
         
         }
+    }
+    public int GetRandomControlOfType(string[] types)
+    {
+        int controlID = -1;
+        List<int> checkedControls = new List<int>();
+
+        do
+        {
+            controlID = Random.Range(0, controls.Length);
+
+            if (!checkedControls.Contains(controlID))
+            {
+                for (int i = 0; i < types.Length; i++)
+                {
+                    if (controls[controlID].GetComponent<ParentControl>().GetControlType() == types[i])
+                    {
+                        return controlID;
+                    }
+                }
+
+                checkedControls.Add(controlID);
+            }
+
+        } while (checkedControls.Count >= GetControlsCount());
+
+        return controlID;
     }
 }
