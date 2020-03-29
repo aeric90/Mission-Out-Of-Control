@@ -22,6 +22,7 @@ public class KnobScript : ParentControl
         r.z = 0.1f;
         r.w = -1.0f;
 
+        controlType = "knob";
         maxValue = 5;
         minValue = 1;
         dependantSource = true;

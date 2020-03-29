@@ -13,6 +13,7 @@ public class SliderScript : ParentControl
 
     private void Awake()
     {
+        controlType = "slider";
         value = "1";
         maxValue = 5;
         minValue = 1;

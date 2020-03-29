@@ -69,6 +69,11 @@ public class ParentControl : MonoBehaviour
         connectionType = type;
     }
 
+    public string GetLabel()
+    {
+        return labelText.text;
+    }
+
     public void SetLabel(string label)
     {
         labelText.text = label;

@@ -24,6 +24,7 @@ public class light_controller : ParentControl
 
     private void Awake()
     {
+        controlType = "light";
         maxValue = 5;
         minValue = 1;
         dependantSource = false;

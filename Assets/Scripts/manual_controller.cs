@@ -8,35 +8,24 @@ using HtmlAgilityPack;
 
 public class manual_controller : MonoBehaviour
 {
+	private HtmlDocument manualTemplate;
+
 	private void Start()
 	{
-		//SaveHtmlFile();
+		manualTemplate = new HtmlDocument();
+		manualTemplate.Load(@".\Assets\HTML\Beta Test Manual.html");
 
-		#region example
 
-		string path = @".\Assets\HTML\Beta Test Manual.html";
+		string path = @".\Assets\HTML\manual_output.test.html";
 
-		var doc = new HtmlDocument();
-		doc.Load(path);
+		PopulateInstruction0();
 
-		var engineTable = doc.DocumentNode.SelectSingleNode("//body/table");
+		manualTemplate.Save(path);
 
-		HtmlNodeCollection engineTableRows = engineTable.ChildNodes;
-
-		foreach (var row in engineTableRows)
-		{
-			if (row.NodeType == HtmlNodeType.Element)
-			{
-				HtmlNodeCollection engingTableEntries = row.ChildNodes;
-
-				foreach (var entry in engineTableRows)
-				{
-					Debug.Log(entry.OuterHtml);
-				}
-			}
-		}
-
-		#endregion
+		/*
+		var test = doc.DocumentNode.SelectSingleNode("//div").Attributes["id"].Value;		   
+		Debug.Log(test);
+		*/
 	}
 
 	private static void SaveHtmlFile()
@@ -57,5 +46,35 @@ public class manual_controller : MonoBehaviour
 		htmlDoc.Save(@".\Assets\HTML\test.html");
 	}
 
+	private void PopulateInstruction0()
+	{
+		int engineCount = puzzle_controller.puzzleInstance.GetEngineCount();
+
+		for (int i = 0; i < engineCount; i++)
+		{
+			int engineNoCount = puzzle_controller.puzzleInstance.GetEngineNoCount(i);
+
+			for (int j = 0; j < engineNoCount; j++)
+			{
+				string engineNo = puzzle_controller.puzzleInstance.GetEngineNo(i, j);
+				Debug.Log("//*[@id=\"e" + i + "n" + j + "\"]/*[@id=\"control\"]");
+				HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"e" + i + "n" + engineNo + "\"]/*[@id=\"control\"]");
+
+				int controlID = -1;
+
+				if(puzzle_controller.puzzleInstance.EngineMatch(i, j))
+				{
+					GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
+					controlID = instruction.GetStepControl(0);
+				}
+				else
+				{
+					controlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "switch", "button" });
+				}
+
+				engineNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID);
+			}
+		}
+	}
 
 }

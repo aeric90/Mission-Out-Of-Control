@@ -28,6 +28,7 @@ public class FileSuccessTriggers
     private string parameter;
 }
 
+
 // This class contains the relevant control and the expected answer
 public class GameStep
 {
@@ -373,6 +374,34 @@ public class GameInstruction
     }
 }
 
+public struct Engine
+{
+    public string engineType;
+    public int[] engineNo;
+
+    public Engine(string engineType, int[] engineNos)
+    {
+        this.engineType = engineType;
+        this.engineNo = engineNos;
+    }
+
+    public int GetEngineNoCount()
+    {
+        return engineNo.Length;
+    }
+
+    public int GetEngineNo(int engineNoIndex)
+    {
+        return engineNo[engineNoIndex];
+    }
+
+    public string GetEngineType()
+    {
+        return engineType;
+    }
+}
+
+
 public class puzzle_controller : MonoBehaviour
 {
     public static puzzle_controller puzzleInstance;
@@ -380,8 +409,11 @@ public class puzzle_controller : MonoBehaviour
     private List<GameInstruction> gameInstructions = new List<GameInstruction>();
 
     private string modelNo;
-    private string engineType;
-    private string engineNo;
+
+    private List<Engine> engineList = new List<Engine>();
+
+    private int engineID, engineNoID;
+
     private string navSystem;
     private string navPlanet;
 
@@ -391,13 +423,13 @@ public class puzzle_controller : MonoBehaviour
     }
     private void Start()
     {
-        engineType = "Pulse Ion";
-        engineNo = "4";
+        InitializeEngineList();
+        InitializeEngines();
+        ui_controller.uiInstance.SetScreenEngineText(engineList[engineID].GetEngineType());
+        ui_controller.uiInstance.SetScreenEngineNoText(engineList[engineID].GetEngineNo(engineNoID).ToString());
+
         navSystem = "POLLUX";
         navPlanet = "ALPHA IV";
-
-        ui_controller.uiInstance.SetScreenEngineText(engineType);
-        ui_controller.uiInstance.SetScreenEngineNoText(engineNo);
 
         // Set METER conrol to a value of 0 and change the label to JAM LEVELS 
         ui_controller.uiInstance.SetControlValue(2, "0");
@@ -453,6 +485,19 @@ public class puzzle_controller : MonoBehaviour
         gameInstructions[5].AddStep(2);
     }
 
+    private void InitializeEngineList()
+    {
+        engineList.Add(new Engine("H3 THRUST", new int[] { 2, 3 }));
+        engineList.Add(new Engine("PULSE ION", new int[] { 1, 2, 4 }));
+        engineList.Add(new Engine("FUSION DRIVE", new int[] { 1, 2, 4 }));
+    }
+
+    private void InitializeEngines()
+    {
+        engineID = Random.Range(0, engineList.Count);
+        engineNoID = Random.Range(0, engineList[engineID].GetEngineNoCount());
+    }
+
     public int GetGameInstructionCount()
     {
         return gameInstructions.Count;
@@ -482,5 +527,26 @@ public class puzzle_controller : MonoBehaviour
         XmlNode root = doc.DocumentElement;
 
 
+    }
+
+    public int GetEngineCount()
+    {
+        return engineList.Count;
+    }
+
+    public int GetEngineNoCount(int engineID)
+    {
+        return engineList[engineID].GetEngineNoCount();
+    }
+
+    public string GetEngineNo(int engineID, int engineNoID)
+    {
+        return engineList[engineID].GetEngineNo(engineNoID).ToString();
+    }
+
+    public bool EngineMatch(int engineID, int engineNoID)
+    {
+        if (this.engineID == engineID && this.engineNoID == engineNoID) return true;
+        return false;
     }
 }

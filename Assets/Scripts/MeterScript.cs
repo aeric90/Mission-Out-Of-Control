@@ -13,6 +13,7 @@ public class MeterScript : ParentControl
     {
         meterUI = meter.GetComponent<Slider>();
 
+        controlType = "meter";
         value = "0";
         maxValue = 4;
         minValue = 0;

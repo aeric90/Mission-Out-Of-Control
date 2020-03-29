@@ -63,8 +63,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Model#: 3ZF94\nEngines: Pulse Ion\nNo. of Engines: 4\nLocation: \n\tSystem:
-    UNKNOWN\n\tPlanet: UNKNOWN\n"
+  m_text: '
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -133,12 +134,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 2680752759971359626}
-    characterCount: 96
+    characterCount: 1
     spriteCount: 0
-    spaceCount: 17
-    wordCount: 14
+    spaceCount: 1
+    wordCount: 1
     linkCount: 0
-    lineCount: 6
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -244,8 +245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelText: 3ZF94
-  engineText: Pulse Ion
-  noEngineText: 4
+  engineText: 
+  noEngineText: 
   systemText: 
   planetText: 
   screenText: {fileID: 2680752759971359626}

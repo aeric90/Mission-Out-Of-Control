@@ -876,6 +876,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button Control
       objectReference: {fileID: 0}
+    - target: {fileID: 5609017410000410887, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
+        type: 3}
+      propertyPath: m_text
+      value: BUTTON 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5609017410000410887, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5609017410000410887, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5609017410000410887, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7902239876099785924, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -2478,6 +2498,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Button Control
+      objectReference: {fileID: 0}
+    - target: {fileID: 5609017410000410887, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
+        type: 3}
+      propertyPath: m_text
+      value: BUTTON 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5609017410000410887, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5609017410000410887, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5609017410000410887, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7902239876099785924, guid: b15ed80052eadb84a90bdc4e8dc7c05d,
         type: 3}
