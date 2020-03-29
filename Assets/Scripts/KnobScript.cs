@@ -18,7 +18,6 @@ public class KnobScript : ParentControl
 
         Quaternion r = Quaternion.AngleAxis(angle + 135f, Vector3.forward);
 
-        value = "1";
         r.z = 0.1f;
         r.w = -1.0f;
 
@@ -27,6 +26,39 @@ public class KnobScript : ParentControl
         minValue = 1;
         dependantSource = true;
         dependantTarget = true;
+    }
+
+    override public void SetValue(string value)
+    {
+        this.value = screenText.text = value;
+
+        Quaternion r = Quaternion.AngleAxis(135f, Vector3.forward);
+
+        switch (value)
+        {
+            case "1":
+                r.z = 0.1f;
+                r.w = -1.0f;
+                break;
+            case "2":
+                r.z = 0.7f;
+                r.w = -0.8f;
+                break;
+            case "3":
+                r.z = 0.9f;
+                r.w = -0.3f;
+                break;
+            case "4":
+                r.z = 1.0f;
+                r.w = 0.2f;
+                break;
+            case "5":
+                r.z = -0.7f;
+                r.w = -0.7f;
+                break;
+        }
+
+        handle.rotation = r;
     }
 
     public void OnKnobTurn()

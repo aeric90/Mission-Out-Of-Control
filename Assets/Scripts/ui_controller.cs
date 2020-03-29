@@ -140,10 +140,8 @@ public class ui_controller : MonoBehaviour
             {
                 for (int i = 0; i < types.Length; i++)
                 {
-                    Debug.Log(types[i]);
+
                     string controlType = controls[controlID].GetComponent<ParentControl>().GetControlType();
-                    Debug.Log(controlType);
-                    Debug.Log(controlType == types[i]);
 
                     if (controlType == types[i])
                     {
@@ -157,6 +155,35 @@ public class ui_controller : MonoBehaviour
         } while (checkedControls.Count <= GetControlsCount());
 
         return - 1;
+    }
+
+    public int GetRandomControlOfType(string[] types, int notControlID)
+    {
+        List<int> checkedControls = new List<int>();
+
+        do
+        {
+            int controlID = Random.Range(0, controls.Length);
+
+            if (!checkedControls.Contains(controlID))
+            {
+                for (int i = 0; i < types.Length; i++)
+                {
+
+                    string controlType = controls[controlID].GetComponent<ParentControl>().GetControlType();
+
+                    if (controlType == types[i] && controlID != notControlID)
+                    {
+                        return controlID;
+                    }
+                }
+
+                checkedControls.Add(controlID);
+            }
+
+        } while (checkedControls.Count <= GetControlsCount());
+
+        return -1;
     }
 
     public string GetControlLabel(int controlID)

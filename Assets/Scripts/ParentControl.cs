@@ -84,7 +84,7 @@ public class ParentControl : MonoBehaviour
         return value;
     }
 
-    public void SetValue(string input)
+    virtual public void SetValue(string input)
     {
         value = input;
     }

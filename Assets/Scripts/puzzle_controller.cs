@@ -62,6 +62,10 @@ public class GameStep
     {
         this.answer = answer;
     }
+    public string GetAnswer()
+    {
+        return answer;
+    }
     virtual public bool CheckStep(string controlValue)
     {
         return controlValue == answer;
@@ -69,6 +73,10 @@ public class GameStep
     virtual public void AddAnswers(string answer1, string answer2)
     {
 
+    }
+    virtual public int GetDependantControlID()
+    {
+        return -1;
     }
 }
 public struct DependantValues
@@ -91,6 +99,10 @@ public class DependantGameStep : GameStep
         this.dependantControlID = dependantControlID;
     }
 
+    override public int GetDependantControlID()
+    {
+        return dependantControlID;
+    }
     override public void AddAnswers(string answer1, string answer2)
     {
         answerMapping.Add(new DependantValues(answer1, answer2));
@@ -217,6 +229,29 @@ public class GameInstruction
                 break;
         }
     }
+    public void AddDependantSteps(int controlID1, int controlID2, string dependantType)
+    {
+        int control2Range = ui_controller.uiInstance.GetControlRange(controlID2);
+
+        switch (dependantType)
+        {
+            case "mapping_up":
+                GenerateMappingDependancy(controlID1, controlID2, false);
+                break;
+            case "mapping_down":
+                GenerateMappingDependancy(controlID1, controlID2, true);
+                break;
+            case "range":
+                GenerateRangeDependancy(controlID1, controlID2);
+                break;
+            case "random":
+                GenerateRandomDependancy(controlID1, controlID2);
+                break;
+            case "replacement":
+                GenerateReplacemnentDependancy(controlID1, controlID2);
+                break;
+        }
+    }
     public void AddDependantAnswer(int stepID, string answer1, string answer2)
     {
         instructionSteps[stepID].AddAnswers(answer1, answer2);
@@ -228,6 +263,11 @@ public class GameInstruction
     public int GetStepControl(int stepID)
     {
         return instructionSteps[stepID].GetControlID();
+    }
+
+    public string GetAnswer(int stepID)
+    {
+        return instructionSteps[stepID].GetAnswer();
     }
     public bool CheckStep(int stepID, string controlValue)
     {
@@ -277,6 +317,34 @@ public class GameInstruction
             int answer2 = 0;
 
             if(direction == 0)
+            {
+                answer2 = control2max - value1;
+            }
+            else
+            {
+                answer2 = control2min + value1;
+            }
+            Debug.Log("ADDING ANSWER WHERE " + answer1.ToString() + " = " + answer2.ToString());
+            AddDependantAnswer(dependantStepID, answer1.ToString(), answer2.ToString());
+        }
+    }
+    private void GenerateMappingDependancy(int controlID1, int controlID2, bool reverse)
+    {
+        Debug.Log("MAPPING DEPENDANCY BEWTEEN " + controlID1 + " AND " + controlID2);
+        int dependantStepID = AddStep(controlID1, controlID2);
+
+        int control1min = ui_controller.uiInstance.GetControlMinValue(controlID1);
+        int control1max = ui_controller.uiInstance.GetControlMaxValue(controlID1);
+        int control2min = ui_controller.uiInstance.GetControlMinValue(controlID2);
+        int control2max = ui_controller.uiInstance.GetControlMaxValue(controlID2);
+
+
+        for (int value1 = 0; value1 < control1max; value1++)
+        {
+            int answer1 = control1min + value1;
+            int answer2 = 0;
+
+            if (reverse)
             {
                 answer2 = control2max - value1;
             }
@@ -352,7 +420,13 @@ public class GameInstruction
         string answer = ui_controller.uiInstance.GetControlRandomAnswer((controlID1));
 
         int replacementChar = Random.Range(0, answer.Length);
-                
+        string frontTest = answer.Substring(0, replacementChar);
+        string frontWX = frontTest + "X";
+        string rearTest = "";
+        if (frontWX.Length <= 2) rearTest = answer.Substring(replacementChar + 1, answer.Length - (replacementChar + 1));
+
+        instructionSteps[dependantStepID].SetAnswer(frontTest + "X" + rearTest);
+
         for (int value = control2min; value <= (control2max - control2min) + 1; value++)
         {
             string answer1 = "";
@@ -371,6 +445,10 @@ public class GameInstruction
             Debug.Log(answer1 + " " + value.ToString());
             AddDependantAnswer(dependantStepID, answer1, value.ToString());
         }
+    }
+    public int GetDependantControlID(int stepID)
+    {
+        return instructionSteps[stepID].GetDependantControlID();
     }
 }
 
@@ -431,6 +509,8 @@ public class puzzle_controller : MonoBehaviour
         navSystem = "POLLUX";
         navPlanet = "ALPHA IV";
 
+        ui_controller.uiInstance.SetControlValue(1, ui_controller.uiInstance.GetControlRandomAnswer(1));
+
         // Set METER conrol to a value of 0 and change the label to JAM LEVELS 
         ui_controller.uiInstance.SetControlValue(2, "0");
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
@@ -445,6 +525,8 @@ public class puzzle_controller : MonoBehaviour
         // Sets a mapped relationship between SLIDER 2 and METER
         ui_controller.uiInstance.SetConnectedControls(7, 2, "mapped");
 
+        ui_controller.uiInstance.SetControlValue(9, ui_controller.uiInstance.GetControlRandomAnswer(9));
+
         // 1st Instruction
         Debug.Log("INSTRUCTION 1");
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
@@ -453,16 +535,16 @@ public class puzzle_controller : MonoBehaviour
         // 2nd Instruction
         Debug.Log("INSTRUCTION 2");
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
-        gameInstructions[1].AddStep(8);
-        gameInstructions[1].AddDependantSteps(5);
+        gameInstructions[1].AddDependantSteps(5, 4, "mapping_up");
+        gameInstructions[1].AddStep(8, "1");
         gameInstructions[1].AddSuccessTrigger("UpdateSystem", navSystem);
         gameInstructions[1].AddSuccessTrigger("UpdatePlanet", navPlanet);
 
         Debug.Log("INSTRUCTION 3");
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
         gameInstructions[2].AddStep(7);
-        gameInstructions[2].AddDependantSteps(6);
-        gameInstructions[2].AddDependantSteps(1);
+        gameInstructions[2].AddDependantSteps(6, 2, "replacement");
+        gameInstructions[2].AddDependantSteps(1, 9, "mapping_up");
 
         Debug.Log("INSTRUCTION 4");
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
