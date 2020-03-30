@@ -1,8 +1,21 @@
+<style>
+#overlay {
+    background-color: #ffffff00;
+    color: red;
+    position: absolute;
+    z-index:100;
+    right: 50px;
+    top: 50px;
+    transform: rotate(45deg);
+    text-align: center;
+}
+</style>
+
 <p><b>NAVIGATION COORDINATES</b></p>
 <p>COORDINATES TO HOME BASE ARE BASED ON THE SHIP'S CURRENT POSITION.</p>
 <p>FIND YOUR CURRENT SYSTEM AND PLANET:</p>
 
-<p><b>ARCTURUS SYSTEM - DISTANCE 14LY</b></p>
+<p><b>ARCTURUS SYSTEM - DISTANCE <span id="snc_d0">44</span> LY</b></p>
 <table>
     <tr>
         <th>PLANET</th>
@@ -10,23 +23,23 @@
     </tr>
     <tr>
         <td>GREGORIA</td>
-        <td>112'41</td>
+        <td><span id="snc_s0b0">826 ' 190</span></td>
     </tr>
     <tr>
         <td>PRIME</td>
-        <td>245'191</td>
+        <td><span id="snc_s0b1">932 ' 845</span></td>
     </tr>
     <tr>
         <td>NOCTURNUS</td>
-        <td>157'22</td>
+        <td><span id="snc_s0b2">652 ' 394</span></td>
     </tr>
     <tr>
         <td>FRANCE</td>
-        <td>12'450</td>
+        <td><span id="snc_s0b3">726 ' 590</span></td>
     </tr>
 </table>
 
-<p><b>POLLUX SYSTEM - DISTANCE 52LY</b></p>
+<p><b>POLLUX SYSTEM - DISTANCE <span id="snc_d1">21</span> LY</b></p>
 <table>
     <tr>
         <th>PLANET</th>
@@ -34,23 +47,23 @@
     </tr>
     <tr>
         <td>ALPHA II</td>
-        <td>63'45</td>
+        <td><span id="snc_s1b0">480 ' 290</span></td>
     </tr>
     <tr>
         <td>ALPHA III</td>
-        <td>111'271</td>
+        <td><span id="snc_s1b1">913 ' 206</span></td>
     </tr>
     <tr>
         <td>ALPHA IV</td>
-        <td>76'98</td>
+        <td><span id="snc_s1b2">654 ' 530</span></td>
     </tr>
     <tr>
         <td>ALPHA VI</td>
-        <td>79'102</td>
+        <td><span id="snc_s1b3">306 ' 300</span></td>
     </tr>
 </table>
 
-<p><b>CENTAURI SYSTEM - 33 LY</b></p>
+<p><b>CENTAURI SYSTEM - <span id="snc_d2">44</span> LY</b></p>
 <table>
     <tr>
         <th>PLANET</th>
@@ -58,19 +71,19 @@
     </tr>
     <tr>
         <td>YANCY</td>
-        <td>223'64</td>
+        <td><span id="snc_s2b0">84 ' 38</span></td>
     </tr>
     <tr>
         <td>ABOBO</td>
-        <td>29'131</td>
+        <td><span id="snc_s2b1">716 ' 635</span></td>
     </tr>
     <tr>
         <td>EARTH 2</td>
-        <td>582'11</td>
+        <td><span id="snc_s2b2">875 ' 295</span></td>
     </tr>
     <tr>
         <td>TIBERIUS</td>
-        <td>99'420</td>
+        <td><span id="snc_s2b3">866 ' 13</span></td>
     </tr>
 </table>
 
@@ -106,22 +119,22 @@
     <tr id="e1n4">
         <td id="engine">PULSE ION</td>
         <td id="engine_no">4</td>
-        <td id="control">SWITCH</td>
+        <td id="control">BUTTON 2</td>
     </tr>
     <tr id="e2n1">
         <td id="engine">FUSION DRIVE</td>
         <td id="engine_no">1</td>
-        <td id="control">BUTTON 2</td>
+        <td id="control">BUTTON 1</td>
     </tr>
     <tr id="e2n2">
         <td id="engine">FUSION DRIVE</td>
         <td id="engine_no">2</td>
-        <td id="control">BUTTON 2</td>
+        <td id="control">BUTTON 1</td>
     </tr>
     <tr id="e2n4">
         <td id="engine">FUSION DRIVE</td>
         <td id="engine_no">4</td>
-        <td id="control">SWITCH</td>
+        <td id="control">BUTTON 2</td>
     </tr>
 </table>
 
@@ -133,7 +146,7 @@
 <p>  - SUBTRACT THE TWO ANGLES GIVEN IN THE BEARING AND ENTER THE VALUE IN THE KEYPAD CONTROL</p>
 
 <p><b>RETRO THRUSTERS</b></p>
-<p>1 - SET THE VALUE OF <span id="frt_c0">SLIDER 1</span> ACCORDING TO THIS FORMULA: ENGINES + FIRST DIGIT OF MODEL # <span id="frt_v0"> - 4</span></p>
+<p>1 - SET THE VALUE OF <span id="frt_c0">SLIDER 1</span> ACCORDING TO THIS FORMULA: ENGINES + FIRST DIGIT OF MODEL # <span id="frt_v0"> - 1</span></p>
 <p>2 - SET THE VALUE OF <span id="frt_c1">SLIDER 2</span> TO THE SAME VALUE</p>
 <p>3 - IF THE WARNING LEVEL OF THE LIGHT IS <span id="frt_v1">LOW</span> OR HIGHER (SEE: SPACE FORCE COLOR CODE CHART), YOU WILL NEED TO ACTIVATE <span id="frt_c2">BUTTON 1</span>.</p>
 
@@ -142,10 +155,20 @@
 <p>2 - IF THE NUMBER OF LETTERS IN THE SHIP'S MODEL NUMBER IS ODD, USE <span id="stm_c2">BUTTON 1</span>, OTHERWISE USE <span id="stm_c3">BUTTON 2</span>.</p>
 <p>SET THE BUTTON TO ON TO ACTIVATE, OFF TO DEACTIVATE.</p>
 
+<p><b>ACTIVATE ENGINES</b></p>
+<p>1 -  ACTIVATE AUTOMATIC VACUUM PUMPS</p>
+<p>2, 3 - DEACTIVATE STELLAR TRIANGULATION MATRIX ACTIVATE AUTOMATIC VACUUM PUMPS</p> 
+<p>4 -  EMPTY THE <span id="re_c0">JAM LEVELS</span></p> 
+<p>5 -  ENTER THE SECRET ACTIVATION CODE</p>
+
+<div id='overlay'>
+<p><b>THE SECRET CODE IS: <span id="re_v0">036</span></b></p>
+</div>
+
 <p><b>JETTISON EMERGENCY PUPPIES</b></p>
 <p>IN THE EVENT OF AN EMERGENCY IT MAY BE NECESSARY FOR YOU TO DUMP YOUR CARGO OF ADORABLE CUDDLY PUPPIES INTO THE COLD VACUUM OF DEEP SPACE.</p>
-<p>1 - SET <span id="jep_c0">SLIDER 2</span> TO <span id="jep_a0">1</span></p>
-<p>2 - ENTER <span id="jep_v1">72X</span> ON THE <span id="jep_c1">KEYPAD</span>. X IS THE VALUE OF <span id="jep_c2">JAM LEVELS</span></p>
+<p>1 - SET <span id="jep_c0">SLIDER 2</span> TO <span id="jep_a0">3</span></p>
+<p>2 - ENTER <span id="jep_v1">4X0</span> ON THE <span id="jep_c1">KEYPAD</span>. X IS THE VALUE OF <span id="jep_c2">JAM LEVELS</span></p>
 <p>3 - SET <span id="jep_c3">KNOB 1</span> TO THE VALUE OF <span id="jep_c4">KNOB 2</span></p>
 
 <p><b>SPACE FORCE COLOR CODE CHART</b></p>

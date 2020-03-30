@@ -39,8 +39,6 @@ public class GameStep
     {
         this.controlID = controlID;
         this.answer = ui_controller.uiInstance.GetControlRandomAnswer(controlID);
-
-        Debug.Log(controlID + " " + answer);
     }
     public GameStep(int controlID, string answer)
     {
@@ -109,10 +107,7 @@ public class DependantGameStep : GameStep
     }
     override public bool CheckStep(string controlValue)
     {
-        Debug.Log("CHECKING DEPENDANT STEP");
-        Debug.Log("Value of source control " + controlID + " =  " + controlValue);
         string dependantControlValue = ui_controller.uiInstance.GetControlValue(dependantControlID);
-        Debug.Log("Value of target control " + dependantControlID + " =  " + dependantControlValue);
         string expectedAnswer = answerMapping.Find(x => x.answer2 == dependantControlValue).answer1;
         
         return controlValue == expectedAnswer;
@@ -300,7 +295,6 @@ public class GameInstruction
     }
     private void GenerateMappingDependancy(int controlID1, int controlID2)
     {
-        Debug.Log("MAPPING DEPENDANCY BEWTEEN " + controlID1 + " AND " + controlID2);
         int dependantStepID = AddStep(controlID1, controlID2);
 
         int direction = Random.Range(0, 2);
@@ -324,13 +318,11 @@ public class GameInstruction
             {
                 answer2 = control2min + value1;
             }
-            Debug.Log("ADDING ANSWER WHERE " + answer1.ToString() + " = " + answer2.ToString());
             AddDependantAnswer(dependantStepID, answer1.ToString(), answer2.ToString());
         }
     }
     private void GenerateMappingDependancy(int controlID1, int controlID2, bool reverse)
     {
-        Debug.Log("MAPPING DEPENDANCY BEWTEEN " + controlID1 + " AND " + controlID2);
         int dependantStepID = AddStep(controlID1, controlID2);
 
         int control1min = ui_controller.uiInstance.GetControlMinValue(controlID1);
@@ -352,13 +344,11 @@ public class GameInstruction
             {
                 answer2 = control2min + value1;
             }
-            Debug.Log("ADDING ANSWER WHERE " + answer1.ToString() + " = " + answer2.ToString());
             AddDependantAnswer(dependantStepID, answer1.ToString(), answer2.ToString());
         }
     }
     private void GenerateRangeDependancy(int controlID1, int controlID2)
     {
-        Debug.Log("RANGE DEPENDANCY - " + controlID1 + " " + controlID2);
         int dependantStepID = AddStep(controlID1, controlID2);
 
         int control1min = ui_controller.uiInstance.GetControlMinValue(controlID1);
@@ -383,13 +373,12 @@ public class GameInstruction
                 answer1 = control1max;
             }
 
-            Debug.Log(answer1.ToString() + " " + value.ToString());
             AddDependantAnswer(dependantStepID, answer1.ToString(), value.ToString());
         }
     }
     private void GenerateRandomDependancy(int controlID1, int controlID2)
     {
-        Debug.Log("RANDOM DEPENDANCY BETWEEN " + controlID1 + " AND " + controlID2);
+
         int dependantStepID = AddStep(controlID1, controlID2);
 
         int control2min = ui_controller.uiInstance.GetControlMinValue(controlID2);
@@ -407,13 +396,13 @@ public class GameInstruction
                 answer1 = ui_controller.uiInstance.GetControlRandomAnswer((controlID1));
             } while (answerList.Contains(answer1));
 
-            Debug.Log("ADDING ANSWER WHERE " + answer1.ToString() + " = " + value.ToString());
+
             AddDependantAnswer(dependantStepID, answer1, value.ToString());
         }
     }
     private void GenerateReplacemnentDependancy(int controlID1, int controlID2)
     {
-        Debug.Log("REPLACEMENT DEPENDANCY - " + controlID1 + " " + controlID2);
+
         int dependantStepID = AddStep(controlID1, controlID2);
 
         int control2min = ui_controller.uiInstance.GetControlMinValue(controlID2);
@@ -444,7 +433,7 @@ public class GameInstruction
                 }
             }
             
-            Debug.Log(answer1 + " " + value.ToString());
+
             AddDependantAnswer(dependantStepID, answer1, value.ToString());
         }
     }
@@ -481,6 +470,33 @@ public struct Engine
     }
 }
 
+public struct NavSystem
+{
+    public string navSystemName;
+    public string[] navPlanets;
+
+    public NavSystem(string navSystemName, string[] navPlanets)
+    {
+        this.navSystemName = navSystemName;
+        this.navPlanets = navPlanets;
+    }
+
+    public int GetNavPlanetsCount()
+    {
+        return navPlanets.Length;
+    }
+
+    public string GetNavSystemName()
+    {
+        return navSystemName;
+    }
+
+    public string GetNavPlanetName(int navPlanetsID)
+    {
+        return navPlanets[navPlanetsID];
+    }
+}
+
 public struct Color
 {
     public string color;
@@ -511,8 +527,9 @@ public class puzzle_controller : MonoBehaviour
 
     private int engineID, engineNoID;
 
-    private string navSystem;
-    private string navPlanet;
+    private List<NavSystem> navSystemList = new List<NavSystem>();
+
+    private int navSystemID, navPlanetID;
 
     private List<Color> colorList = new List<Color>();
 
@@ -520,6 +537,7 @@ public class puzzle_controller : MonoBehaviour
     {
         if (puzzleInstance == null) { puzzleInstance = this; }
     }
+    
     private void Start()
     {
         modelNo = "3ZF94";
@@ -530,8 +548,8 @@ public class puzzle_controller : MonoBehaviour
         ui_controller.uiInstance.SetScreenEngineText(engineList[engineID].GetEngineType());
         ui_controller.uiInstance.SetScreenEngineNoText(engineList[engineID].GetEngineNo(engineNoID).ToString());
 
-        navSystem = "POLLUX";
-        navPlanet = "ALPHA IV";
+        InitializeNavSystemList();
+        InitializeNavSystem();
 
         InitializeColorList();
 
@@ -554,43 +572,37 @@ public class puzzle_controller : MonoBehaviour
         ui_controller.uiInstance.SetControlValue(9, ui_controller.uiInstance.GetControlRandomAnswer(9));
 
         // 1st Instruction
-        Debug.Log("INSTRUCTION 1");
         gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
         gameInstructions[0].AddStep(3, "0");
 
         // 2nd Instruction
-        Debug.Log("INSTRUCTION 2");
         gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
         gameInstructions[1].AddDependantSteps(5, 4, "mapping_up");
         gameInstructions[1].AddStep(8, "1");
-        gameInstructions[1].AddSuccessTrigger("UpdateSystem", navSystem);
-        gameInstructions[1].AddSuccessTrigger("UpdatePlanet", navPlanet);
+        gameInstructions[1].AddSuccessTrigger("UpdateSystem", navSystemList[navSystemID].GetNavSystemName());
+        gameInstructions[1].AddSuccessTrigger("UpdatePlanet", navSystemList[navSystemID].GetNavPlanetName(navPlanetID));
 
-        Debug.Log("INSTRUCTION 3");
         gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
         gameInstructions[2].AddStep(7);
         gameInstructions[2].AddDependantSteps(6, 2, "replacement");
         gameInstructions[2].AddDependantSteps(1, 9, "mapping_up");
 
-        Debug.Log("INSTRUCTION 4");
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
         gameInstructions[3].AddStep(5);
         gameInstructions[3].AddDependantSteps(7, 5, "mapping_up");
         gameInstructions[3].AddDependantSteps(0, 4, "range");
 
-        Debug.Log("INSTRUCTION 5");
         gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
         gameInstructions[4].AddStep(1);
         gameInstructions[4].AddStep(9);
         gameInstructions[4].AddStep(6);
 
-        Debug.Log("INSTRUCTION 6");
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
+        gameInstructions[5].AddStep(3, "1");
+        gameInstructions[5].AddDependantSteps(5, 4, "mapping_up");
+        gameInstructions[5].AddStep(8, "0");
+        gameInstructions[5].AddStep(2, "0");
         gameInstructions[5].AddStep(6);
-        gameInstructions[5].AddStep(3);
-        gameInstructions[5].AddStep(8);
-        gameInstructions[5].AddDependantSteps(5);
-        gameInstructions[5].AddStep(2);
     }
 
     private void InitializeEngineList()
@@ -604,6 +616,19 @@ public class puzzle_controller : MonoBehaviour
     {
         engineID = Random.Range(0, engineList.Count);
         engineNoID = Random.Range(0, engineList[engineID].GetEngineNoCount());
+    }
+
+    private void InitializeNavSystemList()
+    {
+        navSystemList.Add(new NavSystem("ARCTURUS", new string[] { "GREGORIA", "PRIME", "NOCTURNUS", "FRANCE" }));
+        navSystemList.Add(new NavSystem("POLLUX ", new string[] { "ALPHA II", "ALPHA III", "ALPHA IV", "ALPHA VI" }));
+        navSystemList.Add(new NavSystem("CENTAURI ", new string[] { "YANCY", "ABOBO", "EARTH 2", "TIBERIUS" }));
+    }
+
+    private void InitializeNavSystem()
+    {
+        navSystemID = Random.Range(0, navSystemList.Count);
+        navPlanetID = Random.Range(0, navSystemList[navSystemID].GetNavPlanetsCount());
     }
 
     private void InitializeColorList()
@@ -663,8 +688,7 @@ public class puzzle_controller : MonoBehaviour
 
     public bool EngineMatch(int engineID, int engineNoID)
     {
-        if (this.engineID == engineID && this.engineNoID == engineNoID) return true;
-        return false;
+        return (this.engineID == engineID && this.engineNoID == engineNoID);
     }
 
     public string GetCurrentEngineNo()
@@ -680,5 +704,25 @@ public class puzzle_controller : MonoBehaviour
     public string GetColorWarningLevel(string colorValue)
     {
         return colorList[int.Parse(colorValue) - 1].GetWarningLevel();
+    }
+
+    public int GetNavSystemCount()
+    {
+        return navSystemList.Count;
+    }
+
+    public int GetCurrentNavSystemID()
+    {
+        return navSystemID;
+    }
+
+    public int GetCurrentNawSystemPlanetCount(int navSystemID)
+    {
+        return navSystemList[navSystemID].GetNavPlanetsCount();
+    }
+
+    public bool NavSystemMatch(int navSystemID, int navPlanetID)
+    {
+        return (this.navSystemID == navSystemID && this.navPlanetID == navPlanetID);
     }
 }

@@ -21,8 +21,8 @@ public class screen_controller : MonoBehaviour
         output += "Engines: " + engineText + "\n";
         output += "No. of Engines: " + noEngineText + "\n";
         output += "Location:\n";
-        output += "\tSystem: " + (systemText == "" ? "UNKNOWN" : systemText) + "\n";
-        output += "\tSystem: " + (planetText == "" ? "UNKNOWN" : planetText) + "\n";
+        output += "  System: " + (systemText == "" ? "UNKNOWN" : systemText) + "\n";
+        output += "  Planet: " + (planetText == "" ? "UNKNOWN" : planetText) + "\n";
 
         screenText.text = output;
     }

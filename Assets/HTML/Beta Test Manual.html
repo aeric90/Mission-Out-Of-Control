@@ -1,8 +1,21 @@
+<style>
+#overlay {
+    background-color: #ffffff00;
+    color: red;
+    position: absolute;
+    z-index:100;
+    right: 50px;
+    top: 50px;
+    transform: rotate(45deg);
+    text-align: center;
+}
+</style>
+
 <p><b>NAVIGATION COORDINATES</b></p>
 <p>COORDINATES TO HOME BASE ARE BASED ON THE SHIP'S CURRENT POSITION.</p>
 <p>FIND YOUR CURRENT SYSTEM AND PLANET:</p>
 
-<p><b>ARCTURUS SYSTEM - DISTANCE 14LY</b></p>
+<p><b>ARCTURUS SYSTEM - DISTANCE <span id="snc_d0"></span> LY</b></p>
 <table>
     <tr>
         <th>PLANET</th>
@@ -10,23 +23,23 @@
     </tr>
     <tr>
         <td>GREGORIA</td>
-        <td>112'41</td>
+        <td><span id="snc_s0b0"></span></td>
     </tr>
     <tr>
         <td>PRIME</td>
-        <td>245'191</td>
+        <td><span id="snc_s0b1"></span></td>
     </tr>
     <tr>
         <td>NOCTURNUS</td>
-        <td>157'22</td>
+        <td><span id="snc_s0b2"></span></td>
     </tr>
     <tr>
         <td>FRANCE</td>
-        <td>12'450</td>
+        <td><span id="snc_s0b3"></span></td>
     </tr>
 </table>
 
-<p><b>POLLUX SYSTEM - DISTANCE 52LY</b></p>
+<p><b>POLLUX SYSTEM - DISTANCE <span id="snc_d1"></span> LY</b></p>
 <table>
     <tr>
         <th>PLANET</th>
@@ -34,23 +47,23 @@
     </tr>
     <tr>
         <td>ALPHA II</td>
-        <td>63'45</td>
+        <td><span id="snc_s1b0"></span></td>
     </tr>
     <tr>
         <td>ALPHA III</td>
-        <td>111'271</td>
+        <td><span id="snc_s1b1"></span></td>
     </tr>
     <tr>
         <td>ALPHA IV</td>
-        <td>76'98</td>
+        <td><span id="snc_s1b2"></span></td>
     </tr>
     <tr>
         <td>ALPHA VI</td>
-        <td>79'102</td>
+        <td><span id="snc_s1b3"></span></td>
     </tr>
 </table>
 
-<p><b>CENTAURI SYSTEM - 33 LY</b></p>
+<p><b>CENTAURI SYSTEM - <span id="snc_d2"></span> LY</b></p>
 <table>
     <tr>
         <th>PLANET</th>
@@ -58,19 +71,19 @@
     </tr>
     <tr>
         <td>YANCY</td>
-        <td>223'64</td>
+        <td><span id="snc_s2b0"></span></td>
     </tr>
     <tr>
         <td>ABOBO</td>
-        <td>29'131</td>
+        <td><span id="snc_s2b1"></span></td>
     </tr>
     <tr>
         <td>EARTH 2</td>
-        <td>582'11</td>
+        <td><span id="snc_s2b2"></span></td>
     </tr>
     <tr>
         <td>TIBERIUS</td>
-        <td>99'420</td>
+        <td><span id="snc_s2b3"></span></td>
     </tr>
 </table>
 
@@ -141,6 +154,16 @@
 <p>1 - SET <span id="stm_c1"></span> BASED ON THE COLOR OF LIGHT (SEE: SPACE FORCE COLOR CODE CHART)</p>
 <p>2 - IF THE NUMBER OF LETTERS IN THE SHIP'S MODEL NUMBER IS ODD, USE <span id="stm_c2"></span>, OTHERWISE USE <span id="stm_c3"></span>.</p>
 <p>SET THE BUTTON TO ON TO ACTIVATE, OFF TO DEACTIVATE.</p>
+
+<p><b>ACTIVATE ENGINES</b></p>
+<p>1 -  ACTIVATE AUTOMATIC VACUUM PUMPS</p>
+<p>2, 3 - DEACTIVATE STELLAR TRIANGULATION MATRIX ACTIVATE AUTOMATIC VACUUM PUMPS</p> 
+<p>4 -  EMPTY THE <span id="re_c0"></span></p> 
+<p>5 -  ENTER THE SECRET ACTIVATION CODE</p>
+
+<div id='overlay'>
+<p><b>THE SECRET CODE IS: <span id="re_v0"></span></b></p>
+</div>
 
 <p><b>JETTISON EMERGENCY PUPPIES</b></p>
 <p>IN THE EVENT OF AN EMERGENCY IT MAY BE NECESSARY FOR YOU TO DUMP YOUR CARGO OF ADORABLE CUDDLY PUPPIES INTO THE COLD VACUUM OF DEEP SPACE.</p>

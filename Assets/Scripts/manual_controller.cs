@@ -22,6 +22,8 @@ public class manual_controller : MonoBehaviour
 		PopulateInstruction1();
 		PopulateInstruction2();
 		PopulateInstruction3();
+		PopulateInstruction4();
+		PopulateInstruction5();
 
 		manualTemplate.Save(path);
 
@@ -60,12 +62,12 @@ public class manual_controller : MonoBehaviour
 			for (int j = 0; j < engineNoCount; j++)
 			{
 				string engineNo = puzzle_controller.puzzleInstance.GetEngineNo(i, j);
-				
+
 				HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"e" + i + "n" + engineNo + "\"]/*[@id=\"control\"]");
 
 				int controlID = -1;
 
-				if(puzzle_controller.puzzleInstance.EngineMatch(i, j))
+				if (puzzle_controller.puzzleInstance.EngineMatch(i, j))
 				{
 					GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
 					controlID = instruction.GetStepControl(0);
@@ -178,5 +180,80 @@ public class manual_controller : MonoBehaviour
 
 		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"frt_c2\"]");
 		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID2);
+	}
+	private void PopulateInstruction4()
+	{
+		HtmlNode controlNode;
+
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(4);
+
+
+		for (int i = 0; i < puzzle_controller.puzzleInstance.GetNavSystemCount(); i++)
+		{
+			string answer0 = "";
+			string answer1 = "";
+
+			controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"snc_d" + i + "\"]");
+
+			if (i == puzzle_controller.puzzleInstance.GetCurrentNavSystemID())
+			{
+				answer0 = instruction.GetAnswer(0);
+				answer1 = instruction.GetAnswer(1);
+			}
+			else
+			{
+				int controlID0 = instruction.GetStepControl(0);
+				int controlID1 = instruction.GetStepControl(1);
+
+				answer0 = ui_controller.uiInstance.GetControlRandomAnswer(controlID0);
+				answer1 = ui_controller.uiInstance.GetControlRandomAnswer(controlID1);
+			}
+
+			controlNode.InnerHtml = answer0 + answer1;
+
+			for (int j = 0; j < puzzle_controller.puzzleInstance.GetCurrentNawSystemPlanetCount(i); j++)
+			{
+				int answerMain = 0;
+				int controlID2 = instruction.GetStepControl(2);
+				int answer2 = 0;
+				int answer3 = 0;
+
+				controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"snc_s" + i + "b" + j + "\"]");
+
+				if (puzzle_controller.puzzleInstance.NavSystemMatch(i, j))
+				{
+					answerMain = int.Parse(instruction.GetAnswer(2));
+				}
+				else
+				{
+					answerMain = int.Parse(ui_controller.uiInstance.GetControlRandomAnswer(controlID2));
+				}
+
+				do
+				{
+					answer2 = int.Parse(ui_controller.uiInstance.GetControlRandomAnswer(controlID2));
+					answer3 = answer2 - answerMain;
+				} while (answer3 < 0);
+
+				controlNode.InnerHtml = answer2 + " ' " + answer3;
+			}
+		}
+	}
+
+	private void PopulateInstruction5()
+	{
+		HtmlNode controlNode;
+
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(5);
+
+		int controlID3 = instruction.GetStepControl(3);
+
+		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"re_c0\"]");
+		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID3);
+
+		string answer4 = instruction.GetAnswer(4);
+
+		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"re_v0\"]");
+		controlNode.InnerHtml = answer4;
 	}
 }
