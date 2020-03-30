@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class screen_controller : MonoBehaviour
 {
-    public string modelText = "3ZF94";
+    public string modelText = "";
     public string engineText = "";
     public string noEngineText = "";
     public string systemText = "";
@@ -45,5 +45,10 @@ public class screen_controller : MonoBehaviour
     public void SetPlanetText(string planetText)
     {
         this.planetText = planetText;
+    }
+
+    public void SetModelText(string modelText)
+    {
+        this.modelText = modelText;
     }
 }

@@ -368,6 +368,8 @@ public class GameInstruction
 
         int pivot = Random.Range(control2min, control2max) + 1;
 
+        instructionSteps[dependantStepID].SetAnswer(pivot.ToString());
+
         for (int value = control2min; value <= (control2max - control2min) + 1; value++)
         {
             int answer1 = 0;
@@ -479,6 +481,23 @@ public struct Engine
     }
 }
 
+public struct Color
+{
+    public string color;
+    public string warningLevel;
+    public string number;
+    public Color(string color, string warningLevel, string number)
+    {
+        this.color = color;
+        this.warningLevel = warningLevel;
+        this.number = number;
+    }
+
+    public string GetWarningLevel()
+    {
+        return warningLevel;
+    }
+}
 
 public class puzzle_controller : MonoBehaviour
 {
@@ -495,12 +514,17 @@ public class puzzle_controller : MonoBehaviour
     private string navSystem;
     private string navPlanet;
 
+    private List<Color> colorList = new List<Color>();
+
     private void Awake()
     {
         if (puzzleInstance == null) { puzzleInstance = this; }
     }
     private void Start()
     {
+        modelNo = "3ZF94";
+        ui_controller.uiInstance.SetScreenModelText(modelNo);
+
         InitializeEngineList();
         InitializeEngines();
         ui_controller.uiInstance.SetScreenEngineText(engineList[engineID].GetEngineType());
@@ -508,6 +532,8 @@ public class puzzle_controller : MonoBehaviour
 
         navSystem = "POLLUX";
         navPlanet = "ALPHA IV";
+
+        InitializeColorList();
 
         ui_controller.uiInstance.SetControlValue(1, ui_controller.uiInstance.GetControlRandomAnswer(1));
 
@@ -549,8 +575,8 @@ public class puzzle_controller : MonoBehaviour
         Debug.Log("INSTRUCTION 4");
         gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
         gameInstructions[3].AddStep(5);
-        gameInstructions[3].AddStep(7);
-        gameInstructions[3].AddDependantSteps(0);
+        gameInstructions[3].AddDependantSteps(7, 5, "mapping_up");
+        gameInstructions[3].AddDependantSteps(0, 4, "range");
 
         Debug.Log("INSTRUCTION 5");
         gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
@@ -578,6 +604,15 @@ public class puzzle_controller : MonoBehaviour
     {
         engineID = Random.Range(0, engineList.Count);
         engineNoID = Random.Range(0, engineList[engineID].GetEngineNoCount());
+    }
+
+    private void InitializeColorList()
+    {
+        colorList.Add(new Color("PURPLE", "NONE", "1"));
+        colorList.Add(new Color("BLUE", "LOW", "2"));
+        colorList.Add(new Color("GREEN", "MEDIUM", "3"));
+        colorList.Add(new Color("YELLOW", "HIGH", "4"));
+        colorList.Add(new Color("RED", "CRITICAL", "5"));
     }
 
     public int GetGameInstructionCount()
@@ -630,5 +665,20 @@ public class puzzle_controller : MonoBehaviour
     {
         if (this.engineID == engineID && this.engineNoID == engineNoID) return true;
         return false;
+    }
+
+    public string GetCurrentEngineNo()
+    {
+        return GetEngineNo(engineID, engineNoID);
+    }
+
+    public string GetModelNo()
+    {
+        return modelNo;
+    }
+
+    public string GetColorWarningLevel(string colorValue)
+    {
+        return colorList[int.Parse(colorValue) - 1].GetWarningLevel();
     }
 }

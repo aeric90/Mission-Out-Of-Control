@@ -190,4 +190,9 @@ public class ui_controller : MonoBehaviour
     {
         return controls[controlID].GetComponent<ParentControl>().GetLabel();
     }
+
+    public void SetScreenModelText(string modelText)
+    {
+        screenControl.GetComponent<screen_controller>().SetModelText(modelText);
+    }
 }

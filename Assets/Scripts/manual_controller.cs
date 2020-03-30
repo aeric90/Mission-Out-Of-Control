@@ -21,6 +21,7 @@ public class manual_controller : MonoBehaviour
 		PopulateInstruction0();
 		PopulateInstruction1();
 		PopulateInstruction2();
+		PopulateInstruction3();
 
 		manualTemplate.Save(path);
 
@@ -133,5 +134,49 @@ public class manual_controller : MonoBehaviour
 		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"jep_c4\"]");
 		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID4);
 
+	}
+	private void PopulateInstruction3()
+	{
+		HtmlNode controlNode;
+
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(3);
+
+		int controlID0 = instruction.GetStepControl(0);
+		int engineNo = int.Parse(puzzle_controller.puzzleInstance.GetCurrentEngineNo());
+		int modelNoNum = int.Parse(puzzle_controller.puzzleInstance.GetModelNo().Substring(0, 1));
+		int answer0 = int.Parse(instruction.GetAnswer(0));
+		int value = answer0 - engineNo - modelNoNum;
+		string value0 = "";
+
+		if (value < 0)
+		{
+			value *= -1;
+			value0 = " - " + value.ToString();
+		}
+		else
+		{
+			value0 = " + " + value.ToString();
+		}
+
+		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"frt_c0\"]");
+		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID0);
+
+		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"frt_v0\"]");
+		controlNode.InnerHtml = value0;
+
+		int controlID1 = instruction.GetStepControl(1);
+
+		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"frt_c1\"]");
+		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID1);
+
+		string answer2 = instruction.GetAnswer(2);
+		string value1 = puzzle_controller.puzzleInstance.GetColorWarningLevel(answer2);
+		int controlID2 = instruction.GetStepControl(2);
+
+		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"frt_v1\"]");
+		controlNode.InnerHtml = value1;
+
+		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"frt_c2\"]");
+		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID2);
 	}
 }
