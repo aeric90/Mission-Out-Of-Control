@@ -5,13 +5,31 @@ using System;
 using System.Xml;
 using HtmlAgilityPack;
 
+public struct ManualError
+{
+	private int instructionID;
+	private int stepID;
 
+	public ManualError(int instructionID, int stepID)
+	{
+		this.instructionID = instructionID;
+		this.stepID = stepID;
+	}
+
+	public bool ErrorMatch(int instructionID, int stepID)
+	{
+		return (this.instructionID == instructionID && this.stepID == stepID);
+	}
+}
 public class manual_controller : MonoBehaviour
 {
+	private List<ManualError> manualErrors = new List<ManualError>();
 	private HtmlDocument manualTemplate;
 
 	private void Start()
 	{
+		GenerateErrorList();
+
 		manualTemplate = new HtmlDocument();
 		manualTemplate.Load(@".\Assets\HTML\Beta Test Manual.html");
 
@@ -33,24 +51,32 @@ public class manual_controller : MonoBehaviour
 		*/
 	}
 
-	private static void SaveHtmlFile()
+	private void GenerateErrorList()
 	{
-		var html =
-		@"<!DOCTYPE html>
-<html>
-<body>
-	<h1>This is <b>bold</b> heading</h1>
-	<p>This is <u>underlined</u> paragraph</p>
-	<h2>This is <i>italic</i> heading</h2>
-</body>
-</html> ";
+		List<int> loadedInstructions = new List<int>();
 
-		var htmlDoc = new HtmlDocument();
-		htmlDoc.LoadHtml(html);
+		int instructionCount = puzzle_controller.puzzleInstance.GetGameInstructionCount();
 
-		htmlDoc.Save(@".\Assets\HTML\test.html");
+		do
+		{
+			int instructionID = UnityEngine.Random.Range(0, instructionCount - 1);
+
+			if(!loadedInstructions.Contains(instructionID))
+			{
+				loadedInstructions.Add(instructionID);
+			}
+
+		} while (loadedInstructions.Count < 3);
+
+		for (int i = 0; i < loadedInstructions.Count; i++)
+		{
+			int instructionStepCount = puzzle_controller.puzzleInstance.GetGameStepCount(loadedInstructions[i]);
+
+			int stepID = UnityEngine.Random.Range(0, instructionStepCount);
+
+			manualErrors.Add(new ManualError(loadedInstructions[i], stepID));
+		}
 	}
-
 	private void PopulateInstruction0()
 	{
 		int engineCount = puzzle_controller.puzzleInstance.GetEngineCount();
@@ -63,41 +89,34 @@ public class manual_controller : MonoBehaviour
 			{
 				string engineNo = puzzle_controller.puzzleInstance.GetEngineNo(i, j);
 
-				HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"e" + i + "n" + engineNo + "\"]/*[@id=\"control\"]");
-
 				int controlID = -1;
 
 				if (puzzle_controller.puzzleInstance.EngineMatch(i, j))
 				{
 					GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
 					controlID = instruction.GetStepControl(0);
+					ChangeManualTag(0, 0, "//*[@id=\"e" + i + "n" + engineNo + "\"]/*[@id=\"control\"]", controlID);
 				}
 				else
 				{
 					controlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "switch", "button" });
+					ChangeManualTag("//*[@id=\"e" + i + "n" + engineNo + "\"]/*[@id=\"control\"]", controlID);
 				}
-
-				engineNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID);
 			}
 		}
 	}
 	private void PopulateInstruction1()
 	{
-		HtmlNode controlNode;
-
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
 		int controlID1 = instruction.GetStepControl(0);
 		int controlID3 = instruction.GetStepControl(1);
 		int controlID2 = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "button" }, controlID3);
 
-		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"stm_c1\"]");
-		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID1);
+		ChangeManualTag(1, 0, "//*[@id=\"stm_c1\"]", controlID1);
 
-		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"stm_c2\"]");
-		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID2);
+		ChangeManualTag(1, 1, "//*[@id=\"stm_c2\"]", controlID2);
 
-		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"stm_c3\"]");
-		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID3);
+		ChangeManualTag("//*[@id=\"stm_c3\"]", controlID3);
 	}
 	private void PopulateInstruction2()
 	{
@@ -108,11 +127,7 @@ public class manual_controller : MonoBehaviour
 		int controlID0 = instruction.GetStepControl(0);
 		string answer0 = instruction.GetAnswer(0);
 
-		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"jep_c0\"]");
-		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID0);
-
-		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"jep_a0\"]");
-		controlNode.InnerHtml = answer0;
+		ChangeManualTag(2, 0, "//*[@id=\"jep_c0\"]", controlID0, "//*[@id=\"jep_a0\"]", answer0);
 
 		string answer1 = instruction.GetAnswer(1);
 		int controlID1 = instruction.GetStepControl(1);
@@ -239,7 +254,6 @@ public class manual_controller : MonoBehaviour
 			}
 		}
 	}
-
 	private void PopulateInstruction5()
 	{
 		HtmlNode controlNode;
@@ -255,5 +269,139 @@ public class manual_controller : MonoBehaviour
 
 		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"re_v0\"]");
 		controlNode.InnerHtml = answer4;
+	}
+
+	private void ChangeManualTag(string tag, int controlID)
+	{
+		HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode(tag); ;
+		engineNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID);
+	}
+	private void ChangeManualTag(int instructionID, int stepID, string tag, int controlID)
+	{
+		int errorID = -1;
+
+		for(int i = 0; i < manualErrors.Count; i++)
+		{
+			if(manualErrors[i].ErrorMatch(instructionID, stepID))
+			{
+				errorID = i;
+			}
+		}
+
+		if (errorID > -1)
+		{
+			int errorControlID = GetErrorControl(controlID);
+
+			if (errorControlID > -1)
+			{
+				SetErrorControlEntry(errorID, instructionID, tag, controlID, errorControlID);
+			}
+		}
+		else
+		{
+			HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode(tag); ;
+			engineNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID);
+		}
+	}
+    private void ChangeManualTag(int instructionID, int stepID, string tag1, int controlID, string tag2, string answer)
+	{
+		int errorID = -1;
+
+		for (int i = 0; i < manualErrors.Count; i++)
+		{
+			if (manualErrors[i].ErrorMatch(instructionID, stepID))
+			{
+				errorID = i;
+			}
+		}
+
+		if (errorID > -1)
+		{
+			if (UnityEngine.Random.Range(0, 2) > 0)
+			{
+				int errorControlID = GetErrorControl(controlID);
+
+				if (errorControlID > -1)
+				{
+					SetErrorControlEntry(errorID, instructionID, tag1, controlID, errorControlID);
+
+					HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode(tag2); ;
+					engineNode.InnerHtml = answer;
+				}
+			}
+			else
+			{
+				string errorAnswer = GetErrorAnswer(controlID, answer);
+
+				HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode(tag1); ;
+				engineNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID);
+
+				SetErrorAnswerEntry(errorID, instructionID, tag2, controlID, answer, errorAnswer);
+
+			}
+		}
+		else
+		{
+			HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode(tag1); ;
+			engineNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID);
+
+			engineNode = manualTemplate.DocumentNode.SelectSingleNode(tag2); ;
+			engineNode.InnerHtml = answer;
+		}
+	}
+
+	private int GetErrorControl(int controlID)
+	{
+		string controlType = ui_controller.uiInstance.GetControlType(controlID);
+		string[] controlTypes = null;
+
+		switch (controlType)
+		{
+			case "switch":
+			case "button":
+				controlTypes = new string[] { "switch", "button" };
+				break;
+			case "slider":
+			case "knob":
+				controlTypes = new string[] { "slider", "knob" };
+				break;
+			case "light":
+			case "meter":
+				controlTypes = new string[] { "light", "meter" };
+				break;
+		}
+
+		return ui_controller.uiInstance.GetRandomControlOfType(controlTypes, controlID);
+	}
+
+	private string GetErrorAnswer(int controlID, string answer)
+	{
+		string errorAnswer = "";
+
+		do
+		{
+			errorAnswer = ui_controller.uiInstance.GetControlRandomAnswer(controlID);
+
+		} while (errorAnswer == answer);
+
+		return errorAnswer;
+	}
+
+	private void SetErrorControlEntry(int errorID, int instructionID, string tag, int controlID, int errorControlID)
+	{
+		HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode(tag); ;
+		engineNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(errorControlID);
+
+		HtmlNode errorNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"error_" + (errorID + 1) + "\"]");
+		errorNode.InnerHtml = puzzle_controller.puzzleInstance.GetGameInstructionTitle(instructionID) + " USE " + ui_controller.uiInstance.GetControlLabel(controlID) + " NOT " + ui_controller.uiInstance.GetControlLabel(errorControlID);
+	}
+
+	private void SetErrorAnswerEntry(int errorID, int instructionID, string tag, int controlID, string answer, string errorAnswer)
+	{
+		HtmlNode engineNode = manualTemplate.DocumentNode.SelectSingleNode(tag); ;
+		engineNode.InnerHtml = errorAnswer;
+
+		HtmlNode errorNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"error_" + (errorID + 1) + "\"]");
+		errorNode.InnerHtml = puzzle_controller.puzzleInstance.GetGameInstructionTitle(instructionID) + " FOR " + ui_controller.uiInstance.GetControlLabel(controlID) + ", ENTER " + answer + " NOT " + errorAnswer;
 	}
 }
