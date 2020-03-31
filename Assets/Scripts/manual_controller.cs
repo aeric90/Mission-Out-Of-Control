@@ -26,18 +26,28 @@ public struct ManualError
 }
 public class manual_controller : MonoBehaviour
 {
+	public TMPro.TextMeshProUGUI manualURLText;
+
 	private List<ManualError> manualErrors = new List<ManualError>();
 	private HtmlDocument manualTemplate;
+	private SftpClient sftp;
+
+	private TextReader inputText;
+	private MemoryStream outputStream = new MemoryStream();
+
+	private string manualFileName;
 
 	private void Start()
 	{
 		GenerateErrorList();
 
-		manualTemplate = new HtmlDocument();
-		manualTemplate.Load(@".\Assets\HTML\Beta Test Manual.html");
+		SFTPConnect();
+		GetFromFTP();
 
-		Directory.CreateDirectory(@"C:\Temp");
-		string path = @"C:\Temp\Mission_Manual_" + UnityEngine.Random.Range(1000, 10000) + ".html";
+		manualFileName = @"/Mission_Manual_" + UnityEngine.Random.Range(1000, 10000) + ".html"; ;
+
+		manualTemplate = new HtmlDocument();
+		manualTemplate.Load(inputText);
 
 		PopulateInstruction0();
 		PopulateInstruction1();
@@ -46,9 +56,12 @@ public class manual_controller : MonoBehaviour
 		PopulateInstruction4();
 		PopulateInstruction5();
 
-		manualTemplate.Save(path);
+		manualTemplate.Save(outputStream);
 
-		FTPTest(path);
+		SaveToFTP();
+		SFTPDisconnect();
+
+		manualURLText.text = @"http://ugrad.bitdegree.ca/~ericdemarbre" + manualFileName;
 	}
 
 	private void GenerateErrorList()
@@ -440,35 +453,35 @@ public class manual_controller : MonoBehaviour
 		errorNode.InnerHtml = puzzle_controller.puzzleInstance.GetGameInstructionTitle(instructionID) + " - STEP " + (stepID + 1) + " - FOR " + ui_controller.uiInstance.GetControlLabel(controlID) + ", ENTER " + answer + " NOT " + errorAnswer;
 	}
 
-	public void FTPTest(string filename)
+	public void SFTPConnect()
 	{
-		string host = @"ugrad.bitdegree.ca";
+		string host = @"134.117.92.193";
 		string username = "ericdemarbre";
 		string password = @"gEm1va9t9P";
 
+		sftp = new SftpClient(host, username, password);
+	    sftp.Connect();
+	}
+	public void GetFromFTP()
+	{
+		var contents = sftp.OpenRead(@"/accounts/undergraduates/ericdemarbre/public_html/Beta_Test_Manual_Template.html");
+		inputText = new StreamReader(contents);
+	}
+	public void SaveToFTP()
+	{
+		outputStream.Position =0;
+
 		string workingDirectory = "/accounts/undergraduates/ericdemarbre/public_html";
 
-		using (SftpClient sftp = new SftpClient(host, username, password))
-		{
-			try
-			{
-				sftp.Connect();
+		string path = workingDirectory + "/" + manualFileName;
 
-				sftp.ChangeDirectory(workingDirectory);
-
-				using (var fileStream = new FileStream(filename, FileMode.Open))
-				{
-					sftp.BufferSize = 4 * 1024; // bypass Payload error large files
-					sftp.UploadFile(fileStream, Path.GetFileName(filename));
-				}
-
-				sftp.Disconnect();
-			}
-			catch (Exception e)
-			{
-				Debug.Log("An exception has been caught " + e.ToString());
-			}
-		}
+		sftp.ChangeDirectory(workingDirectory);
+		sftp.BufferSize = 4 * 1024;
+		sftp.UploadFile(outputStream, path);
+	}
+	public void SFTPDisconnect()
+	{
+		sftp.Disconnect();
 	}
 
 }
