@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class game_controller : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class game_controller : MonoBehaviour
         if (gameInstance == null) { gameInstance = this; }
     }
 
-    void Start()
+    public void StartGame()
     {
         StartCoroutine(GameLoop());
     }
@@ -149,11 +150,15 @@ public class game_controller : MonoBehaviour
 
         if (win)
         {
-            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU WIN!");
+            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU WIN!"); // Won't type to screen.
+            WinLossMessage.winLossInstance.won = true;
+            StartCoroutine(GameOverCo());
         }
         else
         {
-            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU LOST!");
+            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU LOST!"); // Won't type to screen.
+            WinLossMessage.winLossInstance.won = false;
+            StartCoroutine(GameOverCo());
         }
     }
 
@@ -165,5 +170,12 @@ public class game_controller : MonoBehaviour
     public void SetConfirmPressed()
     {
         confirmPressed = true;
+    }
+
+    private IEnumerator GameOverCo()
+    {
+        yield return new WaitForSeconds(5.0f);
+
+        SceneManager.LoadScene(3);
     }
 }

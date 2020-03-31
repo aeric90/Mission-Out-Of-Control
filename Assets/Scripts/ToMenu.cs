@@ -8,6 +8,8 @@ public class ToMenu : MonoBehaviour
     public void ChangeScene()
     {
         SceneManager.LoadScene(0);
+
+        Destroy(GameObject.Find("Win/Loss"));
     }
 }
 
