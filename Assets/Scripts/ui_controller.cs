@@ -128,6 +128,12 @@ public class ui_controller : MonoBehaviour
         
         }
     }
+    
+    public string GetControlType(int controlID)
+    {
+        return controls[controlID].GetComponent<ParentControl>().GetControlType();
+    }
+    
     public int GetRandomControlOfType(string[] types)
     {
         List<int> checkedControls = new List<int>();

@@ -44,8 +44,6 @@ public class GameStep
     {
         this.controlID = controlID;
         this.answer = answer;
-
-        Debug.Log(controlID + " " + this.answer);
     }
 
     public int GetControlID()
@@ -259,7 +257,6 @@ public class GameInstruction
     {
         return instructionSteps[stepID].GetControlID();
     }
-
     public string GetAnswer(int stepID)
     {
         return instructionSteps[stepID].GetAnswer();
