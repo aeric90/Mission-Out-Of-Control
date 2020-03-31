@@ -1,4 +1,24 @@
 <style>
+    @font-face {
+        font-family: script1;
+        src: url(fonts/danielbd.ttf);
+    }
+
+    @font-face {
+        font-family: script2;
+        src: url(fonts/seriously.ttf);
+    }
+
+    @font-face {
+        font-family: script3;
+        src: url(fonts/cinnamoncake.ttf);
+    }
+
+    @font-face {
+        font-family: script4;
+        src: url(fonts/alwaysforever.ttf);
+    }
+    
     body {
         margin-top: 50px;
         margin-bottom: 50px;
@@ -13,23 +33,26 @@
     }
 
     .code {
+        font-family: script3;
         color: red;
         left: 720px;
         top: 50px;
         transform: rotate(45deg);
-        text-align: center;        
+        text-align: center;
     }
-    
+
     .error1 {
+        font-family: script1;
         color: blue;
         left: 720px;
         top: 350px;
         transform: rotate(-25deg);
-        text-align: center; 
+        text-align: center;
         width: 250px;
     }
 
     .error2 {
+        font-family: script2;
         color: green;
         left: 5px;
         top: 900px;
@@ -37,8 +60,9 @@
         text-align: center;
         width: 250px;
     }
-    
+
     .error3 {
+        font-family: script4;
         color: black;
         left: 900px;
         top: 1450px;
@@ -46,7 +70,7 @@
         text-align: center;
         width: 250px;
     }
-    
+
 </style>
 
 
@@ -191,8 +215,8 @@
     </table>
 
     <p><b>SET SPEED</b></p>
-    <p>1 - SET KNOB 1 TO THE FIRST DIGIT OF THE DISTANCE</p>
-    <p>1 - SET KNOB 2 TO THE SECOND DIGIT OF THE DISTANCE</p>
+    <p>1 - SET <span id="snc_c0"></span> TO THE FIRST DIGIT OF THE DISTANCE</p>
+    <p>2 - SET <span id="snc_c1"></span> TO THE SECOND DIGIT OF THE DISTANCE</p>
 
     <p><b>SET BEARING</b></p>
     <p> - SUBTRACT THE TWO ANGLES GIVEN IN THE BEARING AND ENTER THE VALUE IN THE KEYPAD CONTROL</p>
