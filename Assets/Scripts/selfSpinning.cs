@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class earthSelfSpinning : MonoBehaviour
+public class selfSpinning : MonoBehaviour
 {
+    public float selfSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,6 @@ public class earthSelfSpinning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(new Vector3(0, Time.deltaTime * 10, 0));
+        transform.Rotate(new Vector3(0, Time.deltaTime * selfSpeed, 0));
     }
 }
