@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 622291406}
   - component: {fileID: 622291405}
   - component: {fileID: 622291404}
+  - component: {fileID: 622291408}
   m_Layer: 0
   m_Name: Sky
   m_TagString: Untagged
@@ -537,6 +538,18 @@ RectTransform:
   m_AnchoredPosition: {x: 335.77377, y: 218.79745}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &622291408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622291403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e621c5aa0d997f4a8a25b9849506bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,9 +830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd89a3a06c049d946b3a7f7e9a3e9032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Switch: {fileID: 0}
-  switchOn: {fileID: 21300000, guid: e166313210c43be468259971b6f224f5, type: 3}
-  switchOff: {fileID: 21300000, guid: ee1834ec3b9a48f478ef69ef3584499b, type: 3}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -967,6 +977,7 @@ GameObject:
   - component: {fileID: 1244707972}
   - component: {fileID: 1244707971}
   - component: {fileID: 1244707970}
+  - component: {fileID: 1244707974}
   m_Layer: 0
   m_Name: Earth
   m_TagString: Untagged
@@ -1047,6 +1058,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1244707974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244707969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e64cf1216df55f64a90d206f1971b6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1289261853
 GameObject:
   m_ObjectHideFlags: 0
