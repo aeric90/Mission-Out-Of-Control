@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Xml;
 using HtmlAgilityPack;
-using Renci.SshNet;
-using Renci.SshNet.Sftp;
 using System.IO;
+using System.Net;
+
 
 public struct ManualError
 {
@@ -26,25 +25,27 @@ public struct ManualError
 }
 public class manual_controller : MonoBehaviour
 {
-	public TMPro.TextMeshProUGUI manualURLText;
+	public TMPro.TextMeshProUGUI manualCodeText;
 
 	private List<ManualError> manualErrors = new List<ManualError>();
 	private HtmlDocument manualTemplate;
-	private SftpClient sftp;
-
 	private TextReader inputText;
 	private MemoryStream outputStream = new MemoryStream();
 
+	private int manualCode;
 	private string manualFileName;
 
 	private void Start()
 	{
 		GenerateErrorList();
 
-		SFTPConnect();
-		GetFromFTP();
+		//SFTPConnect();
+		//GetFromFTP();
 
-		manualFileName = @"/Mission_Manual_" + UnityEngine.Random.Range(1000, 10000) + ".html"; ;
+		FTPGet();
+
+		manualCode = UnityEngine.Random.Range(1000, 10000);
+		manualFileName = @"/Mission_Manual_" + manualCode + ".html"; ;
 
 		manualTemplate = new HtmlDocument();
 		manualTemplate.Load(inputText);
@@ -58,10 +59,9 @@ public class manual_controller : MonoBehaviour
 
 		manualTemplate.Save(outputStream);
 
-		SaveToFTP();
-		SFTPDisconnect();
+		FTPSend(outputStream.ToArray(), manualFileName);
 
-		manualURLText.text = @"http://ugrad.bitdegree.ca/~ericdemarbre" + manualFileName;
+		manualCodeText.text = manualCode.ToString();
 	}
 
 	private void GenerateErrorList()
@@ -453,35 +453,34 @@ public class manual_controller : MonoBehaviour
 		errorNode.InnerHtml = puzzle_controller.puzzleInstance.GetGameInstructionTitle(instructionID) + " - STEP " + (stepID + 1) + " - FOR " + ui_controller.uiInstance.GetControlLabel(controlID) + ", ENTER " + answer + " NOT " + errorAnswer;
 	}
 
-	public void SFTPConnect()
+	public void FTPGet()
 	{
-		string host = @"134.117.92.193";
-		string username = "ericdemarbre";
-		string password = @"gEm1va9t9P";
+		// Get the object used to communicate with the server.
+		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173/Beta_Test_Manual_Template.html");
+		request.Method = WebRequestMethods.Ftp.DownloadFile;
 
-		sftp = new SftpClient(host, username, password);
-	    sftp.Connect();
+		// This example assumes the FTP site uses anonymous logon.
+		request.Credentials = new NetworkCredential("u590740642", "moocmanuals");
+
+		FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+		Stream responseStream = response.GetResponseStream();
+		inputText = new StreamReader(responseStream);
 	}
-	public void GetFromFTP()
-	{
-		var contents = sftp.OpenRead(@"/accounts/undergraduates/ericdemarbre/public_html/Beta_Test_Manual_Template.html");
-		inputText = new StreamReader(contents);
-	}
-	public void SaveToFTP()
-	{
-		outputStream.Position =0;
 
-		string workingDirectory = "/accounts/undergraduates/ericdemarbre/public_html";
-
-		string path = workingDirectory + "/" + manualFileName;
-
-		sftp.ChangeDirectory(workingDirectory);
-		sftp.BufferSize = 4 * 1024;
-		sftp.UploadFile(outputStream, path);
-	}
-	public void SFTPDisconnect()
+	public void FTPSend(byte[] outputBytes, string manualFileName)
 	{
-		sftp.Disconnect();
+		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
+		request.Method = WebRequestMethods.Ftp.UploadFile;
+
+		request.Credentials = new NetworkCredential("u590740642", "moocmanuals");
+
+		request.ContentLength = outputBytes.Length;
+
+		using (Stream requestStream = request.GetRequestStream())
+		{
+			requestStream.Write(outputBytes, 0, outputBytes.Length);
+		}
 	}
 
 }
