@@ -252,7 +252,7 @@ public class GameInstruction
             case "MAPPING_UP":
                 GenerateMappingDependancy(controlID1, controlID2, false);
                 break;
-            case "mapping_down":
+            case "MAPPING_DOWN":
                 GenerateMappingDependancy(controlID1, controlID2, true);
                 break;
             case "RANGE":

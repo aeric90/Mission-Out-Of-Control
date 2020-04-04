@@ -102,16 +102,37 @@ public class manual_controller : MonoBehaviour
 		
 		for (int i = 0; i < puzzle_controller.puzzleInstance.GetSelectedInstructionCount(); i++)
 		{
+			string instructionHTML = puzzle_controller.puzzleInstance.GetSelectedInstuctionHTML(i);
+
+			switch (instructionHTML)
+			{
+				case "/mooc_davp.html":
+					PopulateMoocDAVP();
+					break;
+				case "/mooc_adb.html":
+					PopulateMoocADB();
+					break;
+				case "/mooc_dlg.html":
+					PopulateMoocDLG();
+					break;
+				case "/mooc_astm.html":
+					PopulateInstruction1();
+					break;
+				case "/mooc_jep.html":
+					PopulateInstruction2();
+					break;
+				case "/mooc_frt.html":
+					PopulateInstruction3();
+					break;
+				case "/mooc_snc.html":
+					PopulateInstruction4();
+					break;
+				default:
+					break;
+			}
 
 		}
 
-		/*
-		PopulateInstruction0();
-		*/
-		PopulateInstruction1();
-		PopulateInstruction2();
-		PopulateInstruction3();
-		PopulateInstruction4();
 		PopulateInstruction5();
 
 		manualTemplate.Save(outputStream);
@@ -147,7 +168,7 @@ public class manual_controller : MonoBehaviour
 			manualErrors.Add(new ManualError(loadedInstructions[i], stepID));
 		}
 	}
-	private void PopulateInstruction0()
+	private void PopulateMoocDAVP()
 	{
 		int engineCount = puzzle_controller.puzzleInstance.GetEngineCount();
 
@@ -174,6 +195,28 @@ public class manual_controller : MonoBehaviour
 				}
 			}
 		}
+	}
+	private void PopulateMoocADB()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
+		int controlID0 = instruction.GetDependantControlID(0);
+		int controlID1 = instruction.GetStepControl(0);
+		int controlID2 = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "button" }, controlID1);
+		string answer0 = instruction.GetAnswer(0);
+
+		ChangeManualTag(0, 0, "//*[@id=\"adb_c0\"]", controlID0);
+		ChangeManualTag("//*[@id=\"adb_c1\"]", controlID1);
+		ChangeManualTag("//*[@id=\"adb_c2\"]", controlID2);
+		ChangeManualTag("//*[@id=\"adb_a0\"]", answer0);
+	}
+	private void PopulateMoocDLG()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
+		int controlID0 = instruction.GetStepControl(0);
+		int controlID1 = instruction.GetDependantControlID(0);
+
+		ChangeManualTag("//*[@id=\"dlg_c0\"]", controlID0);
+		ChangeManualTag(0, 0, "//*[@id=\"dlg_c1\"]", controlID1);
 	}
 	private void PopulateInstruction1()
 	{
@@ -298,6 +341,7 @@ public class manual_controller : MonoBehaviour
 		ChangeManualTag(4, 0, "//*[@id=\"snc_c0\"]", controlID0);
 		ChangeManualTag(4, 1, "//*[@id=\"snc_c1\"]", controlID1);
 	}
+	
 	private void PopulateInstruction5()
 	{
 		HtmlNode controlNode;
