@@ -71,19 +71,18 @@ h2 {
     padding-left: 10px;
     padding-right: 10px;
     font-family: type-bold;
-    color: beige;
     width: 550px;
-    background-color: black;
 }
 
 th {
     padding-left: 20px;
     padding-right: 20px;
     outline-style: dotted;
+    outline-width: thin;
     font-family: type-bold;
     font-weight: 200;
     align-items: center;
-    background-color: white;
+    background-color: transparent;
 }
 
 td {
@@ -91,7 +90,9 @@ td {
     padding-left: 20px;
     padding-right: 20px;
     outline-style: dotted;
+    outline-width: thin;
     background-color: transparent;
+    text-align: center;
 }
 
 .printed {
