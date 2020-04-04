@@ -4,32 +4,53 @@ using System.Reflection;
 using UnityEngine;
 using System.IO;
 using System.Xml;
+using System.Xml.Serialization;
 
-
-public class FileInstructions
+[XmlRoot("instructionCollection")]
+public class InstructionContainer
 {
-    private string title;
-    private int difficulty;
-    private FileSteps[] fileSteps;
-    private FileSuccessTriggers[] fileSucessTriggers;
+    [XmlArray("instructions"), XmlArrayItem("instruction")]
+    public List<Instruction> instructions = new List<Instruction>();
+}
+public class Instruction
+{
+    public string order;
+    public string title;
+    public bool reversable;
+    public string reverseTitle;
+    public string instructionHTML;
+
+    [XmlArray("steps"), XmlArrayItem("step")]
+    public List<Step> steps = new List<Step>();
+
+    [XmlArray("successTriggers"), XmlArrayItem("successTrigger")]
+    public List<SuccessTrigger> successTriggers = new List<SuccessTrigger>();
+}
+public class Step
+{
+    [XmlArray("stepControls"), XmlArrayItem("stepControl")]
+    public List<StepControl> stepControls = new List<StepControl>();
+
+    public string answerType;
+
+    public string answer;
+
+    public string dependantType;
+    [XmlArray("dependantControls"), XmlArrayItem("stepControl")]
+    public List<StepControl> dependantControls = new List<StepControl>();
+
+    public string defaultValue;
+}
+public class StepControl
+{
+    public string controlType;
+}
+public class SuccessTrigger
+{
+    public string function;
 }
 
-public class FileSteps
-{
-    private string[] controls;
-    private string defaultAnswer;
-    private string answerType;
-    private string answerValue;
-}
 
-public class FileSuccessTriggers
-{
-    private string function;
-    private string parameter;
-}
-
-
-// This class contains the relevant control and the expected answer
 public class GameStep
 {
     protected int controlID;
@@ -112,7 +133,7 @@ public class DependantGameStep : GameStep
     }
 
 }
-// This class contains the title and steps for a game instruction
+
 public class GameInstruction
 {
     private string instructionTitle;
@@ -228,19 +249,19 @@ public class GameInstruction
 
         switch (dependantType)
         {
-            case "mapping_up":
+            case "MAPPING_UP":
                 GenerateMappingDependancy(controlID1, controlID2, false);
                 break;
             case "mapping_down":
                 GenerateMappingDependancy(controlID1, controlID2, true);
                 break;
-            case "range":
+            case "RANGE":
                 GenerateRangeDependancy(controlID1, controlID2);
                 break;
-            case "random":
+            case "RANDOM":
                 GenerateRandomDependancy(controlID1, controlID2);
                 break;
-            case "replacement":
+            case "REPLACEMENT":
                 GenerateReplacemnentDependancy(controlID1, controlID2);
                 break;
         }
@@ -265,9 +286,9 @@ public class GameInstruction
     {
         return instructionSteps[stepID].CheckStep(controlValue);
     }
-    public void AddSuccessTrigger(string successMethod, string successParams)
+    public void AddSuccessTrigger(string successMethod)
     {
-        string[] successTrigger = new string[] { successMethod, successParams };
+        string[] successTrigger = new string[] { successMethod };
         successTriggers.Add(successTrigger);
     }
     public bool CheckSuccessTrigger()
@@ -282,13 +303,13 @@ public class GameInstruction
             foundMethod.Invoke(this, new object[] { trigger[1] });
         }
     }
-    public void UpdateSystem(string systemText)
+    public void UpdateSystem()
     {
-        ui_controller.uiInstance.SetScreenSystemText(systemText);
+        ui_controller.uiInstance.SetScreenSystemText(puzzle_controller.puzzleInstance.GetCurrentNavSystem());
     }
-    public void UpdatePlanet(string planetText)
+    public void UpdatePlanet()
     {
-        ui_controller.uiInstance.SetScreenPlanetText(planetText);
+        ui_controller.uiInstance.SetScreenPlanetText(puzzle_controller.puzzleInstance.GetCurrentNavPlanet());
     }
     private void GenerateMappingDependancy(int controlID1, int controlID2)
     {
@@ -466,7 +487,6 @@ public struct Engine
         return engineType;
     }
 }
-
 public struct NavSystem
 {
     public string navSystemName;
@@ -493,7 +513,6 @@ public struct NavSystem
         return navPlanets[navPlanetsID];
     }
 }
-
 public struct Color
 {
     public string color;
@@ -516,6 +535,8 @@ public class puzzle_controller : MonoBehaviour
 {
     public static puzzle_controller puzzleInstance;
 
+    private InstructionContainer fileInstructions;
+
     private List<GameInstruction> gameInstructions = new List<GameInstruction>();
 
     private string modelNo;
@@ -537,7 +558,8 @@ public class puzzle_controller : MonoBehaviour
     
     private void Start()
     {
-        modelNo = "3ZF94";
+        LoadInstructionsXML();
+        modelNo = "3ZF94";  // Need to be able to generate these
         ui_controller.uiInstance.SetScreenModelText(modelNo);
 
         InitializeEngineList();
@@ -561,38 +583,48 @@ public class puzzle_controller : MonoBehaviour
         ui_controller.uiInstance.SetConnectedControls(3, 4, "random");
 
         // Sets the defaults value of LIGHT to 3
-        ui_controller.uiInstance.SetControlValue(4, "3");
+        ui_controller.uiInstance.SetControlValue(4, ui_controller.uiInstance.GetControlRandomAnswer(4));
 
         // Sets a mapped relationship between SLIDER 2 and METER
         ui_controller.uiInstance.SetConnectedControls(7, 2, "mapped");
 
         ui_controller.uiInstance.SetControlValue(9, ui_controller.uiInstance.GetControlRandomAnswer(9));
 
-        // 1st Instruction
-        gameInstructions.Add(new GameInstruction("DISABLE AUTOMATIC VACUUM PUMPS"));
-        gameInstructions[0].AddStep(3, "0");
+        for(int instruction = 0; instruction <= 4; instruction++)
+        {
+            string instructionTitle = fileInstructions.instructions[instruction].title;
+            gameInstructions.Add(new GameInstruction(instructionTitle));
 
-        // 2nd Instruction
-        gameInstructions.Add(new GameInstruction("ACTIVATE STELLAR TRIANGULATION MATRIX"));
-        gameInstructions[1].AddDependantSteps(5, 4, "mapping_up");
-        gameInstructions[1].AddStep(8, "1");
-        gameInstructions[1].AddSuccessTrigger("UpdateSystem", navSystemList[navSystemID].GetNavSystemName());
-        gameInstructions[1].AddSuccessTrigger("UpdatePlanet", navSystemList[navSystemID].GetNavPlanetName(navPlanetID));
+            
+           for (int i = 0; i < fileInstructions.instructions[instruction].steps.Count; i++)
+           {
+                int instructionControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[instruction].steps[i].stepControls[0].controlType });
+                string answerType = fileInstructions.instructions[instruction].steps[i].answerType;
+                switch (answerType)
+                {
+                    case "FIXED":
+                       string insturctionControlAnswer = fileInstructions.instructions[instruction].steps[i].answer;
+                       gameInstructions[instruction].AddStep(instructionControlID, insturctionControlAnswer);
+                       break;
+                    case "DEPENDANT":
+                        int instructionDependantControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[instruction].steps[i].dependantControls[0].controlType });
+                        string instructionDependantType = fileInstructions.instructions[instruction].steps[i].dependantType;
+                        gameInstructions[instruction].AddDependantSteps(instructionControlID, instructionDependantControlID, instructionDependantType);
+                        break;
+                    case "RANDOM":
+                       gameInstructions[instruction].AddStep(instructionControlID);
+                       break;
+                   default:
+                       break;
+                }
+            }
 
-        gameInstructions.Add(new GameInstruction("JETISON EMERGENCY PUPPIES"));
-        gameInstructions[2].AddStep(7);
-        gameInstructions[2].AddDependantSteps(6, 2, "replacement");
-        gameInstructions[2].AddDependantSteps(1, 9, "mapping_up");
-
-        gameInstructions.Add(new GameInstruction("FIRE RETRO THRUSTERS"));
-        gameInstructions[3].AddStep(5);
-        gameInstructions[3].AddDependantSteps(7, 5, "mapping_up");
-        gameInstructions[3].AddDependantSteps(0, 4, "range");
-
-        gameInstructions.Add(new GameInstruction("SET NAVIGATION COORDINATES"));
-        gameInstructions[4].AddStep(1);
-        gameInstructions[4].AddStep(9);
-        gameInstructions[4].AddStep(6);
+            for (int j = 0; j < fileInstructions.instructions[instruction].successTriggers.Count; j++)
+            {
+                string successFunction = fileInstructions.instructions[instruction].successTriggers[j].function;
+                gameInstructions[instruction].AddSuccessTrigger(successFunction);
+            }
+        }
 
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
         gameInstructions[5].AddStep(3, "1");
@@ -600,6 +632,8 @@ public class puzzle_controller : MonoBehaviour
         gameInstructions[5].AddStep(8, "0");
         gameInstructions[5].AddStep(2, "0");
         gameInstructions[5].AddStep(6);
+
+        manual_controller.manualInstance.CreateManual();
     }
 
     private void InitializeEngineList()
@@ -657,17 +691,6 @@ public class puzzle_controller : MonoBehaviour
         return gameInstructions[instructionID];
     }
 
-    public void XMLTest()
-    {
-        XmlDocument doc = new XmlDocument();
-        doc.Load("/assets/instructions.xml");
-
-        XmlNodeList nodeList;
-        XmlNode root = doc.DocumentElement;
-
-
-    }
-
     public int GetEngineCount()
     {
         return engineList.Count;
@@ -703,6 +726,11 @@ public class puzzle_controller : MonoBehaviour
         return colorList[int.Parse(colorValue) - 1].GetWarningLevel();
     }
 
+    public string GetCurrentNavSystem()
+    {
+        return navSystemList[navSystemID].GetNavSystemName();
+    }
+
     public int GetNavSystemCount()
     {
         return navSystemList.Count;
@@ -717,9 +745,22 @@ public class puzzle_controller : MonoBehaviour
     {
         return navSystemList[navSystemID].GetNavPlanetsCount();
     }
+    
+    public string GetCurrentNavPlanet()
+    {
+        return navSystemList[navSystemID].GetNavPlanetName(navPlanetID);
+    }
 
     public bool NavSystemMatch(int navSystemID, int navPlanetID)
     {
         return (this.navSystemID == navSystemID && this.navPlanetID == navPlanetID);
+    }
+
+    public void LoadInstructionsXML()
+    {
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(InstructionContainer));
+        FileStream readStream = new FileStream(@".\Assets\XML\MOOC_Instructions.xml", FileMode.Open);
+        fileInstructions = xmlSerializer.Deserialize(readStream) as InstructionContainer;
+        readStream.Close();
     }
 }

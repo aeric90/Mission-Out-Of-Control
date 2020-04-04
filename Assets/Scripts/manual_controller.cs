@@ -6,7 +6,6 @@ using HtmlAgilityPack;
 using System.IO;
 using System.Net;
 
-
 public struct ManualError
 {
 	private int instructionID;
@@ -25,6 +24,8 @@ public struct ManualError
 }
 public class manual_controller : MonoBehaviour
 {
+	public static manual_controller manualInstance;
+
 	public TMPro.TextMeshProUGUI manualCodeText;
 
 	private List<ManualError> manualErrors = new List<ManualError>();
@@ -35,12 +36,14 @@ public class manual_controller : MonoBehaviour
 	private int manualCode;
 	private string manualFileName;
 
-	private void Start()
+	private void Awake()
+	{
+		if (manualInstance == null) { manualInstance = this; }
+	}
+
+	public void CreateManual()
 	{
 		GenerateErrorList();
-
-		//SFTPConnect();
-		//GetFromFTP();
 
 		FTPGet();
 
@@ -62,6 +65,7 @@ public class manual_controller : MonoBehaviour
 		FTPSend(outputStream.ToArray(), manualFileName);
 
 		manualCodeText.text = manualCode.ToString();
+
 	}
 
 	private void GenerateErrorList()
@@ -252,7 +256,7 @@ public class manual_controller : MonoBehaviour
 		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"re_c0\"]");
 		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID3);
 
-		string answer4 = instruction.GetAnswer(4);
+		string answer4 = instruction.GetAnswer(3);
 
 		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"re_v0\"]");
 		controlNode.InnerHtml = answer4;
@@ -467,7 +471,6 @@ public class manual_controller : MonoBehaviour
 		Stream responseStream = response.GetResponseStream();
 		inputText = new StreamReader(responseStream);
 	}
-
 	public void FTPSend(byte[] outputBytes, string manualFileName)
 	{
 		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
@@ -482,5 +485,4 @@ public class manual_controller : MonoBehaviour
 			requestStream.Write(outputBytes, 0, outputBytes.Length);
 		}
 	}
-
 }
