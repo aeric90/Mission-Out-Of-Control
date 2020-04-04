@@ -112,20 +112,20 @@ public class manual_controller : MonoBehaviour
 				case "/mooc_adb.html":
 					PopulateMoocADB();
 					break;
+				case "/mooc_astm.html":
+					PopulateMoocASTM();
+					break;
 				case "/mooc_dlg.html":
 					PopulateMoocDLG();
 					break;
-				case "/mooc_astm.html":
-					PopulateInstruction1();
-					break;
 				case "/mooc_jep.html":
-					PopulateInstruction2();
+					PopulateMoocJEP();
 					break;
 				case "/mooc_frt.html":
-					PopulateInstruction3();
+					PopulateMoocFRT();
 					break;
 				case "/mooc_snc.html":
-					PopulateInstruction4();
+					PopulateMoocSNC();
 					break;
 				default:
 					break;
@@ -133,7 +133,7 @@ public class manual_controller : MonoBehaviour
 
 		}
 
-		PopulateInstruction5();
+		PopulateMoocRE();
 
 		manualTemplate.Save(outputStream);
 
@@ -168,6 +168,7 @@ public class manual_controller : MonoBehaviour
 			manualErrors.Add(new ManualError(loadedInstructions[i], stepID));
 		}
 	}
+
 	private void PopulateMoocDAVP()
 	{
 		int engineCount = puzzle_controller.puzzleInstance.GetEngineCount();
@@ -209,16 +210,7 @@ public class manual_controller : MonoBehaviour
 		ChangeManualTag("//*[@id=\"adb_c2\"]", controlID2);
 		ChangeManualTag("//*[@id=\"adb_a0\"]", answer0);
 	}
-	private void PopulateMoocDLG()
-	{
-		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
-		int controlID0 = instruction.GetStepControl(0);
-		int controlID1 = instruction.GetDependantControlID(0);
-
-		ChangeManualTag("//*[@id=\"dlg_c0\"]", controlID0);
-		ChangeManualTag(0, 0, "//*[@id=\"dlg_c1\"]", controlID1);
-	}
-	private void PopulateInstruction1()
+	private void PopulateMoocASTM()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
 		int controlID1 = instruction.GetStepControl(0);
@@ -231,7 +223,16 @@ public class manual_controller : MonoBehaviour
 
 		ChangeManualTag("//*[@id=\"stm_c3\"]", controlID3);
 	}
-	private void PopulateInstruction2()
+	private void PopulateMoocDLG()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
+		int controlID0 = instruction.GetStepControl(0);
+		int controlID1 = instruction.GetStepControl(1);
+
+		ChangeManualTag(0, 0, "//*[@id=\"dlg_c0\"]", controlID0);
+		ChangeManualTag(0, 1, "//*[@id=\"dlg_c1\"]", controlID1);
+	}
+	private void PopulateMoocJEP()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(2);
 
@@ -253,7 +254,7 @@ public class manual_controller : MonoBehaviour
 
 		ChangeManualTag(2, 2, "//*[@id=\"jep_c3\"]", controlID3, "//*[@id=\"jep_c4\"]", controlID4);
 	}
-	private void PopulateInstruction3()
+	private void PopulateMoocFRT()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(3);
 
@@ -288,7 +289,7 @@ public class manual_controller : MonoBehaviour
 		ChangeManualTag("//*[@id=\"frt_v1\"]", value1);
 		ChangeManualTag(3, 1, "//*[@id=\"frt_c2\"]", controlID2);
 	}
-	private void PopulateInstruction4()
+	private void PopulateMoocSNC()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(4);
 		int controlID0 = instruction.GetStepControl(0);
@@ -342,7 +343,7 @@ public class manual_controller : MonoBehaviour
 		ChangeManualTag(4, 1, "//*[@id=\"snc_c1\"]", controlID1);
 	}
 	
-	private void PopulateInstruction5()
+	private void PopulateMoocRE()
 	{
 		HtmlNode controlNode;
 

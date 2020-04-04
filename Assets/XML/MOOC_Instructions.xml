@@ -43,7 +43,7 @@
       </steps>
     </instruction>
     <instruction>
-      <order>0</order>
+      <order>1</order>
       <title>DEPLOY LANDING GEAR</title>
       <reversible>TRUE</reversible>
       <reverseTitle>RETRACT LANDING GEAR</reverseTitle>
@@ -52,16 +52,22 @@
         <step>
           <stepControls>
             <stepControl>
-              <controlType>switch</controlType>
+              <controlType>button</controlType>
             </stepControl>
           </stepControls>
-          <answerType>DEPENDANT</answerType>
-          <dependantType>MAPPING_DOWN</dependantType>
-          <dependantControls>
+          <answerType>FIXED</answerType>
+          <answer>1</answer>
+          <defaultValue>0</defaultValue>
+        </step>
+        <step>
+          <stepControls>
             <stepControl>
               <controlType>button</controlType>
             </stepControl>
-          </dependantControls>
+          </stepControls>
+          <answerType>FIXED</answerType>
+          <answer>1</answer>
+          <defaultValue>0</defaultValue>
         </step>
       </steps>
     </instruction>
