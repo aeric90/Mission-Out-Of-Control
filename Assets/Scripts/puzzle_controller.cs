@@ -765,7 +765,7 @@ public class puzzle_controller : MonoBehaviour
     public void LoadInstructionsXML()
     {
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(InstructionContainer));
-        FileStream readStream = new FileStream(@".\Assets\XML\MOOC_Instructions.xml", FileMode.Open);
+        FileStream readStream = new FileStream(@".\Assets\XML\/mooc_Instructions.xml", FileMode.Open);
         fileInstructions = xmlSerializer.Deserialize(readStream) as InstructionContainer;
         readStream.Close();
     }
@@ -783,5 +783,20 @@ public class puzzle_controller : MonoBehaviour
 
             selectedInstructions.Add(randomInstructionID);
         }
+    }
+
+    public int GetSelectedInstructionCount()
+    {
+        return selectedInstructions.Count;
+    }
+
+    public string GetSelectedInstructionTitle(int instructionID)
+    {
+        return fileInstructions.instructions[selectedInstructions[instructionID]].title;
+    }
+
+    public string GetSelectedInstuctionHTML(int instructionID)
+    {
+        return fileInstructions.instructions[selectedInstructions[instructionID]].instructionHTML;
     }
 }

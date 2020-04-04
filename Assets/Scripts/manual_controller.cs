@@ -30,8 +30,15 @@ public class manual_controller : MonoBehaviour
 
 	private List<ManualError> manualErrors = new List<ManualError>();
 	private HtmlDocument manualTemplate;
-	private TextReader inputText;
+
+	private static MemoryStream inputStream = new MemoryStream();
+
+	private StreamWriter inputFile = new StreamWriter(inputStream);
+	private StreamReader headerText;
+	private StreamReader instructionText;
 	private MemoryStream outputStream = new MemoryStream();
+
+	private StreamReader manualText;
 
 	private int manualCode;
 	private string manualFileName;
@@ -50,15 +57,57 @@ public class manual_controller : MonoBehaviour
 	{
 		GenerateErrorList();
 
-		FTPGet();
-		
+		headerText = FTPGet(@"/instructions/mooc_header.html");
+		inputFile.Write(headerText.ReadToEnd());
+		inputFile.Flush();
+
+		List<int> manualInsturctions = new List<int>();
+
+		do
+		{
+			int randomInstruction = -1;
+
+			do
+			{
+				randomInstruction = UnityEngine.Random.Range(0, puzzle_controller.puzzleInstance.GetSelectedInstructionCount());
+			} while (manualInsturctions.Contains(randomInstruction));
+
+			string instructionHTML = puzzle_controller.puzzleInstance.GetSelectedInstuctionHTML(randomInstruction);
+
+			instructionText = FTPGet(@"/instructions" + instructionHTML);
+			inputFile.Write(instructionText.ReadToEnd());
+			inputFile.Flush();
+
+			manualInsturctions.Add(randomInstruction);
+
+		} while (manualInsturctions.Count < puzzle_controller.puzzleInstance.GetSelectedInstructionCount());
+
+		instructionText = FTPGet(@"/instructions/mooc_re.html");
+		inputFile.Write(instructionText.ReadToEnd());
+		inputFile.Flush();
+
+		headerText = FTPGet(@"/instructions/mooc_footer.html");
+		inputFile.Write(headerText.ReadToEnd());
+		inputFile.Flush();
+
+		inputStream.Position = 0;
+
+		manualText = new StreamReader(inputStream);
+
 		manualCode = UnityEngine.Random.Range(1000, 10000);
-		manualFileName = @"/Mission_Manual_" + manualCode + ".html"; ;
+		manualFileName = @"/Mission_Manual_" + manualCode + ".html";
 
 		manualTemplate = new HtmlDocument();
-		manualTemplate.Load(inputText);
+		manualTemplate.Load(manualText);
 		
+		for (int i = 0; i < puzzle_controller.puzzleInstance.GetSelectedInstructionCount(); i++)
+		{
+
+		}
+
+		/*
 		PopulateInstruction0();
+		*/
 		PopulateInstruction1();
 		PopulateInstruction2();
 		PopulateInstruction3();
@@ -461,10 +510,10 @@ public class manual_controller : MonoBehaviour
 		errorNode.InnerHtml = puzzle_controller.puzzleInstance.GetGameInstructionTitle(instructionID) + " - STEP " + (stepID + 1) + " - FOR " + ui_controller.uiInstance.GetControlLabel(controlID) + ", ENTER " + answer + " NOT " + errorAnswer;
 	}
 
-	public void FTPGet()
+	public StreamReader FTPGet(string manualFileName)
 	{
 		// Get the object used to communicate with the server.
-		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173/Beta_Test_Manual_Template.html");
+		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
 		request.Method = WebRequestMethods.Ftp.DownloadFile;
 
 		// This example assumes the FTP site uses anonymous logon.
@@ -473,7 +522,7 @@ public class manual_controller : MonoBehaviour
 		FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
 		Stream responseStream = response.GetResponseStream();
-		inputText = new StreamReader(responseStream);
+		return new StreamReader(responseStream);
 	}
 	public void FTPSend(byte[] outputBytes, string manualFileName)
 	{
@@ -495,5 +544,8 @@ public class manual_controller : MonoBehaviour
 		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
 		request.Credentials = new NetworkCredential("u590740642", "moocmanuals");
 		request.Method = WebRequestMethods.Ftp.DeleteFile;
+		FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+		Debug.Log(response.StatusDescription);
+		response.Close();
 	}
 }
