@@ -41,18 +41,23 @@ public class manual_controller : MonoBehaviour
 		if (manualInstance == null) { manualInstance = this; }
 	}
 
+	private void OnApplicationQuit()
+	{
+		FTPDelete(manualFileName);
+	}
+
 	public void CreateManual()
 	{
 		GenerateErrorList();
 
 		FTPGet();
-
+		
 		manualCode = UnityEngine.Random.Range(1000, 10000);
 		manualFileName = @"/Mission_Manual_" + manualCode + ".html"; ;
 
 		manualTemplate = new HtmlDocument();
 		manualTemplate.Load(inputText);
-
+		
 		PopulateInstruction0();
 		PopulateInstruction1();
 		PopulateInstruction2();
@@ -65,7 +70,6 @@ public class manual_controller : MonoBehaviour
 		FTPSend(outputStream.ToArray(), manualFileName);
 
 		manualCodeText.text = manualCode.ToString();
-
 	}
 
 	private void GenerateErrorList()
@@ -484,5 +488,12 @@ public class manual_controller : MonoBehaviour
 		{
 			requestStream.Write(outputBytes, 0, outputBytes.Length);
 		}
+	}
+
+	public void FTPDelete(string manualFileName)
+	{
+		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
+		request.Credentials = new NetworkCredential("u590740642", "moocmanuals");
+		request.Method = WebRequestMethods.Ftp.DeleteFile;
 	}
 }

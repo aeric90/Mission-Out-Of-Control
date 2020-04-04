@@ -300,7 +300,7 @@ public class GameInstruction
         foreach (string[] trigger in successTriggers)
         {
             MethodInfo foundMethod = this.GetType().GetMethod(trigger[0]);
-            foundMethod.Invoke(this, new object[] { trigger[1] });
+            foundMethod.Invoke(this, new object[] { });
         }
     }
     public void UpdateSystem()
@@ -536,17 +536,17 @@ public class puzzle_controller : MonoBehaviour
     public static puzzle_controller puzzleInstance;
 
     private InstructionContainer fileInstructions;
+    private List<int> selectedInstructions = new List<int>();
+
 
     private List<GameInstruction> gameInstructions = new List<GameInstruction>();
 
     private string modelNo;
 
     private List<Engine> engineList = new List<Engine>();
-
     private int engineID, engineNoID;
 
     private List<NavSystem> navSystemList = new List<NavSystem>();
-
     private int navSystemID, navPlanetID;
 
     private List<Color> colorList = new List<Color>();
@@ -559,6 +559,8 @@ public class puzzle_controller : MonoBehaviour
     private void Start()
     {
         LoadInstructionsXML();
+        ChooseInstructions();
+
         modelNo = "3ZF94";  // Need to be able to generate these
         ui_controller.uiInstance.SetScreenModelText(modelNo);
 
@@ -590,39 +592,43 @@ public class puzzle_controller : MonoBehaviour
 
         ui_controller.uiInstance.SetControlValue(9, ui_controller.uiInstance.GetControlRandomAnswer(9));
 
-        for(int instruction = 0; instruction <= 4; instruction++)
+        for(int i = 0; i < selectedInstructions.Count; i++)
         {
-            string instructionTitle = fileInstructions.instructions[instruction].title;
-            gameInstructions.Add(new GameInstruction(instructionTitle));
 
-            
-           for (int i = 0; i < fileInstructions.instructions[instruction].steps.Count; i++)
-           {
-                int instructionControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[instruction].steps[i].stepControls[0].controlType });
-                string answerType = fileInstructions.instructions[instruction].steps[i].answerType;
+            int currentInstruction = selectedInstructions[i];
+
+            string instructionTitle = fileInstructions.instructions[currentInstruction].title;
+            gameInstructions.Add(new GameInstruction(instructionTitle));
+                    
+            for (int j = 0; j < fileInstructions.instructions[currentInstruction].steps.Count; j++)
+            {
+                int instructionControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[currentInstruction].steps[j].stepControls[0].controlType });
+                string answerType = fileInstructions.instructions[currentInstruction].steps[j].answerType;
+
                 switch (answerType)
                 {
-                    case "FIXED":
-                       string insturctionControlAnswer = fileInstructions.instructions[instruction].steps[i].answer;
-                       gameInstructions[instruction].AddStep(instructionControlID, insturctionControlAnswer);
-                       break;
-                    case "DEPENDANT":
-                        int instructionDependantControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[instruction].steps[i].dependantControls[0].controlType });
-                        string instructionDependantType = fileInstructions.instructions[instruction].steps[i].dependantType;
-                        gameInstructions[instruction].AddDependantSteps(instructionControlID, instructionDependantControlID, instructionDependantType);
-                        break;
-                    case "RANDOM":
-                       gameInstructions[instruction].AddStep(instructionControlID);
-                       break;
-                   default:
-                       break;
+
+                case "FIXED":
+                    string insturctionControlAnswer = fileInstructions.instructions[currentInstruction].steps[j].answer;
+                    gameInstructions[i].AddStep(instructionControlID, insturctionControlAnswer);
+                    break;
+                case "DEPENDANT":
+                    int instructionDependantControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[currentInstruction].steps[j].dependantControls[0].controlType });
+                    string instructionDependantType = fileInstructions.instructions[currentInstruction].steps[j].dependantType;
+                    gameInstructions[i].AddDependantSteps(instructionControlID, instructionDependantControlID, instructionDependantType);
+                    break;
+                case "RANDOM":
+                    gameInstructions[i].AddStep(instructionControlID);
+                    break;
+                default:
+                    break;
                 }
             }
 
-            for (int j = 0; j < fileInstructions.instructions[instruction].successTriggers.Count; j++)
+            for (int j = 0; j < fileInstructions.instructions[currentInstruction].successTriggers.Count; j++)
             {
-                string successFunction = fileInstructions.instructions[instruction].successTriggers[j].function;
-                gameInstructions[instruction].AddSuccessTrigger(successFunction);
+                string successFunction = fileInstructions.instructions[currentInstruction].successTriggers[j].function;
+                gameInstructions[i].AddSuccessTrigger(successFunction);
             }
         }
 
@@ -762,5 +768,20 @@ public class puzzle_controller : MonoBehaviour
         FileStream readStream = new FileStream(@".\Assets\XML\MOOC_Instructions.xml", FileMode.Open);
         fileInstructions = xmlSerializer.Deserialize(readStream) as InstructionContainer;
         readStream.Close();
+    }
+
+    public void ChooseInstructions()
+    {
+        for(int i = 0; i < 5; i++)  // 5 here would be replaced by difficulty
+        {
+            int randomInstructionID = -1;
+
+            do
+            {
+                randomInstructionID = UnityEngine.Random.Range(0, fileInstructions.instructions.Count);
+            } while (fileInstructions.instructions[randomInstructionID].order != i.ToString());
+
+            selectedInstructions.Add(randomInstructionID);
+        }
     }
 }

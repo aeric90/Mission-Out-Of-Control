@@ -1,0 +1,48 @@
+@font-face {
+  font-family: karnivor;
+  src: url(KARNIVOR.ttf);
+}
+
+body {
+    background-image: url("sky.jpg");
+}
+
+h1 {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+}
+
+h2 {
+    font-family: karnivor;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+}
+
+p {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+}
+
+#manual_form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+#title_image {
+    width: 40%;
+}
+
+
+#button_image {
+    width: 20%;
+}
+
+#error_space {
+    font-family: karnivor;
+    background-color: rgba(0, 0, 0, 0);
+    color: red;
+    text-align: center;
+}

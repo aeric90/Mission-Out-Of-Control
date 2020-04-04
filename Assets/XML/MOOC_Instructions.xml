@@ -20,6 +20,25 @@
       </steps>
     </instruction>
     <instruction>
+      <order>0</order>
+      <title>ACTIVATE DISTRESS BEACON</title>
+      <reversible>TRUE</reversible>
+      <reverseTitle>DISABLE DISTRESS BEACON</reverseTitle>
+      <instructionHTML>MOOC_ADB.html</instructionHTML>
+      <steps>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>button</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>FIXED</answerType>
+          <answer>1</answer>
+          <defaultValue>0</defaultValue>
+        </step>
+      </steps>
+    </instruction>
+    <instruction>
       <order>1</order>
       <title>ACTIVATE STELLAR TRIANGULATION MATRIX</title>
       <reversible>TRUE</reversible>

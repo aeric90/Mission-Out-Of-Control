@@ -1,0 +1,103 @@
+@font-face {
+    font-family: script;
+    src: url(./fonts/danielbd.ttf);
+}
+
+@font-face {
+    font-family: type-regular;
+    src: url(./fonts/RobotoMono-Regular.ttf);
+}
+
+@font-face {
+    font-family: type-bold;
+    src: url(./fonts/RobotoMono-Bold.ttf);
+}
+
+body {
+    background-image: url("paper.png");
+    background-color: white;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 150px;
+    margin-left: 200px;
+}
+
+.overlay {
+    background-color: #ffffff00;
+    position: absolute;
+    z-index: 100;
+}
+
+.code {
+    font-family: script;
+    color: red;
+    left: 720px;
+    top: 50px;
+    transform: rotate(45deg);
+    text-align: center;
+}
+
+.error1 {
+    font-family: script;
+    color: blue;
+    left: 720px;
+    top: 350px;
+    transform: rotate(-25deg);
+    text-align: center;
+    width: 250px;
+}
+
+.error2 {
+    font-family: script;
+    color: green;
+    left: 5px;
+    top: 900px;
+    transform: rotate(-85deg);
+    text-align: center;
+    width: 250px;
+}
+
+.error3 {
+    font-family: script;
+    color: black;
+    left: 900px;
+    top: 1450px;
+    transform: rotate(10deg);
+    text-align: center;
+    width: 250px;
+}
+
+h2 {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: type-bold;
+    color: beige;
+    width: 550px;
+    background-color: black;
+}
+
+th {
+    padding-left: 20px;
+    padding-right: 20px;
+    outline-style: dotted;
+    font-family: type-bold;
+    font-weight: 200;
+    align-items: center;
+    background-color: white;
+}
+
+td {
+    font-family: type-regular;
+    padding-left: 20px;
+    padding-right: 20px;
+    outline-style: dotted;
+    background-color: transparent;
+}
+
+.printed {
+    font-family: type-regular;
+}
+
+.printed-bold {
+    font-family: type-bold;
+}
