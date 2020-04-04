@@ -1,4 +1,4 @@
-@font-face {
+ @font-face {
     font-family: script;
     src: url(./fonts/danielbd.ttf);
 }
@@ -14,12 +14,25 @@
 }
 
 body {
-    background-image: url("paper.png");
+    
+    /* Main background colour is white*/
     background-color: white;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-right: 150px;
-    margin-left: 200px;
+    height: 250v;
+    
+    /* Uses a repeating gradiant to get the green stripes. It is a solid colour because the gradiant goes from green to green. each stripe is separated by a 46px transparent stripe.
+    
+    green stripe between 0 - 25px, transparent stripe between at 25 - 50 */
+    background-image: repeating-linear-gradient(#90F5B2 0px, #90F5B2 25px, transparent 25px, transparent 50px);
+    
+    /* The body has a default margin that should be set to zero so that the stripes do not show up on the outside of the boarders.*/
+    margin: 0;
+    padding: 0;
+    
+    /* These boarders allow the */
+    border-left: 100px solid white;
+    border-right: 100px solid white;
+    border-bottom: 30px solid white;
+    border-top: 50px solid white;
 }
 
 .overlay {
@@ -67,38 +80,47 @@ body {
     width: 250px;
 }
 
+/*This is the old timey printer font, who's ttf has been added to the fonts folder*/
+
+@font-face{
+    font-family: fakeReceipt;
+    src: url(fonts/fake%20receipt.ttf);
+}
+
 h2 {
+    /* The previous bit of code made this possible to use the fake receipt font */
+    font-family: "fakeReceipt";
     padding-left: 10px;
     padding-right: 10px;
-    font-family: type-bold;
     width: 550px;
 }
 
 th {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 14.5px;
     outline-style: dotted;
-    outline-width: thin;
-    font-family: type-bold;
-    font-weight: 200;
+    outline-width: 2px;
+    font-family: "fakeReceipt";
+    text-underline-position: alphabetic;
     align-items: center;
     background-color: transparent;
 }
 
 td {
-    font-family: type-regular;
-    padding-left: 20px;
-    padding-right: 20px;
+    font-family: "fakeReceipt";
+    padding: 14.5px;
     outline-style: dotted;
-    outline-width: thin;
+    outline-width: 2px;
     background-color: transparent;
     text-align: center;
 }
 
 .printed {
-    font-family: type-regular;
+    /* The previous bit of code made this possible to use */
+    font-family: "fakeReceipt";
+    line-height: 35px;
 }
 
 .printed-bold {
-    font-family: type-bold;
+    font-family: "fakeReceipt";
+    line-height: 33px;
 }
