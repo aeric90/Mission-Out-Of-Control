@@ -157,9 +157,9 @@
     </instruction>
     <instruction>
       <order>2</order>
-      <title>JETISON EMERGENCY PUPPIES</title>
+      <title>DO A BARREL ROLL</title>
       <reversible>false</reversible>
-      <instructionHTML>/mooc_jep.html</instructionHTML>
+      <instructionHTML>/mooc_dabr.html</instructionHTML>
       <steps>
         <step>
           <stepControls>
@@ -170,22 +170,9 @@
               <controlType>knob</controlType>
             </stepControl>
           </stepControls>
-          <answerType>RANDOM</answerType>
-          <reverseControl>false</reverseControl>
-        </step>
-        <step>
-          <stepControls>
-            <stepControl>
-              <controlType>keypad</controlType>
-            </stepControl>
-          </stepControls>
-          <answerType>DEPENDANT</answerType>
-          <dependantType>REPLACEMENT</dependantType>
-          <dependantControls>
-            <stepControl>
-              <controlType>meter</controlType>
-            </stepControl>
-          </dependantControls>
+          <answerType>FIXED</answerType>
+          <answer>1</answer>
+          <defaultValue></defaultValue>
           <reverseControl>false</reverseControl>
         </step>
         <step>
@@ -197,8 +184,22 @@
               <controlType>knob</controlType>
             </stepControl>
           </stepControls>
+          <answerType>FIXED</answerType>
+          <answer>5</answer>
+          <defaultValue></defaultValue>
+          <reverseControl>false</reverseControl>
+        </step>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>button</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>switch</controlType>
+            </stepControl>
+          </stepControls>
           <answerType>DEPENDANT</answerType>
-          <dependantType>MAPPING_UP</dependantType>
+          <dependantType>RANGE</dependantType>
           <dependantControls>
             <stepControl>
               <controlType>slider</controlType>
@@ -210,6 +211,11 @@
           <reverseControl>false</reverseControl>
         </step>
       </steps>
+      <successTriggers>
+        <successTrigger>
+          <function>DoABarrelRoll</function>
+        </successTrigger>
+      </successTriggers>
     </instruction>
     <instruction>
       <order>3</order>

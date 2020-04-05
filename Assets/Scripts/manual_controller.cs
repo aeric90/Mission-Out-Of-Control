@@ -134,6 +134,9 @@ public class manual_controller : MonoBehaviour
 				case "/mooc_jep.html":
 					PopulateMoocJEP();
 					break;
+				case "/mooc_dabr.html":
+					PopulateMoocDABR();
+					break;
 				case "/mooc_frt.html":
 					PopulateMoocFRT();
 					break;
@@ -282,6 +285,27 @@ public class manual_controller : MonoBehaviour
 		int controlID4 = instruction.GetDependantControlID(2);
 
 		ChangeManualTag(2, 2, "//*[@id=\"jep_c3\"]", controlID3, "//*[@id=\"jep_c4\"]", controlID4);
+	}
+	private void PopulateMoocDABR()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(2);
+
+		int controlID0 = instruction.GetStepControl(0);
+		string answer0 = instruction.GetAnswer(0);
+
+		ChangeManualTag(2, 0, "//*[@id=\"dabr_c0\"]", controlID0, "//*[@id=\"dabr_a0\"]", answer0);
+
+		int controlID1 = instruction.GetStepControl(1);
+		string answer1 = instruction.GetAnswer(1);
+
+		ChangeManualTag(2, 1, "//*[@id=\"dabr_c1\"]", controlID1, "//*[@id=\"dabr_a1\"]", answer1);
+
+		string answer2 = instruction.GetAnswer(2);
+		int controlID2 = instruction.GetStepControl(2);
+		int controlID3 = instruction.GetDependantControlID(2);
+
+		ChangeManualTag(2, 2, "//*[@id=\"dabr_c2\"]", controlID2, "//*[@id=\"dabr_a2\"]", answer2);
+		ChangeManualTag("//*[@id=\"dabr_c3\"]", controlID3);
 	}
 	private void PopulateMoocFRT()
 	{
