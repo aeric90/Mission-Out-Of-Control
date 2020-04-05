@@ -16,10 +16,9 @@
 body {
     
     /* Main background colour is white*/
-    background-color: white;
+    background-color: transparent;
     width: 750px;
-    height: 250v;
-    
+    height: auto;
     /* Uses a repeating gradiant to get the green stripes. It is a solid colour because the gradiant goes from green to green. each stripe is separated by a 46px transparent stripe.
     
     green stripe between 0 - 25px, transparent stripe between at 25 - 50 */
@@ -30,17 +29,17 @@ body {
     padding: 100;
     
     /* These boarders allow the */
-    border-left: 100px solid white;
-    border-right: 100px solid white;
-    border-bottom: 30px solid white;
-    border-top: 50px solid white;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 30px solid transparent;
+    border-top: 50px solid transparent;
 }
 
 #stripedBG{
     position: absolute;
     z-index: -1;
     width: 750px;
-    height: 3650px;
+    height: auto;
     background-image: repeating-linear-gradient(#90F5B2 0px, #90F5B2 25px, transparent 25px, transparent 50px);
 }
 
@@ -72,7 +71,7 @@ body {
 .error2 {
     font-family: script;
     color: green;
-    left: 5px;
+    left: -160px;
     top: 900px;
     transform: rotate(-85deg);
     text-align: center;
@@ -82,7 +81,7 @@ body {
 .error3 {
     font-family: script;
     color: black;
-    left: 900px;
+    left: 700px;
     top: 1450px;
     transform: rotate(10deg);
     text-align: center;
@@ -96,12 +95,26 @@ body {
     src: url(fonts/fake%20receipt.ttf);
 }
 
+h1 {
+    font-family: "fakeReceipt";
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 550px;
+}
+
 h2 {
     /* The previous bit of code made this possible to use the fake receipt font */
     font-family: "fakeReceipt";
     padding-left: 10px;
     padding-right: 10px;
     width: 550px;
+}
+
+h3 {
+    font-family: "fakeReceipt";
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 550px;  
 }
 
 th {
@@ -132,4 +145,8 @@ td {
 .printed-bold {
     font-family: "fakeReceipt";
     line-height: 33px;
+}
+
+.center {
+    text-align: center;
 }

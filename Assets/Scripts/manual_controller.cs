@@ -99,7 +99,9 @@ public class manual_controller : MonoBehaviour
 
 		manualTemplate = new HtmlDocument();
 		manualTemplate.Load(manualText);
-		
+
+		ChangeManualTag("//*[@id=\"mooc_no\"]", manualCode.ToString());
+
 		for (int i = 0; i < puzzle_controller.puzzleInstance.GetSelectedInstructionCount(); i++)
 		{
 			string instructionHTML = puzzle_controller.puzzleInstance.GetSelectedInstuctionHTML(i);
@@ -225,12 +227,12 @@ public class manual_controller : MonoBehaviour
 	}
 	private void PopulateMoocDLG()
 	{
-		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
 		int controlID0 = instruction.GetStepControl(0);
 		int controlID1 = instruction.GetStepControl(1);
 
-		ChangeManualTag(0, 0, "//*[@id=\"dlg_c0\"]", controlID0);
-		ChangeManualTag(0, 1, "//*[@id=\"dlg_c1\"]", controlID1);
+		ChangeManualTag(1, 0, "//*[@id=\"dlg_c0\"]", controlID0);
+		ChangeManualTag(1, 1, "//*[@id=\"dlg_c1\"]", controlID1);
 	}
 	private void PopulateMoocJEP()
 	{
