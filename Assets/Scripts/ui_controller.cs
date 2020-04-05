@@ -192,6 +192,35 @@ public class ui_controller : MonoBehaviour
         return -1;
     }
 
+    public int GetRandomControlOfType(string[] types, List<int> notControlIDs)
+    {
+        List<int> checkedControls = new List<int>();
+        do
+        {
+            int controlID = Random.Range(0, controls.Length);
+
+            if (!checkedControls.Contains(controlID))
+            {
+                for (int i = 0; i < types.Length; i++)
+                {
+                    string controlType = controls[controlID].GetComponent<ParentControl>().GetControlType();
+                    if (controlType == types[i])
+                    {
+                        if (!notControlIDs.Contains(controlID))
+                        {
+                            return controlID;
+                        }
+                    }
+                }
+
+                checkedControls.Add(controlID);
+            }
+
+        } while (checkedControls.Count <= GetControlsCount());
+
+        return -1;
+    }
+
     public string GetControlLabel(int controlID)
     {
         return controls[controlID].GetComponent<ParentControl>().GetLabel();

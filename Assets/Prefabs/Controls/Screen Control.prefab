@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b6f4ced0cc40e4989dfefb98f4678a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelText: 3ZF94
+  modelText: 
   engineText: 
   noEngineText: 
   systemText: 
