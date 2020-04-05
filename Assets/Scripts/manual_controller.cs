@@ -122,6 +122,9 @@ public class manual_controller : MonoBehaviour
 				case "/mooc_adb.html":
 					PopulateMoocADB();
 					break;
+				case "/mooc_dt.html":
+					PopulateMoocTR();
+					break;
 				case "/mooc_astm.html":
 					PopulateMoocASTM();
 					break;
@@ -215,6 +218,16 @@ public class manual_controller : MonoBehaviour
 		int controlID0 = instruction.GetStepControl(0);
 
 		ChangeManualTag("//*[@id=\"adb_c0\"]", controlID0);
+	}
+	private void PopulateMoocTR()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
+		int controlID0 = instruction.GetStepControl(0);
+		string answer0 = instruction.GetAnswer(0);
+		string answer1 = (6 - int.Parse(answer0)).ToString();
+
+		ChangeManualTag(0, 0, "//*[@id=\"tr_c0\"]", controlID0, "//*[@id=\"tr_v0\"]", answer0);
+		ChangeManualTag("//*[@id=\"tr_v1\"]", answer1);
 	}
 	private void PopulateMoocASTM()
 	{

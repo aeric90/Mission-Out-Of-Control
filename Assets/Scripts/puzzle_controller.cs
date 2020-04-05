@@ -89,21 +89,30 @@ public class InstructionTrigger
     public string function;
 }
 
-
 public class GameStep
 {
     protected int controlID;
     protected string answer;
+    protected bool reversible;
 
     public GameStep(int controlID)
     {
+        Debug.Log("ADDING STEP WITH control ID " + controlID);
         this.controlID = controlID;
         this.answer = ui_controller.uiInstance.GetControlRandomAnswer(controlID);
+        Debug.Log("ANSWER IS - " + answer);
+
     }
     public GameStep(int controlID, string answer)
     {
         this.controlID = controlID;
         this.answer = answer;
+    }
+    public GameStep(int controlID, string answer, bool reversible)
+    {
+        this.controlID = controlID;
+        this.answer = answer;
+        this.reversible = reversible;
     }
 
     public int GetControlID()
@@ -121,6 +130,14 @@ public class GameStep
     public string GetAnswer()
     {
         return answer;
+    }
+    public void SetReversible(bool reversible)
+    {
+        this.reversible = reversible;
+    }
+    public bool GetReversible()
+    {
+        return reversible;
     }
     virtual public bool CheckStep(string controlValue)
     {
@@ -182,7 +199,6 @@ public class DependantGameStep : GameStep
     }
 
 }
-
 public class GameInstruction
 {
     private string instructionTitle;
@@ -200,11 +216,16 @@ public class GameInstruction
     }
     public void AddStep(int controlID)
     {
+        Debug.Log("ADDING STEP WITH control ID " + controlID);
         instructionSteps.Add(new GameStep(controlID));
     }
     public void AddStep(int controlID, string answer)
     {
         instructionSteps.Add(new GameStep(controlID, answer));
+    }
+    public void AddStep(int controlID, string answer, bool reversible)
+    {
+        instructionSteps.Add(new GameStep(controlID, answer, reversible));
     }
     public int AddStep(int controlID1, int controlID2, string dependantType)
     {
@@ -591,7 +612,6 @@ public class puzzle_controller : MonoBehaviour
     private InstructionContainer fileInstructions;
     private List<int> selectedInstructions = new List<int>();
 
-
     private List<GameInstruction> gameInstructions = new List<GameInstruction>();
 
     private string modelNo;
@@ -637,6 +657,12 @@ public class puzzle_controller : MonoBehaviour
         Debug.Log("GENERATING COLOR DATA");
         InitializeColorList();
 
+
+        StartCoroutine(CreateInstructions());
+    }
+
+    IEnumerator CreateInstructions()
+    {
         List<int> controlIDs = new List<int>();
 
         Debug.Log("CREATING GAME INSTRUCTIONS");
@@ -651,9 +677,12 @@ public class puzzle_controller : MonoBehaviour
 
             if (i >= 2) controlIDs.Clear();
 
-            Debug.Log("         CREATING GAME INSTRUCTION STEPS");
+            Debug.Log("         CREATING GAME INSTRUCTION STEPS - " + fileInstructions.instructions[currentInstruction].steps.Count + " TOTAL");
+    
             for (int j = 0; j < fileInstructions.instructions[currentInstruction].steps.Count; j++)
             {
+                yield return null;
+
                 Debug.Log("             GAME INSTRUCTION STEP - " + j);
                 int instructionControlID = ui_controller.uiInstance.GetRandomControlOfType(fileInstructions.instructions[currentInstruction].GetStepControlTypes(j), controlIDs);
                 Debug.Log("             GAME INSTRUCTION STEP CONTROL " + instructionControlID);
@@ -666,8 +695,12 @@ public class puzzle_controller : MonoBehaviour
                     case "FIXED":
                         Debug.Log("             CREATING FIXED ANSWER TYPE");
                         string insturctionControlAnswer = fileInstructions.instructions[currentInstruction].steps[j].answer;
+
+                        bool reversible = fileInstructions.instructions[currentInstruction].steps[j].reverseControl;
+                        Debug.Log("                  IS THIS CONTROL REVERSIBLE? " + reversible);
+
                         Debug.Log("                 ANSWER - " + insturctionControlAnswer);
-                        gameInstructions[i].AddStep(instructionControlID, insturctionControlAnswer);
+                        gameInstructions[i].AddStep(instructionControlID, insturctionControlAnswer, reversible);
 
                         Debug.Log("                 CHECKING FOR DEFAULT VALUE");
                         if (fileInstructions.instructions[currentInstruction].steps[j].defaultValue != "" && !controlValueSet.Contains(instructionControlID))
@@ -694,8 +727,11 @@ public class puzzle_controller : MonoBehaviour
                     default:
                         break;
                 }
+
+                yield return null;
             }
 
+            Debug.Log("   CREATING SUCESS TRIGGERS");
             for (int j = 0; j < fileInstructions.instructions[currentInstruction].successTriggers.Count; j++)
             {
                 string successFunction = fileInstructions.instructions[currentInstruction].successTriggers[j].function;
@@ -706,9 +742,10 @@ public class puzzle_controller : MonoBehaviour
             {
                 Debug.Log("Control ID Used - " + x);
             }
+
+            yield return null;
         }
 
-        AddFinalStep();
 
         // Set all other controls to random values
         for (int i = 0; i < ui_controller.uiInstance.GetControlsCount(); i++)
@@ -722,7 +759,7 @@ public class puzzle_controller : MonoBehaviour
                 case "knob":
                 case "slider":
                 case "light":
-                    if(!controlValueSet.Contains(i))
+                    if (!controlValueSet.Contains(i))
                     {
                         string value = ui_controller.uiInstance.GetControlRandomAnswer(i);
                         ui_controller.uiInstance.SetControlValue(i, value);
@@ -737,11 +774,14 @@ public class puzzle_controller : MonoBehaviour
             }
         }
 
+        AddFinalStep();
+
+        Debug.Log("     SETTING METER NAME");
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
 
         manual_controller.manualInstance.CreateManual();
-
     }
+
     private void AddFinalStep()
     {
         List<int> controlIDs = new List<int>();
@@ -767,10 +807,30 @@ public class puzzle_controller : MonoBehaviour
                     string controlType = ui_controller.uiInstance.GetControlType(controlID);
                     
                     Debug.Log("             GAME INSTRUCTION STEP CONTROL TYPE  " + controlType);
-                    if (controlType == "button" || controlType == "swtich")
+                    Debug.Log("             ORIGINAL  ANSWER - " + answer);
+                    Debug.Log("             REVERSIBLE? - " + currentStep.GetReversible());
+                    if (currentStep.GetReversible())
                     {
-                        answer = answer == "0" ? "1" : "0";
+                        switch (controlType)
+                        {
+                            case "button":
+                            case "switch":
+                                if (answer == "0")
+                                {
+                                    answer = "1";
+                                }
+                                else
+                                {
+                                    answer = "0";
+                                }
+                                break;
+                            case "slider":
+                            case "knob":
+                                answer = (6 - int.Parse(answer)).ToString();
+                                break;
+                        }
                     }
+
                     Debug.Log("                 ANSWER - " + answer);
                     gameInstructions[5].AddStep(controlID, answer);
                 }
@@ -783,16 +843,21 @@ public class puzzle_controller : MonoBehaviour
             }
         }
 
+        Debug.Log("      ADDING EMPTY METER STEP");
         gameInstructions[5].AddStep(2, "0");
         controlIDs.Add(2);
+        Debug.Log("      ADDING KEYPAD STEP");
         gameInstructions[5].AddStep(6);
         controlIDs.Add(6);
 
-        int lightControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "switch", "button" }, controlIDs);
+        Debug.Log("      CREATING LIGHT RELATIONSHIP");
+        int lightControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "switch", "button" });
+        Debug.Log("      LIGHT RELATING TO " + lightControlRelID);
         ui_controller.uiInstance.SetConnectedControls(lightControlRelID, 4, "random");
 
-
+        Debug.Log("      CREATING METER RELATIONSHIP");
         int meterControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "slider", "knob" }, controlIDs);
+        Debug.Log("      METER RELATING TO " + meterControlRelID);
         ui_controller.uiInstance.SetConnectedControls(meterControlRelID, 2, "mapped");
     }
 
