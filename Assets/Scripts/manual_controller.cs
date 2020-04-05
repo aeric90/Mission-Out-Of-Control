@@ -30,8 +30,15 @@ public class manual_controller : MonoBehaviour
 
 	private List<ManualError> manualErrors = new List<ManualError>();
 	private HtmlDocument manualTemplate;
-	private TextReader inputText;
+
+	private static MemoryStream inputStream = new MemoryStream();
+
+	private StreamWriter inputFile = new StreamWriter(inputStream);
+	private StreamReader headerText;
+	private StreamReader instructionText;
 	private MemoryStream outputStream = new MemoryStream();
+
+	private StreamReader manualText;
 
 	private int manualCode;
 	private string manualFileName;
@@ -50,20 +57,85 @@ public class manual_controller : MonoBehaviour
 	{
 		GenerateErrorList();
 
-		FTPGet();
-		
+		headerText = FTPGet(@"/instructions/mooc_header.html");
+		inputFile.Write(headerText.ReadToEnd());
+		inputFile.Flush();
+
+		List<int> manualInsturctions = new List<int>();
+
+		do
+		{
+			int randomInstruction = -1;
+
+			do
+			{
+				randomInstruction = UnityEngine.Random.Range(0, puzzle_controller.puzzleInstance.GetSelectedInstructionCount());
+			} while (manualInsturctions.Contains(randomInstruction));
+
+			string instructionHTML = puzzle_controller.puzzleInstance.GetSelectedInstuctionHTML(randomInstruction);
+
+			instructionText = FTPGet(@"/instructions" + instructionHTML);
+			inputFile.Write(instructionText.ReadToEnd());
+			inputFile.Flush();
+
+			manualInsturctions.Add(randomInstruction);
+
+		} while (manualInsturctions.Count < puzzle_controller.puzzleInstance.GetSelectedInstructionCount());
+
+		instructionText = FTPGet(@"/instructions/mooc_re.html");
+		inputFile.Write(instructionText.ReadToEnd());
+		inputFile.Flush();
+
+		headerText = FTPGet(@"/instructions/mooc_footer.html");
+		inputFile.Write(headerText.ReadToEnd());
+		inputFile.Flush();
+
+		inputStream.Position = 0;
+
+		manualText = new StreamReader(inputStream);
+
 		manualCode = UnityEngine.Random.Range(1000, 10000);
-		manualFileName = @"/Mission_Manual_" + manualCode + ".html"; ;
+		manualFileName = @"/Mission_Manual_" + manualCode + ".html";
 
 		manualTemplate = new HtmlDocument();
-		manualTemplate.Load(inputText);
-		
-		PopulateInstruction0();
-		PopulateInstruction1();
-		PopulateInstruction2();
-		PopulateInstruction3();
-		PopulateInstruction4();
-		PopulateInstruction5();
+		manualTemplate.Load(manualText);
+
+		ChangeManualTag("//*[@id=\"mooc_no\"]", manualCode.ToString());
+
+		for (int i = 0; i < puzzle_controller.puzzleInstance.GetSelectedInstructionCount(); i++)
+		{
+			string instructionHTML = puzzle_controller.puzzleInstance.GetSelectedInstuctionHTML(i);
+
+			switch (instructionHTML)
+			{
+				case "/mooc_davp.html":
+					PopulateMoocDAVP();
+					break;
+				case "/mooc_adb.html":
+					PopulateMoocADB();
+					break;
+				case "/mooc_astm.html":
+					PopulateMoocASTM();
+					break;
+				case "/mooc_dlg.html":
+					PopulateMoocDLG();
+					break;
+				case "/mooc_jep.html":
+					PopulateMoocJEP();
+					break;
+				case "/mooc_frt.html":
+					PopulateMoocFRT();
+					break;
+				case "/mooc_snc.html":
+					PopulateMoocSNC();
+					break;
+				default:
+					break;
+			}
+
+		}
+
+		PopulateMoocRE();
 
 		manualTemplate.Save(outputStream);
 
@@ -98,7 +170,8 @@ public class manual_controller : MonoBehaviour
 			manualErrors.Add(new ManualError(loadedInstructions[i], stepID));
 		}
 	}
-	private void PopulateInstruction0()
+
+	private void PopulateMoocDAVP()
 	{
 		int engineCount = puzzle_controller.puzzleInstance.GetEngineCount();
 
@@ -126,7 +199,20 @@ public class manual_controller : MonoBehaviour
 			}
 		}
 	}
-	private void PopulateInstruction1()
+	private void PopulateMoocADB()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
+		int controlID0 = instruction.GetDependantControlID(0);
+		int controlID1 = instruction.GetStepControl(0);
+		int controlID2 = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "button" }, controlID1);
+		string answer0 = instruction.GetAnswer(0);
+
+		ChangeManualTag(0, 0, "//*[@id=\"adb_c0\"]", controlID0);
+		ChangeManualTag("//*[@id=\"adb_c1\"]", controlID1);
+		ChangeManualTag("//*[@id=\"adb_c2\"]", controlID2);
+		ChangeManualTag("//*[@id=\"adb_a0\"]", answer0);
+	}
+	private void PopulateMoocASTM()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
 		int controlID1 = instruction.GetStepControl(0);
@@ -139,7 +225,16 @@ public class manual_controller : MonoBehaviour
 
 		ChangeManualTag("//*[@id=\"stm_c3\"]", controlID3);
 	}
-	private void PopulateInstruction2()
+	private void PopulateMoocDLG()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
+		int controlID0 = instruction.GetStepControl(0);
+		int controlID1 = instruction.GetStepControl(1);
+
+		ChangeManualTag(1, 0, "//*[@id=\"dlg_c0\"]", controlID0);
+		ChangeManualTag(1, 1, "//*[@id=\"dlg_c1\"]", controlID1);
+	}
+	private void PopulateMoocJEP()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(2);
 
@@ -161,7 +256,7 @@ public class manual_controller : MonoBehaviour
 
 		ChangeManualTag(2, 2, "//*[@id=\"jep_c3\"]", controlID3, "//*[@id=\"jep_c4\"]", controlID4);
 	}
-	private void PopulateInstruction3()
+	private void PopulateMoocFRT()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(3);
 
@@ -196,7 +291,7 @@ public class manual_controller : MonoBehaviour
 		ChangeManualTag("//*[@id=\"frt_v1\"]", value1);
 		ChangeManualTag(3, 1, "//*[@id=\"frt_c2\"]", controlID2);
 	}
-	private void PopulateInstruction4()
+	private void PopulateMoocSNC()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(4);
 		int controlID0 = instruction.GetStepControl(0);
@@ -249,7 +344,8 @@ public class manual_controller : MonoBehaviour
 		ChangeManualTag(4, 0, "//*[@id=\"snc_c0\"]", controlID0);
 		ChangeManualTag(4, 1, "//*[@id=\"snc_c1\"]", controlID1);
 	}
-	private void PopulateInstruction5()
+	
+	private void PopulateMoocRE()
 	{
 		HtmlNode controlNode;
 
@@ -461,10 +557,10 @@ public class manual_controller : MonoBehaviour
 		errorNode.InnerHtml = puzzle_controller.puzzleInstance.GetGameInstructionTitle(instructionID) + " - STEP " + (stepID + 1) + " - FOR " + ui_controller.uiInstance.GetControlLabel(controlID) + ", ENTER " + answer + " NOT " + errorAnswer;
 	}
 
-	public void FTPGet()
+	public StreamReader FTPGet(string manualFileName)
 	{
 		// Get the object used to communicate with the server.
-		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173/Beta_Test_Manual_Template.html");
+		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
 		request.Method = WebRequestMethods.Ftp.DownloadFile;
 
 		// This example assumes the FTP site uses anonymous logon.
@@ -473,7 +569,7 @@ public class manual_controller : MonoBehaviour
 		FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
 		Stream responseStream = response.GetResponseStream();
-		inputText = new StreamReader(responseStream);
+		return new StreamReader(responseStream);
 	}
 	public void FTPSend(byte[] outputBytes, string manualFileName)
 	{
@@ -495,5 +591,8 @@ public class manual_controller : MonoBehaviour
 		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
 		request.Credentials = new NetworkCredential("u590740642", "moocmanuals");
 		request.Method = WebRequestMethods.Ftp.DeleteFile;
+		FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+		Debug.Log(response.StatusDescription);
+		response.Close();
 	}
 }

@@ -5,7 +5,7 @@
       <title>DISABLE AUTOMATIC VACUUM PUMPS</title>
       <reversible>TRUE</reversible>
       <reverseTitle>ENABLE AUTOMATIC VACUUM PUMPS</reverseTitle>
-      <instructionHTML>MOOC_DAVP.html</instructionHTML>
+      <instructionHTML>/mooc_davp.html</instructionHTML>
       <steps>
         <step>
           <stepControls>
@@ -24,8 +24,41 @@
       <title>ACTIVATE DISTRESS BEACON</title>
       <reversible>TRUE</reversible>
       <reverseTitle>DISABLE DISTRESS BEACON</reverseTitle>
-      <instructionHTML>MOOC_ADB.html</instructionHTML>
+      <instructionHTML>/mooc_adb.html</instructionHTML>
       <steps>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>button</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>DEPENDANT</answerType>
+          <dependantType>RANGE</dependantType>
+          <dependantControls>
+            <stepControl>
+              <controlType>slider</controlType>
+            </stepControl>
+          </dependantControls>
+        </step>
+      </steps>
+    </instruction>
+    <instruction>
+      <order>1</order>
+      <title>DEPLOY LANDING GEAR</title>
+      <reversible>TRUE</reversible>
+      <reverseTitle>RETRACT LANDING GEAR</reverseTitle>
+      <instructionHTML>/mooc_dlg.html</instructionHTML>
+      <steps>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>button</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>FIXED</answerType>
+          <answer>1</answer>
+          <defaultValue>0</defaultValue>
+        </step>
         <step>
           <stepControls>
             <stepControl>
@@ -43,7 +76,7 @@
       <title>ACTIVATE STELLAR TRIANGULATION MATRIX</title>
       <reversible>TRUE</reversible>
       <reverseTitle>DEACTIVATE STELLAR TRIANGULATION MATRIX</reverseTitle>
-      <instructionHTML>MOOC_ASTM.html</instructionHTML>
+      <instructionHTML>/mooc_astm.html</instructionHTML>
       <steps>
         <step>
           <stepControls>
@@ -83,7 +116,7 @@
       <order>2</order>
       <title>JETISON EMERGENCY PUPPIES</title>
       <reversible>FALSE</reversible>
-      <instructionHTML>MOOC_JEP.html</instructionHTML>
+      <instructionHTML>/mooc_jep.html</instructionHTML>
       <steps>
         <step>
           <stepControls>
@@ -127,7 +160,7 @@
       <order>3</order>
       <title>FIRE RETRO THRUSTERS</title>
       <reversible>FALSE</reversible>
-      <instructionHTML>MOOC_FRT.html</instructionHTML>
+      <instructionHTML>/mooc_frt.html</instructionHTML>
       <steps>
         <step>
           <stepControls>
@@ -171,7 +204,7 @@
       <order>4</order>
       <title>SET NAVIGATION COORDINATES</title>
       <reversible>FALSE</reversible>
-      <instructionHTML>MOOC_SNC.html</instructionHTML>
+      <instructionHTML>/mooc_snc.html</instructionHTML>
       <steps>
         <step>
           <stepControls>
@@ -203,7 +236,7 @@
       <order>F</order>
       <title>REACTIVATE ENGINES</title>
       <reversible>FALSE</reversible>
-      <instructionHTML>MOOC_RE.html</instructionHTML>
+      <instructionHTML>/mooc_re.html</instructionHTML>
       <steps>
         <step>
           <stepControls>
