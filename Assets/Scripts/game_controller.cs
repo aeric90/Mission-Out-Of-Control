@@ -7,6 +7,8 @@ public class game_controller : MonoBehaviour
 {
     public static game_controller gameInstance;
 
+    public Animator cameraAnimator;
+
     public int gameTimer;
 
     private bool confirmPressed = false;
@@ -60,11 +62,22 @@ public class game_controller : MonoBehaviour
 
     private IEnumerator CountDown()
     {
+        bool played = false;
+
         while (!gameOver)
         {
             if (gameTimer <= 0)
             {
                 GameOver(false);
+            }
+
+            if (gameTimer <= 14)
+            {
+                if (!played)
+                {
+                    AudioPlayer.audioPlayerInstance.PlayClip(AudioPlayer.audioPlayerInstance.audioClips[0], true, 0.05f);
+                    played = true;
+                }
             }
 
             yield return new WaitForSeconds(1.0f);
@@ -97,6 +110,7 @@ public class game_controller : MonoBehaviour
             else 
             {
                 ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- " + " INCORRECT");
+                cameraAnimator.Play("Shake");
                 break; 
             }
         }
