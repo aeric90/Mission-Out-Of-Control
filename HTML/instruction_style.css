@@ -23,7 +23,7 @@ body {
     /* Uses a repeating gradiant to get the green stripes. It is a solid colour because the gradiant goes from green to green. each stripe is separated by a 46px transparent stripe.
     
     green stripe between 0 - 25px, transparent stripe between at 25 - 50 */
-    background-image: repeating-linear-gradient(#90F5B2 0px, #90F5B2 25px, transparent 25px, transparent 50px);
+    
     
     /* The body has a default margin that should be set to zero so that the stripes do not show up on the outside of the boarders.*/
     margin: 0;
@@ -34,6 +34,14 @@ body {
     border-right: 100px solid white;
     border-bottom: 30px solid white;
     border-top: 50px solid white;
+}
+
+#stripedBG{
+    position: absolute;
+    z-index: -1;
+    width: 750px;
+    height: 3650px;
+    background-image: repeating-linear-gradient(#90F5B2 0px, #90F5B2 25px, transparent 25px, transparent 50px);
 }
 
 .overlay {
