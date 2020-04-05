@@ -323,6 +323,65 @@
       </successTriggers>
     </instruction>
     <instruction>
+      <order>2</order>
+      <title>ADJUST SEAT BACK AND TRAY TABLE</title>
+      <reversible>false</reversible>
+      <instructionHTML>/mooc_asbatt.html</instructionHTML>
+      <steps>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>slider</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>knob</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>FIXED</answerType>
+          <answer>5</answer>
+          <defaultValue></defaultValue>
+          <reverseControl>false</reverseControl>
+        </step>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>slider</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>knob</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>FIXED</answerType>
+          <answer>5</answer>
+          <defaultValue></defaultValue>
+          <reverseControl>false</reverseControl>
+        </step>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>button</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>switch</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>DEPENDANT</answerType>
+          <dependantType>RANGE</dependantType>
+          <dependantControls>
+            <stepControl>
+              <controlType>meter</controlType>
+            </stepControl>
+          </dependantControls>
+          <reverseControl>false</reverseControl>
+        </step>
+      </steps>
+      <successTriggers>
+        <successTrigger>
+          <function>DoABarrelRoll</function>
+        </successTrigger>
+      </successTriggers>
+    </instruction>
+    <instruction>
       <order>3</order>
       <title>FIRE RETRO THRUSTERS</title>
       <reversible>false</reversible>
