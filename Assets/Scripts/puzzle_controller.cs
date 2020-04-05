@@ -30,16 +30,13 @@ public class Step
 {
     [XmlArray("stepControls"), XmlArrayItem("stepControl")]
     public List<StepControl> stepControls = new List<StepControl>();
-
     public string answerType;
-
     public string answer;
-
     public string dependantType;
     [XmlArray("dependantControls"), XmlArrayItem("stepControl")]
     public List<StepControl> dependantControls = new List<StepControl>();
-
     public string defaultValue;
+    public bool reverseControl;
 }
 public class StepControl
 {
