@@ -26,6 +26,7 @@ public class game_controller : MonoBehaviour
     public void StartGame()
     {
         StartCoroutine(GameLoop());
+        MoveTowardsShip.moveTowardsShipInstance.StartPlanetMovement();
     }
 
     private IEnumerator GameLoop()
