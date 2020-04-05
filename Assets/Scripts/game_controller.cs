@@ -7,7 +7,7 @@ public class game_controller : MonoBehaviour
 {
     public static game_controller gameInstance;
 
-    public Animator cameraAnimator;
+    public GameObject cameraMain;
 
     public int gameTimer;
 
@@ -110,7 +110,7 @@ public class game_controller : MonoBehaviour
             else 
             {
                 ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- " + " INCORRECT");
-                cameraAnimator.Play("Shake");
+                cameraMain.GetComponent<Animator>().Play("Shake");
                 break; 
             }
         }
