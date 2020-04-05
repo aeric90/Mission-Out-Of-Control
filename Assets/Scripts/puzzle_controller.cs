@@ -828,6 +828,9 @@ public class puzzle_controller : MonoBehaviour
                             case "knob":
                                 answer = (6 - int.Parse(answer)).ToString();
                                 break;
+                            case "keypad":
+                                answer = "" + answer[2] + answer[1] + answer[0];
+                                break;
                         }
                     }
 

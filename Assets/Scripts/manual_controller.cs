@@ -128,6 +128,9 @@ public class manual_controller : MonoBehaviour
 				case "/mooc_astm.html":
 					PopulateMoocASTM();
 					break;
+				case "/mooc_rvmo.html":
+					PopulateMoocRVMO();
+					break;
 				case "/mooc_dlg.html":
 					PopulateMoocDLG();
 					break;
@@ -255,6 +258,18 @@ public class manual_controller : MonoBehaviour
 			ChangeManualTag(1, 1, "//*[@id=\"stm_c3\"]", controlID2);
 		}
 	}
+	private void PopulateMoocRVMO()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
+		int controlID0 = instruction.GetStepControl(0);
+		int controlID1 = instruction.GetDependantControlID(0);
+
+		ChangeManualTag(1, 0, "//*[@id=\"rvmo_c0\"]", controlID0, "//*[@id=\"rvmo_c1\"]", controlID1);
+
+		string answer0 = instruction.GetAnswer(1);
+		ChangeManualTag("//*[@id=\"rvmo_a0\"]", answer0);
+
+	}
 	private void PopulateMoocDLG()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
@@ -285,7 +300,7 @@ public class manual_controller : MonoBehaviour
 		int controlID4 = instruction.GetDependantControlID(2);
 
 		ChangeManualTag(2, 2, "//*[@id=\"jep_c3\"]", controlID3, "//*[@id=\"jep_c4\"]", controlID4);
-	}
+	}	  
 	private void PopulateMoocDABR()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(2);
