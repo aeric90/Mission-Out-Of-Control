@@ -41,6 +41,32 @@ public class Instruction
 
     [XmlArray("successTriggers"), XmlArrayItem("successTrigger")]
     public List<InstructionTrigger> successTriggers = new List<InstructionTrigger>();
+    
+    public string[] GetStepControlTypes(int stepID)
+    {
+        string controlList = "";
+
+        for(int i = 0; i < steps[stepID].stepControls.Count; i++)
+        {
+            if (controlList != "") controlList += ",";
+            controlList += steps[stepID].stepControls[i].controlType;
+        }
+
+        return controlList.Split(',');
+    }
+
+    public string[] GetDependantStepControlTypes(int stepID)
+    {
+        string controlList = "";
+
+        for (int i = 0; i < steps[stepID].dependantControls.Count; i++)
+        {
+            if (controlList != "") controlList += ",";
+            controlList += steps[stepID].dependantControls[i].controlType;
+        }
+
+        return controlList.Split(',');
+    }
 }
 public class Step
 {
@@ -587,54 +613,79 @@ public class puzzle_controller : MonoBehaviour
     
     private void Start()
     {
+        Debug.Log("LOADING XML INSTRUCTION FILE");
         LoadInstructionsXML();
+
+        Debug.Log("CHOOSING INSTRUCTIONS FOR PUZZLE");
         ChooseInstructions();
 
+        Debug.Log("GENERATING MODEL NUMBER");
         modelNo = GenerateModelNo();
         ui_controller.uiInstance.SetScreenModelText(modelNo);
 
+        Debug.Log("GENERATING ENGINE DATA");
         InitializeEngineList();
         InitializeEngines();
         ui_controller.uiInstance.SetScreenEngineText(engineList[engineID].GetEngineType());
         ui_controller.uiInstance.SetScreenEngineNoText(engineList[engineID].GetEngineNo(engineNoID).ToString());
 
+        Debug.Log("GENERATING NAV DATA");
         InitializeNavSystemList();
         InitializeNavSystem();
         ShowNav();
 
+        Debug.Log("GENERATING COLOR DATA");
         InitializeColorList();
 
-        for(int i = 0; i < selectedInstructions.Count; i++)
+        Debug.Log("CREATING GAME INSTRUCTIONS");
+        for (int i = 0; i < selectedInstructions.Count; i++)
         {
+            Debug.Log("     CREATING GAME INSTRUCTION " + i);
             int currentInstruction = selectedInstructions[i];
-
             string instructionTitle = fileInstructions.instructions[currentInstruction].title;
+            Debug.Log("         GAME INSTRUCTION - " + instructionTitle);
             gameInstructions.Add(new GameInstruction(instructionTitle));
 
+            List<int> controlIDs = new List<int>();
+
+            Debug.Log("         CREATING GAME INSTRUCTION STEPS");
             for (int j = 0; j < fileInstructions.instructions[currentInstruction].steps.Count; j++)
             {
-                int instructionControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[currentInstruction].steps[j].stepControls[0].controlType });
+                Debug.Log("             GAME INSTRUCTION STEP - " + j);
+                int instructionControlID = ui_controller.uiInstance.GetRandomControlOfType(fileInstructions.instructions[currentInstruction].GetStepControlTypes(j), controlIDs);
+                Debug.Log("             GAME INSTRUCTION STEP CONTROL " + instructionControlID);
                 string answerType = fileInstructions.instructions[currentInstruction].steps[j].answerType;
+                Debug.Log("             GAME INSTRUCTION STEP ANSWER TYPE " + answerType);
+                controlIDs.Add(instructionControlID);
 
                 switch (answerType)
                 {
                     case "FIXED":
+                        Debug.Log("             CREATING FIXED ANSWER TYPE");
                         string insturctionControlAnswer = fileInstructions.instructions[currentInstruction].steps[j].answer;
+                        Debug.Log("                 ANSWER - " + insturctionControlAnswer);
                         gameInstructions[i].AddStep(instructionControlID, insturctionControlAnswer);
 
-
+                        Debug.Log("                 CHECKING FOR DEFAULT VALUE");
                         if (fileInstructions.instructions[currentInstruction].steps[j].defaultValue != "" && !controlValueSet.Contains(instructionControlID))
                         {
-                            ui_controller.uiInstance.SetControlValue(instructionControlID, fileInstructions.instructions[currentInstruction].steps[j].defaultValue);
+                            string defaultValue = fileInstructions.instructions[currentInstruction].steps[j].defaultValue;
+                            ui_controller.uiInstance.SetControlValue(instructionControlID, defaultValue);
+                            Debug.Log("                     SETTING CONTROL " + instructionControlID + " TO " + defaultValue);
                             controlValueSet.Add(instructionControlID);
                         }
                         break;
                     case "DEPENDANT":
-                        int instructionDependantControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[currentInstruction].steps[j].dependantControls[0].controlType });
+                        Debug.Log("             CREATING DEPENDANT ANSWER TYPE");
+                        int instructionDependantControlID = ui_controller.uiInstance.GetRandomControlOfType(fileInstructions.instructions[currentInstruction].GetDependantStepControlTypes(j), controlIDs);
+                        Debug.Log("                 DEPENDANT CONTROL - " + instructionDependantControlID);
+                        controlIDs.Add(instructionDependantControlID);
                         string instructionDependantType = fileInstructions.instructions[currentInstruction].steps[j].dependantType;
+                        Debug.Log("                 DEPENDANT TYPE - " + instructionDependantType);
                         gameInstructions[i].AddDependantSteps(instructionControlID, instructionDependantControlID, instructionDependantType);
                         break;
                     case "RANDOM":
+                        Debug.Log("             CREATING RANDOM ANSWER TYPE");
                         gameInstructions[i].AddStep(instructionControlID);
                         break;
                     default:
@@ -688,6 +739,7 @@ public class puzzle_controller : MonoBehaviour
         ui_controller.uiInstance.SetConnectedControls(meterControlRelID, 2, "mapped");
 
         manual_controller.manualInstance.CreateManual();
+
     }
     private void AddFinalStep()
     {
@@ -724,6 +776,7 @@ public class puzzle_controller : MonoBehaviour
         gameInstructions[5].AddStep(2, "0");
         gameInstructions[5].AddStep(6);
     }
+
     private void InitializeEngineList()
     {
         engineList.Add(new Engine("H3 THRUST", new int[] { 2, 3 }));

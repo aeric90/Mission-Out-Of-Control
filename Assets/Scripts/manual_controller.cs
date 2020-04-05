@@ -582,7 +582,7 @@ public class manual_controller : MonoBehaviour
 		request.Credentials = new NetworkCredential("u590740642", "moocmanuals");
 
 		FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-
+		Debug.Log(response.StatusDescription);
 		Stream responseStream = response.GetResponseStream();
 		return new StreamReader(responseStream);
 	}
@@ -600,7 +600,6 @@ public class manual_controller : MonoBehaviour
 			requestStream.Write(outputBytes, 0, outputBytes.Length);
 		}
 	}
-
 	public void FTPDelete(string manualFileName)
 	{
 		FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
