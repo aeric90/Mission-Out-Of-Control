@@ -30,16 +30,12 @@
         <step>
           <stepControls>
             <stepControl>
-              <controlType>button</controlType>
+              <controlType>switch</controlType>
             </stepControl>
           </stepControls>
-          <answerType>DEPENDANT</answerType>
-          <dependantType>RANGE</dependantType>
-          <dependantControls>
-            <stepControl>
-              <controlType>slider</controlType>
-            </stepControl>
-          </dependantControls>
+          <answerType>FIXED</answerType>
+          <answer>0</answer>
+          <defaultValue>1</defaultValue>
           <reverseControl>true</reverseControl>
         </step>
       </steps>
@@ -109,12 +105,14 @@
           <reverseControl>true</reverseControl>
         </step>
       </steps>
+      <loadTriggers>
+        <loadTrigger>
+          <function>HideNavTrigger</function>
+        </loadTrigger>
+      </loadTriggers>
       <successTriggers>
         <successTrigger>
-          <function>UpdateSystem</function>
-        </successTrigger>
-        <successTrigger>
-          <function>UpdatePlanet</function>
+          <function>ShowNavTrigger</function>
         </successTrigger>
       </successTriggers>
     </instruction>

@@ -33,14 +33,15 @@ body {
     border-right: 100px solid transparent;
     border-bottom: 30px solid transparent;
     border-top: 50px solid transparent;
+    z-index: 0;
 }
 
 #stripedBG{
     position: absolute;
-    z-index: -1;
+    z-index: -2;
     width: 750px;
     height: auto;
-    background-image: repeating-linear-gradient(#90F5B2 0px, #90F5B2 25px, transparent 25px, transparent 50px);
+    background-image: repeating-linear-gradient(#90F5B27F 0px, #90F5B27F 25px, transparent 25px, transparent 50px);
 }
 
 .overlay {
@@ -154,5 +155,26 @@ td {
 .coffee
 {
     position: absolute;
-    width: 25%;
+    width: 500px;
+    z-index: -2;
+}
+
+.ring_1
+{
+    left: 400px;
+    top: 1000px;
+    transform: rotate(95deg);
+}
+
+.ring_2
+{
+    left: 200px;
+    top: 1500px;
+    transform: rotate(195deg);
+}
+
+.ring_3
+{
+    left: 100px;
+    top: 500px;
 }

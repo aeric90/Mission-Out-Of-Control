@@ -61,6 +61,15 @@ public class manual_controller : MonoBehaviour
 		inputFile.Write(headerText.ReadToEnd());
 		inputFile.Flush();
 
+		int coffee_stains = UnityEngine.Random.Range(0, 4);
+
+		if(coffee_stains > 0)
+		{
+			instructionText = FTPGet(@"/instructions/mooc_coffee_" + coffee_stains + ".html");
+			inputFile.Write(instructionText.ReadToEnd());
+			inputFile.Flush();
+		}
+
 		List<int> manualInsturctions = new List<int>();
 
 		do
@@ -202,28 +211,32 @@ public class manual_controller : MonoBehaviour
 	private void PopulateMoocADB()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(0);
-		int controlID0 = instruction.GetDependantControlID(0);
-		int controlID1 = instruction.GetStepControl(0);
-		int controlID2 = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "button" }, controlID1);
-		string answer0 = instruction.GetAnswer(0);
+		int controlID0 = instruction.GetStepControl(0);
 
-		ChangeManualTag(0, 0, "//*[@id=\"adb_c0\"]", controlID0);
-		ChangeManualTag("//*[@id=\"adb_c1\"]", controlID1);
-		ChangeManualTag("//*[@id=\"adb_c2\"]", controlID2);
-		ChangeManualTag("//*[@id=\"adb_a0\"]", answer0);
+		ChangeManualTag("//*[@id=\"adb_c0\"]", controlID0);
 	}
 	private void PopulateMoocASTM()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
 		int controlID1 = instruction.GetStepControl(0);
-		int controlID3 = instruction.GetStepControl(1);
-		int controlID2 = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "button" }, controlID3);
 
 		ChangeManualTag(1, 0, "//*[@id=\"stm_c1\"]", controlID1);
 
-		ChangeManualTag(1, 1, "//*[@id=\"stm_c2\"]", controlID2);
+		int controlID2 = instruction.GetStepControl(1);
+		int controlID3 = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "button" }, controlID2);
 
-		ChangeManualTag("//*[@id=\"stm_c3\"]", controlID3);
+		int modelLetters = puzzle_controller.puzzleInstance.GetModelNoLetterCount();
+
+		if (modelLetters % 2 > 0)
+		{
+			ChangeManualTag(1, 1, "//*[@id=\"stm_c2\"]", controlID2);
+			ChangeManualTag("//*[@id=\"stm_c3\"]", controlID3);
+		}
+		else
+		{
+			ChangeManualTag("//*[@id=\"stm_c2\"]", controlID3);
+			ChangeManualTag(1, 1, "//*[@id=\"stm_c3\"]", controlID2);
+		}
 	}
 	private void PopulateMoocDLG()
 	{
@@ -344,22 +357,24 @@ public class manual_controller : MonoBehaviour
 		ChangeManualTag(4, 0, "//*[@id=\"snc_c0\"]", controlID0);
 		ChangeManualTag(4, 1, "//*[@id=\"snc_c1\"]", controlID1);
 	}
-	
 	private void PopulateMoocRE()
 	{
-		HtmlNode controlNode;
-
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(5);
 
+		string instructionTitle0 = puzzle_controller.puzzleInstance.GetGameInstruction(0).GetTitle();
+		string reverseTitle0 = puzzle_controller.puzzleInstance.FindInstructionReverseTitle(instructionTitle0);
+
+		ChangeManualTag("//*[@id=\"re_i0\"]", reverseTitle0);
+
+		string instructionTitle1 = puzzle_controller.puzzleInstance.GetGameInstruction(1).GetTitle();
+		string reverseTitle1 = puzzle_controller.puzzleInstance.FindInstructionReverseTitle(instructionTitle1);
+
+		ChangeManualTag("//*[@id=\"re_i1\"]", reverseTitle1);
+
 		int controlID3 = instruction.GetStepControl(3);
-
-		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"re_c0\"]");
-		controlNode.InnerHtml = ui_controller.uiInstance.GetControlLabel(controlID3);
-
-		string answer4 = instruction.GetAnswer(3);
-
-		controlNode = manualTemplate.DocumentNode.SelectSingleNode("//*[@id=\"re_v0\"]");
-		controlNode.InnerHtml = answer4;
+		ChangeManualTag("//*[@id=\"re_c0\"]", controlID3);
+		string answer4 = instruction.GetAnswer(4);
+		ChangeManualTag("//*[@id=\"re_v0\"]", answer4);
 	}
 
 	private void ChangeManualTag(string tag, int controlID)

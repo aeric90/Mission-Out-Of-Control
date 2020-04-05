@@ -21,16 +21,30 @@ public class button_controller : ParentControl
 
     public void OnButtonPress()
     {
-        if(value == "0")
+        ChangeValue();
+        UpdateScreen();
+    }
+
+    public void UpdateScreen()
+    {
+        if (value == "1") screenText.text = "ON";
+        if (value == "0") screenText.text = "OFF";
+    }
+    override public void SetValue(string value)
+    {
+        this.value = value;
+        UpdateScreen();
+    }
+    public void ChangeValue()
+    {
+        valueChange = true;
+        if (value == "0")
         {
             value = "1";
-            screenText.text = "ON";
         }
-
         else if (value == "1")
         {
             value = "0";
-            screenText.text = "OFF";
         }
     }
 }

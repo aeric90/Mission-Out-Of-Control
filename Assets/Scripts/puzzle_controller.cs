@@ -11,20 +11,36 @@ public class InstructionContainer
 {
     [XmlArray("instructions"), XmlArrayItem("instruction")]
     public List<Instruction> instructions = new List<Instruction>();
+
+    public string FindReverseTitle(string instructionTitle)
+    {
+        for(int i = 0; i < instructions.Count; i++)
+        {
+            if(instructions[i].title == instructionTitle)
+            {
+                return instructions[i].reverseTitle;
+            }
+        }
+
+        return "";
+    }
 }
 public class Instruction
 {
     public string order;
     public string title;
-    public bool reversable;
+    public bool reversible;
     public string reverseTitle;
     public string instructionHTML;
 
     [XmlArray("steps"), XmlArrayItem("step")]
     public List<Step> steps = new List<Step>();
 
+    [XmlArray("loadTriggers"), XmlArrayItem("loadTrigger")]
+    public List<InstructionTrigger> loadTriggers = new List<InstructionTrigger>();
+
     [XmlArray("successTriggers"), XmlArrayItem("successTrigger")]
-    public List<SuccessTrigger> successTriggers = new List<SuccessTrigger>();
+    public List<InstructionTrigger> successTriggers = new List<InstructionTrigger>();
 }
 public class Step
 {
@@ -42,7 +58,7 @@ public class StepControl
 {
     public string controlType;
 }
-public class SuccessTrigger
+public class InstructionTrigger
 {
     public string function;
 }
@@ -92,6 +108,10 @@ public class GameStep
     {
         return -1;
     }
+    virtual public string GetDependantType()
+    {
+        return "NONE";
+    }
 }
 public struct DependantValues
 {
@@ -106,13 +126,19 @@ public struct DependantValues
 public class DependantGameStep : GameStep
 {
     private int dependantControlID;
+    private string dependantType;
     private List<DependantValues> answerMapping = new List<DependantValues>();
 
-    public DependantGameStep(int controlID, int dependantControlID) : base(controlID, "")
+    public DependantGameStep(int controlID, int dependantControlID, string dependantType) : base(controlID, "")
     {
         this.dependantControlID = dependantControlID;
+        this.dependantType = dependantType;
     }
 
+    override public string GetDependantType()
+    {
+        return dependantType;
+    }
     override public int GetDependantControlID()
     {
         return dependantControlID;
@@ -154,9 +180,9 @@ public class GameInstruction
     {
         instructionSteps.Add(new GameStep(controlID, answer));
     }
-    public int AddStep(int controlID1, int controlID2)
+    public int AddStep(int controlID1, int controlID2, string dependantType)
     {
-        instructionSteps.Add(new DependantGameStep(controlID1, controlID2));
+        instructionSteps.Add(new DependantGameStep(controlID1, controlID2, dependantType));
         return instructionSteps.Count - 1;
     }
     public void AddDependantSteps(int controlID1)
@@ -300,17 +326,17 @@ public class GameInstruction
             foundMethod.Invoke(this, new object[] { });
         }
     }
-    public void UpdateSystem()
+    public void HideNavTrigger()
     {
-        ui_controller.uiInstance.SetScreenSystemText(puzzle_controller.puzzleInstance.GetCurrentNavSystem());
+        puzzle_controller.puzzleInstance.HideNav();
     }
-    public void UpdatePlanet()
+    public void ShowNavTrigger()
     {
-        ui_controller.uiInstance.SetScreenPlanetText(puzzle_controller.puzzleInstance.GetCurrentNavPlanet());
+        puzzle_controller.puzzleInstance.ShowNav();
     }
     private void GenerateMappingDependancy(int controlID1, int controlID2)
     {
-        int dependantStepID = AddStep(controlID1, controlID2);
+        int dependantStepID = AddStep(controlID1, controlID2, "MAPPING_UP");
 
         int direction = Random.Range(0, 2);
 
@@ -338,7 +364,7 @@ public class GameInstruction
     }
     private void GenerateMappingDependancy(int controlID1, int controlID2, bool reverse)
     {
-        int dependantStepID = AddStep(controlID1, controlID2);
+        int dependantStepID = AddStep(controlID1, controlID2, reverse ? "MAPPING_DOWN" : "MAPPING_UP");
 
         int control1min = ui_controller.uiInstance.GetControlMinValue(controlID1);
         int control1max = ui_controller.uiInstance.GetControlMaxValue(controlID1);
@@ -364,7 +390,7 @@ public class GameInstruction
     }
     private void GenerateRangeDependancy(int controlID1, int controlID2)
     {
-        int dependantStepID = AddStep(controlID1, controlID2);
+        int dependantStepID = AddStep(controlID1, controlID2, "RANGE");
 
         int control1min = ui_controller.uiInstance.GetControlMinValue(controlID1);
         int control1max = ui_controller.uiInstance.GetControlMaxValue(controlID1);
@@ -394,7 +420,7 @@ public class GameInstruction
     private void GenerateRandomDependancy(int controlID1, int controlID2)
     {
 
-        int dependantStepID = AddStep(controlID1, controlID2);
+        int dependantStepID = AddStep(controlID1, controlID2, "RANDOM");
 
         int control2min = ui_controller.uiInstance.GetControlMinValue(controlID2);
         int control2max = ui_controller.uiInstance.GetControlMaxValue(controlID2);
@@ -418,7 +444,7 @@ public class GameInstruction
     private void GenerateReplacemnentDependancy(int controlID1, int controlID2)
     {
 
-        int dependantStepID = AddStep(controlID1, controlID2);
+        int dependantStepID = AddStep(controlID1, controlID2, "REPLACEMENT");
 
         int control2min = ui_controller.uiInstance.GetControlMinValue(controlID2);
         int control2max = ui_controller.uiInstance.GetControlMaxValue(controlID2);
@@ -455,6 +481,10 @@ public class GameInstruction
     public int GetDependantControlID(int stepID)
     {
         return instructionSteps[stepID].GetDependantControlID();
+    }
+    public GameStep GetInstructionStep(int stepID)
+    {
+        return instructionSteps[stepID];
     }
 }
 
@@ -548,6 +578,8 @@ public class puzzle_controller : MonoBehaviour
 
     private List<Color> colorList = new List<Color>();
 
+    private List<int> controlValueSet = new List<int>();
+
     private void Awake()
     {
         if (puzzleInstance == null) { puzzleInstance = this; }
@@ -558,7 +590,7 @@ public class puzzle_controller : MonoBehaviour
         LoadInstructionsXML();
         ChooseInstructions();
 
-        modelNo = "3ZF94";  // Need to be able to generate these
+        modelNo = GenerateModelNo();
         ui_controller.uiInstance.SetScreenModelText(modelNo);
 
         InitializeEngineList();
@@ -568,35 +600,17 @@ public class puzzle_controller : MonoBehaviour
 
         InitializeNavSystemList();
         InitializeNavSystem();
+        ShowNav();
 
         InitializeColorList();
 
-        ui_controller.uiInstance.SetControlValue(1, ui_controller.uiInstance.GetControlRandomAnswer(1));
-
-        // Set METER conrol to a value of 0 and change the label to JAM LEVELS 
-        ui_controller.uiInstance.SetControlValue(2, "0");
-        ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
-
-        // Sets a random relationship between SWITCH and LIGHT 
-        ui_controller.uiInstance.SetControlValue(3, "1");
-        ui_controller.uiInstance.SetConnectedControls(3, 4, "random");
-
-        // Sets the defaults value of LIGHT to 3
-        ui_controller.uiInstance.SetControlValue(4, ui_controller.uiInstance.GetControlRandomAnswer(4));
-
-        // Sets a mapped relationship between SLIDER 2 and METER
-        ui_controller.uiInstance.SetConnectedControls(7, 2, "mapped");
-
-        ui_controller.uiInstance.SetControlValue(9, ui_controller.uiInstance.GetControlRandomAnswer(9));
-
         for(int i = 0; i < selectedInstructions.Count; i++)
         {
-
             int currentInstruction = selectedInstructions[i];
 
             string instructionTitle = fileInstructions.instructions[currentInstruction].title;
             gameInstructions.Add(new GameInstruction(instructionTitle));
-                    
+
             for (int j = 0; j < fileInstructions.instructions[currentInstruction].steps.Count; j++)
             {
                 int instructionControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[currentInstruction].steps[j].stepControls[0].controlType });
@@ -604,21 +618,27 @@ public class puzzle_controller : MonoBehaviour
 
                 switch (answerType)
                 {
+                    case "FIXED":
+                        string insturctionControlAnswer = fileInstructions.instructions[currentInstruction].steps[j].answer;
+                        gameInstructions[i].AddStep(instructionControlID, insturctionControlAnswer);
 
-                case "FIXED":
-                    string insturctionControlAnswer = fileInstructions.instructions[currentInstruction].steps[j].answer;
-                    gameInstructions[i].AddStep(instructionControlID, insturctionControlAnswer);
-                    break;
-                case "DEPENDANT":
-                    int instructionDependantControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[currentInstruction].steps[j].dependantControls[0].controlType });
-                    string instructionDependantType = fileInstructions.instructions[currentInstruction].steps[j].dependantType;
-                    gameInstructions[i].AddDependantSteps(instructionControlID, instructionDependantControlID, instructionDependantType);
-                    break;
-                case "RANDOM":
-                    gameInstructions[i].AddStep(instructionControlID);
-                    break;
-                default:
-                    break;
+
+                        if (fileInstructions.instructions[currentInstruction].steps[j].defaultValue != "" && !controlValueSet.Contains(instructionControlID))
+                        {
+                            ui_controller.uiInstance.SetControlValue(instructionControlID, fileInstructions.instructions[currentInstruction].steps[j].defaultValue);
+                            controlValueSet.Add(instructionControlID);
+                        }
+                        break;
+                    case "DEPENDANT":
+                        int instructionDependantControlID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { fileInstructions.instructions[currentInstruction].steps[j].dependantControls[0].controlType });
+                        string instructionDependantType = fileInstructions.instructions[currentInstruction].steps[j].dependantType;
+                        gameInstructions[i].AddDependantSteps(instructionControlID, instructionDependantControlID, instructionDependantType);
+                        break;
+                    case "RANDOM":
+                        gameInstructions[i].AddStep(instructionControlID);
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -629,16 +649,81 @@ public class puzzle_controller : MonoBehaviour
             }
         }
 
-        gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
-        gameInstructions[5].AddStep(3, "1");
-        gameInstructions[5].AddDependantSteps(5, 4, "mapping_up");
-        gameInstructions[5].AddStep(8, "0");
-        gameInstructions[5].AddStep(2, "0");
-        gameInstructions[5].AddStep(6);
+        AddFinalStep();
+
+        // Set all other controls to random values
+        for (int i = 0; i < ui_controller.uiInstance.GetControlsCount(); i++)
+        {
+            string controlType = ui_controller.uiInstance.GetControlType(i);
+
+            switch (controlType)
+            {
+                case "button":
+                case "switch":
+                case "knob":
+                case "slider":
+                case "light":
+                    if(!controlValueSet.Contains(i))
+                    {
+                        string value = ui_controller.uiInstance.GetControlRandomAnswer(i);
+                        ui_controller.uiInstance.SetControlValue(i, value);
+                        controlValueSet.Add(i);
+                    }
+                    break;
+                case "meter":
+                    ui_controller.uiInstance.SetControlValue(i, "0");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
+
+        int lightControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "switch", "button" });
+        ui_controller.uiInstance.SetConnectedControls(lightControlRelID, 4, "random");
+
+
+        int meterControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "slider", "knob" });
+        ui_controller.uiInstance.SetConnectedControls(meterControlRelID, 2, "mapped");
 
         manual_controller.manualInstance.CreateManual();
     }
+    private void AddFinalStep()
+    {
+        gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
 
+        for(int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < gameInstructions[i].GetStepCount(); j++)
+            {
+                GameStep currentStep = gameInstructions[i].GetInstructionStep(j);
+
+                int controlID = currentStep.GetControlID();
+                string depedantType = currentStep.GetDependantType();
+
+                if (depedantType == "NONE")
+                {
+                    string answer = currentStep.GetAnswer();
+                    string controlType = ui_controller.uiInstance.GetControlType(controlID);
+
+                    if (controlType == "button" || controlType == "swtich")
+                    {
+                        answer = answer == "0" ? "1" : "0";
+                    }
+                    gameInstructions[5].AddStep(controlID, answer);
+                }
+                else
+                {
+                    int dependantControlID = currentStep.GetDependantControlID();
+                    gameInstructions[5].AddDependantSteps(controlID, dependantControlID, depedantType);
+                }
+            }
+        }
+
+        gameInstructions[5].AddStep(2, "0");
+        gameInstructions[5].AddStep(6);
+    }
     private void InitializeEngineList()
     {
         engineList.Add(new Engine("H3 THRUST", new int[] { 2, 3 }));
@@ -719,9 +804,67 @@ public class puzzle_controller : MonoBehaviour
         return GetEngineNo(engineID, engineNoID);
     }
 
+    public string GenerateModelNo()
+    {
+        string modelNo = "";
+        int letterCount = 0;
+
+        for(int i = 0; i < 5; i++)
+        {
+            switch(i)
+            {
+                case 0:
+                case 4:
+                    modelNo += Random.Range(0, 10).ToString();
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                    if(letterCount < 2)
+                    {
+                        modelNo += (char)('A' + Random.Range(0, 26));
+                        letterCount++;
+                    }
+                    else
+                    {
+                        if(Random.Range(0, 2) == 0)
+                        {
+                            modelNo += (char)('A' + Random.Range(0, 26));
+                            letterCount++;
+                        }
+                        else
+                        {
+                            modelNo += Random.Range(0, 10).ToString();
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return modelNo;
+    }
+
     public string GetModelNo()
     {
         return modelNo;
+    }
+
+    public int GetModelNoLetterCount()
+    {
+        int letterCount = 0;
+
+        for(int i = 0; i < modelNo.Length; i++)
+        {
+            char modelLetter = modelNo[i];
+            if ((int)modelLetter >= (int)'A' && (int)modelLetter <= (int)'Z')
+            {
+                letterCount++;
+            }
+        }
+
+        return letterCount;
     }
 
     public string GetColorWarningLevel(string colorValue)
@@ -737,6 +880,18 @@ public class puzzle_controller : MonoBehaviour
     public int GetNavSystemCount()
     {
         return navSystemList.Count;
+    }
+
+    public void ShowNav()
+    {
+        ui_controller.uiInstance.SetScreenSystemText(puzzle_controller.puzzleInstance.GetCurrentNavSystem());
+        ui_controller.uiInstance.SetScreenPlanetText(puzzle_controller.puzzleInstance.GetCurrentNavPlanet());
+    }
+
+    public void HideNav()
+    {
+        ui_controller.uiInstance.SetScreenSystemText("");
+        ui_controller.uiInstance.SetScreenPlanetText("");
     }
 
     public int GetCurrentNavSystemID()
@@ -795,5 +950,10 @@ public class puzzle_controller : MonoBehaviour
     public string GetSelectedInstuctionHTML(int instructionID)
     {
         return fileInstructions.instructions[selectedInstructions[instructionID]].instructionHTML;
+    }
+
+    public string FindInstructionReverseTitle(string instructionTitle)
+    {
+        return fileInstructions.FindReverseTitle(instructionTitle);
     }
 }

@@ -30,6 +30,7 @@ public class KnobScript : ParentControl
 
     override public void SetValue(string value)
     {
+        valueChange = true;
         this.value = screenText.text = value;
 
         Quaternion r = Quaternion.AngleAxis(135f, Vector3.forward);
@@ -63,6 +64,7 @@ public class KnobScript : ParentControl
 
     public void OnKnobTurn()
     {
+        valueChange = true;
         if (GetActive())
         {
             Vector3 mousePos = Input.mousePosition;

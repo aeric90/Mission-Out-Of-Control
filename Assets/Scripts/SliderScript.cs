@@ -42,4 +42,11 @@ public class SliderScript : ParentControl
         }
         
     }
+
+    override public void SetValue(string value)
+    {
+        this.value = screenText.text = value;
+
+        sliderUI.value = int.Parse(value);
+    }
 }
