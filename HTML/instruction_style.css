@@ -150,3 +150,9 @@ td {
 .center {
     text-align: center;
 }
+
+.coffee
+{
+    position: absolute;
+    width: 25%;
+}
