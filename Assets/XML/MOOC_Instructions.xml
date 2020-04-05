@@ -47,6 +47,27 @@
       </steps>
     </instruction>
     <instruction>
+      <order>0</order>
+      <title>DECREASE THROTTLE</title>
+      <reversible>true</reversible>
+      <reverseTitle>INCREASE THROTTLE</reverseTitle>
+      <instructionHTML>/mooc_dt.html</instructionHTML>
+      <steps>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>knob</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>meter</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>RANDOM</answerType>
+          <reverseControl>true</reverseControl>
+        </step>
+      </steps>
+    </instruction>
+    <instruction>
       <order>1</order>
       <title>DEPLOY LANDING GEAR</title>
       <reversible>true</reversible>

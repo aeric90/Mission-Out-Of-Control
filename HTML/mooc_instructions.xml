@@ -12,6 +12,9 @@
                         <stepControl>
                             <controlType>switch</controlType>
                         </stepControl>
+                        <stepControl>
+                            <controlType>button</controlType>
+                        </stepControl>
                     </stepControls>
                     <answerType>FIXED</answerType>
                     <answer>0</answer>
@@ -30,16 +33,36 @@
                 <step>
                     <stepControls>
                         <stepControl>
+                            <controlType>switch</controlType>
+                        </stepControl>
+                        <stepControl>
                             <controlType>button</controlType>
                         </stepControl>
                     </stepControls>
-                    <answerType>DEPENDANT</answerType>
-                    <dependantType>RANGE</dependantType>
-                    <dependantControls>
+                    <answerType>FIXED</answerType>
+                    <answer>1</answer>
+                    <defaultValue>0</defaultValue>
+                    <reverseControl>true</reverseControl>
+                </step>
+            </steps>
+        </instruction>
+        <instruction>
+            <order>0</order>
+            <title>DECREASE THROTTLE</title>
+            <reversible>true</reversible>
+            <reverseTitle>INCREASE THROTTLE</reverseTitle>
+            <instructionHTML>/mooc_dt.html</instructionHTML>
+            <steps>
+                <step>
+                    <stepControls>
                         <stepControl>
-                            <controlType>slider</controlType>
+                            <controlType>knob</controlType>
                         </stepControl>
-                    </dependantControls>
+                        <stepControl>
+                            <controlType>meter</controlType>
+                        </stepControl>
+                    </stepControls>
+                    <answerType>RANDOM</answerType>
                     <reverseControl>true</reverseControl>
                 </step>
             </steps>
@@ -54,6 +77,9 @@
                 <step>
                     <stepControls>
                         <stepControl>
+                            <controlType>switch</controlType>
+                        </stepControl>
+                        <stepControl>
                             <controlType>button</controlType>
                         </stepControl>
                     </stepControls>
@@ -64,6 +90,9 @@
                 </step>
                 <step>
                     <stepControls>
+                        <stepControl>
+                            <controlType>switch</controlType>
+                        </stepControl>
                         <stepControl>
                             <controlType>button</controlType>
                         </stepControl>
@@ -87,6 +116,9 @@
                         <stepControl>
                             <controlType>slider</controlType>
                         </stepControl>
+                        <stepControl>
+                            <controlType>knob</controlType>
+                        </stepControl>
                     </stepControls>
                     <answerType>DEPENDANT</answerType>
                     <dependantType>MAPPING_UP</dependantType>
@@ -100,6 +132,9 @@
                 <step>
                     <stepControls>
                         <stepControl>
+                            <controlType>switch</controlType>
+                        </stepControl>
+                        <stepControl>
                             <controlType>button</controlType>
                         </stepControl>
                     </stepControls>
@@ -109,12 +144,14 @@
                     <reverseControl>true</reverseControl>
                 </step>
             </steps>
+            <loadTriggers>
+                <loadTrigger>
+                    <function>HideNavTrigger</function>
+                </loadTrigger>
+            </loadTriggers>
             <successTriggers>
                 <successTrigger>
-                    <function>UpdateSystem</function>
-                </successTrigger>
-                <successTrigger>
-                    <function>UpdatePlanet</function>
+                    <function>ShowNavTrigger</function>
                 </successTrigger>
             </successTriggers>
         </instruction>
@@ -128,6 +165,9 @@
                     <stepControls>
                         <stepControl>
                             <controlType>slider</controlType>
+                        </stepControl>
+                        <stepControl>
+                            <controlType>knob</controlType>
                         </stepControl>
                     </stepControls>
                     <answerType>RANDOM</answerType>
@@ -151,12 +191,18 @@
                 <step>
                     <stepControls>
                         <stepControl>
+                            <controlType>slider</controlType>
+                        </stepControl>
+                        <stepControl>
                             <controlType>knob</controlType>
                         </stepControl>
                     </stepControls>
                     <answerType>DEPENDANT</answerType>
                     <dependantType>MAPPING_UP</dependantType>
                     <dependantControls>
+                        <stepControl>
+                            <controlType>slider</controlType>
+                        </stepControl>
                         <stepControl>
                             <controlType>knob</controlType>
                         </stepControl>
@@ -176,6 +222,9 @@
                         <stepControl>
                             <controlType>slider</controlType>
                         </stepControl>
+                        <stepControl>
+                            <controlType>knob</controlType>
+                        </stepControl>
                     </stepControls>
                     <answerType>RANDOM</answerType>
                     <reverseControl>false</reverseControl>
@@ -185,12 +234,18 @@
                         <stepControl>
                             <controlType>slider</controlType>
                         </stepControl>
+                        <stepControl>
+                            <controlType>knob</controlType>
+                        </stepControl>
                     </stepControls>
                     <answerType>DEPENDANT</answerType>
                     <dependantType>MAPPING_UP</dependantType>
                     <dependantControls>
                         <stepControl>
                             <controlType>slider</controlType>
+                        </stepControl>
+                        <stepControl>
+                            <controlType>knob</controlType>
                         </stepControl>
                     </dependantControls>
                     <reverseControl>false</reverseControl>
@@ -199,6 +254,9 @@
                     <stepControls>
                         <stepControl>
                             <controlType>button</controlType>
+                        </stepControl>
+                        <stepControl>
+                            <controlType>switch</controlType>
                         </stepControl>
                     </stepControls>
                     <answerType>DEPENDANT</answerType>
@@ -223,6 +281,9 @@
                         <stepControl>
                             <controlType>knob</controlType>
                         </stepControl>
+                        <stepControl>
+                            <controlType>slider</controlType>
+                        </stepControl>
                     </stepControls>
                     <answerType>RANDOM</answerType>
                     <reverseControl>false</reverseControl>
@@ -231,6 +292,9 @@
                     <stepControls>
                         <stepControl>
                             <controlType>knob</controlType>
+                        </stepControl>
+                        <stepControl>
+                            <controlType>slider</controlType>
                         </stepControl>
                     </stepControls>
                     <answerType>RANDOM</answerType>
