@@ -43,11 +43,34 @@
       </steps>
     </instruction>
     <instruction>
+      <order>0</order>
+      <title>DEPLOY LANDING GEAR</title>
+      <reversible>TRUE</reversible>
+      <reverseTitle>RETRACT LANDING GEAR</reverseTitle>
+      <instructionHTML>/mooc_dlg.html</instructionHTML>
+      <steps>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>switch</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>DEPENDANT</answerType>
+          <dependantType>MAPPING_DOWN</dependantType>
+          <dependantControls>
+            <stepControl>
+              <controlType>button</controlType>
+            </stepControl>
+          </dependantControls>
+        </step>
+      </steps>
+    </instruction>
+    <instruction>
       <order>1</order>
       <title>ACTIVATE STELLAR TRIANGULATION MATRIX</title>
       <reversible>TRUE</reversible>
       <reverseTitle>DEACTIVATE STELLAR TRIANGULATION MATRIX</reverseTitle>
-      <instructionHTML>//mooc_astm.html</instructionHTML>
+      <instructionHTML>/mooc_astm.html</instructionHTML>
       <steps>
         <step>
           <stepControls>
