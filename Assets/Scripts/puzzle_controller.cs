@@ -637,6 +637,8 @@ public class puzzle_controller : MonoBehaviour
         Debug.Log("GENERATING COLOR DATA");
         InitializeColorList();
 
+        List<int> controlIDs = new List<int>();
+
         Debug.Log("CREATING GAME INSTRUCTIONS");
         for (int i = 0; i < selectedInstructions.Count; i++)
         {
@@ -646,7 +648,8 @@ public class puzzle_controller : MonoBehaviour
             Debug.Log("         GAME INSTRUCTION - " + instructionTitle);
             gameInstructions.Add(new GameInstruction(instructionTitle));
 
-            List<int> controlIDs = new List<int>();
+
+            if (i >= 2) controlIDs.Clear();
 
             Debug.Log("         CREATING GAME INSTRUCTION STEPS");
             for (int j = 0; j < fileInstructions.instructions[currentInstruction].steps.Count; j++)
@@ -698,6 +701,11 @@ public class puzzle_controller : MonoBehaviour
                 string successFunction = fileInstructions.instructions[currentInstruction].successTriggers[j].function;
                 gameInstructions[i].AddSuccessTrigger(successFunction);
             }
+
+            foreach (int x in controlIDs)
+            {
+                Debug.Log("Control ID Used - " + x);
+            }
         }
 
         AddFinalStep();
@@ -731,18 +739,15 @@ public class puzzle_controller : MonoBehaviour
 
         ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
 
-        int lightControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "switch", "button" });
-        ui_controller.uiInstance.SetConnectedControls(lightControlRelID, 4, "random");
-
-
-        int meterControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "slider", "knob" });
-        ui_controller.uiInstance.SetConnectedControls(meterControlRelID, 2, "mapped");
-
         manual_controller.manualInstance.CreateManual();
 
     }
     private void AddFinalStep()
     {
+        List<int> controlIDs = new List<int>();
+
+        Debug.Log("         CREATING GAME INSTRUCTION FINAL STEP");
+
         gameInstructions.Add(new GameInstruction("REACTIVATE ENGINES"));
 
         for(int i = 0; i < 2; i++)
@@ -752,29 +757,43 @@ public class puzzle_controller : MonoBehaviour
                 GameStep currentStep = gameInstructions[i].GetInstructionStep(j);
 
                 int controlID = currentStep.GetControlID();
+                controlIDs.Add(controlID);
                 string depedantType = currentStep.GetDependantType();
-
+                Debug.Log("             GAME INSTRUCTION STEP CONTROL " + controlID);
+                Debug.Log("             GAME INSTRUCTION STEP ANSWER TYPE " + depedantType);
                 if (depedantType == "NONE")
                 {
                     string answer = currentStep.GetAnswer();
                     string controlType = ui_controller.uiInstance.GetControlType(controlID);
-
+                    
+                    Debug.Log("             GAME INSTRUCTION STEP CONTROL TYPE  " + controlType);
                     if (controlType == "button" || controlType == "swtich")
                     {
                         answer = answer == "0" ? "1" : "0";
                     }
+                    Debug.Log("                 ANSWER - " + answer);
                     gameInstructions[5].AddStep(controlID, answer);
                 }
                 else
                 {
                     int dependantControlID = currentStep.GetDependantControlID();
+                    controlIDs.Add(dependantControlID);
                     gameInstructions[5].AddDependantSteps(controlID, dependantControlID, depedantType);
                 }
             }
         }
 
         gameInstructions[5].AddStep(2, "0");
+        controlIDs.Add(2);
         gameInstructions[5].AddStep(6);
+        controlIDs.Add(6);
+
+        int lightControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "switch", "button" }, controlIDs);
+        ui_controller.uiInstance.SetConnectedControls(lightControlRelID, 4, "random");
+
+
+        int meterControlRelID = ui_controller.uiInstance.GetRandomControlOfType(new string[] { "slider", "knob" }, controlIDs);
+        ui_controller.uiInstance.SetConnectedControls(meterControlRelID, 2, "mapped");
     }
 
     private void InitializeEngineList()

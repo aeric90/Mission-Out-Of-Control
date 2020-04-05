@@ -40,8 +40,8 @@
             </stepControl>
           </stepControls>
           <answerType>FIXED</answerType>
-          <answer>0</answer>
-          <defaultValue>1</defaultValue>
+          <answer>1</answer>
+          <defaultValue>0</defaultValue>
           <reverseControl>true</reverseControl>
         </step>
       </steps>

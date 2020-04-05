@@ -29,16 +29,8 @@ public class manual_controller : MonoBehaviour
 	public TMPro.TextMeshProUGUI manualCodeText;
 
 	private List<ManualError> manualErrors = new List<ManualError>();
+	
 	private HtmlDocument manualTemplate;
-
-	private static MemoryStream inputStream = new MemoryStream();
-
-	private StreamWriter inputFile = new StreamWriter(inputStream);
-	private StreamReader headerText;
-	private StreamReader instructionText;
-	private MemoryStream outputStream = new MemoryStream();
-
-	private StreamReader manualText;
 
 	private int manualCode;
 	private string manualFileName;
@@ -55,6 +47,13 @@ public class manual_controller : MonoBehaviour
 
 	public void CreateManual()
 	{
+		StreamReader headerText;
+		StreamReader instructionText;
+		StreamReader manualText;
+		MemoryStream inputStream = new MemoryStream();
+		StreamWriter inputFile = new StreamWriter(inputStream);
+		MemoryStream outputStream = new MemoryStream();
+
 		GenerateErrorList();
 
 		headerText = FTPGet(@"/instructions/mooc_header.html");
@@ -155,6 +154,8 @@ public class manual_controller : MonoBehaviour
 
 	private void GenerateErrorList()
 	{
+		manualErrors.Clear();
+
 		List<int> loadedInstructions = new List<int>();
 
 		int instructionCount = puzzle_controller.puzzleInstance.GetGameInstructionCount();
@@ -294,15 +295,16 @@ public class manual_controller : MonoBehaviour
 		ChangeManualTag("//*[@id=\"frt_v0\"]", value0);
 
 		int controlID1 = instruction.GetStepControl(1);
-
+		int controlID2 = instruction.GetDependantControlID(1);
 		ChangeManualTag(3, 1, "//*[@id=\"frt_c1\"]", controlID1);
+		ChangeManualTag(3, 1, "//*[@id=\"frt_c2\"]", controlID2);
 
 		string answer2 = instruction.GetAnswer(2);
 		string value1 = puzzle_controller.puzzleInstance.GetColorWarningLevel(answer2);
-		int controlID2 = instruction.GetStepControl(2);
+		int controlID3 = instruction.GetStepControl(2);
 
 		ChangeManualTag("//*[@id=\"frt_v1\"]", value1);
-		ChangeManualTag(3, 1, "//*[@id=\"frt_c2\"]", controlID2);
+		ChangeManualTag(3, 2, "//*[@id=\"frt_c3\"]", controlID3);
 	}
 	private void PopulateMoocSNC()
 	{
