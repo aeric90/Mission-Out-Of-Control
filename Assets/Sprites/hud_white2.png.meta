@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b751e322454c7fa45aff7fbec08d0e89
+guid: f184e4564deb1c249802cfe2c4a2068b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8957797488043358935
-    second: hud_white_0
+      213: 3293446629168057331
+    second: hud_white2_0
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -89,13 +89,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hud_white_0
+      name: hud_white2_0
       rect:
         serializedVersion: 2
-        x: 920
-        y: 1648
-        width: 2385
-        height: 715
+        x: 909
+        y: 1647
+        width: 2401
+        height: 711
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,8 +103,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aff2c833b88a9804fbe94e94cea2ee82
-      internalID: 8957797488043358935
+      spriteID: 81adaff1df2aec64d948f5f5a0e27354
+      internalID: 3293446629168057331
       vertices: []
       indices: 
       edges: []
@@ -112,7 +112,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: c1c30762b10a9934ab8048e784fbb567
     internalID: 0
     vertices: []
     indices: 

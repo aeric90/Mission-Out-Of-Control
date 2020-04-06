@@ -110,7 +110,9 @@ public class game_controller : MonoBehaviour
             }
             else 
             {
-                ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- " + " INCORRECT");
+                ui_controller.uiInstance.AddComputerLineTag("<color=#FF0000>");
+                ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- ");
+                ui_controller.uiInstance.AddComputerLine("INCORRECT");
                 cameraMain.GetComponent<Animator>().Play("Shake");
                 break; 
             }

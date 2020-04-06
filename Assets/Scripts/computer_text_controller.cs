@@ -8,6 +8,8 @@ public class computer_text_controller : MonoBehaviour
     private string textBuffer = "";
     public bool textUpdating = false;
 
+    private Coroutine waitForText;
+
     private void Start()
     {
         StartCoroutine(UpdateComputerText());
@@ -31,7 +33,6 @@ public class computer_text_controller : MonoBehaviour
             {
                 textUpdating = false;
             }
-
             yield return null;
         }
     }
@@ -39,6 +40,22 @@ public class computer_text_controller : MonoBehaviour
     public void AddText(string inputString)
     {
         this.textBuffer += inputString;
+    }
+
+    public void AddTextWithTag(string inputString)
+    {
+        StartCoroutine(WaitForText(inputString));
+    }
+
+    IEnumerator WaitForText(string inputString)
+    {
+        while (textUpdating)
+        {
+            yield return null;
+        }
+
+        computerText.text += inputString;
+        yield return null;
     }
 
     public void SetText(string inputString)
