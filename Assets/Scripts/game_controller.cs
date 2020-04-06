@@ -112,13 +112,13 @@ public class game_controller : MonoBehaviour
             instructionSucceeded = current.CheckStep(i, ui_controller.uiInstance.GetControlValue(current.GetStepControl(i)));
             if (instructionSucceeded)
             {
-                ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- " + " CORRECT");
+                ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- ");
+                ui_controller.uiInstance.AddComputerLine("<color=#00FF00>CORRECT</color>");
             }
             else 
             {
-                ui_controller.uiInstance.AddComputerLineTag("<color=#FF0000>");
                 ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- ");
-                ui_controller.uiInstance.AddComputerLine("INCORRECT");
+                ui_controller.uiInstance.AddComputerLine("<color=#FF0000>INCORRECT</color>");
                 break; 
             }
         }

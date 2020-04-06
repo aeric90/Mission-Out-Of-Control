@@ -51,10 +51,6 @@ public class ui_controller : MonoBehaviour
     {
         computerText.GetComponent<computer_text_controller>().AddText(lineText);
     }
-    public void AddComputerLineTag(string lineText)
-    {
-        computerText.GetComponent<computer_text_controller>().AddTextWithTag(lineText);
-    }
     public void SetComputerLine(string lineText)
     {
         computerText.GetComponent<computer_text_controller>().SetText(lineText);
