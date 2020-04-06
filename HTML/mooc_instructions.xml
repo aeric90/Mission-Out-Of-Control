@@ -441,6 +441,71 @@
       </steps>
     </instruction>
     <instruction>
+      <order>3</order>
+      <title>REALIGN DILITHIUM CRYSTALS</title>
+      <reversible>false</reversible>
+      <instructionHTML>/mooc_rdc.html</instructionHTML>
+      <steps>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>slider</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>knob</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>DEPENDANT</answerType>
+          <dependantType>MAPPING_UP</dependantType>
+          <dependantControls>
+            <stepControl>
+              <controlType>slider</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>knob</controlType>
+            </stepControl>
+          </dependantControls>
+          <reverseControl>false</reverseControl>
+        </step>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>slider</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>knob</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>DEPENDANT</answerType>
+          <dependantType>MAPPING_UP</dependantType>
+          <dependantControls>
+            <stepControl>
+              <controlType>slider</controlType>
+            </stepControl>
+            <stepControl>
+              <controlType>knob</controlType>
+            </stepControl>
+          </dependantControls>
+          <reverseControl>false</reverseControl>
+        </step>
+        <step>
+          <stepControls>
+            <stepControl>
+              <controlType>keypad</controlType>
+            </stepControl>
+          </stepControls>
+          <answerType>DEPENDANT</answerType>
+          <dependantType>REPLACEMENT</dependantType>
+          <dependantControls>
+            <stepControl>
+              <controlType>light</controlType>
+            </stepControl>
+          </dependantControls>
+          <reverseControl>false</reverseControl>
+        </step>
+      </steps>
+    </instruction>
+    <instruction>
       <order>4</order>
       <title>SET NAVIGATION COORDINATES</title>
       <reversible>false</reversible>
