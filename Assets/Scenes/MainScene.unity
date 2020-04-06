@@ -733,8 +733,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'and enter the code:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9cf624a67ddf18d4fa6a66c94b15c9e4, type: 2}
+  m_sharedMaterial: {fileID: 1280125385384741937, guid: 9cf624a67ddf18d4fa6a66c94b15c9e4,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2411,7 +2412,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 0
+  m_padding: 4.4674997
   m_canvasRenderer: {fileID: 1392288426}
   m_TextComponent: {fileID: 1853843175}
   m_materialReferenceIndex: 1
@@ -2627,7 +2628,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 0
+  m_padding: 4.4674997
   m_canvasRenderer: {fileID: 1489426582}
   m_TextComponent: {fileID: 1876513064}
   m_materialReferenceIndex: 1
@@ -2790,7 +2791,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 0
+  m_padding: 4.4674997
   m_canvasRenderer: {fileID: 1558187436}
   m_TextComponent: {fileID: 317008834}
   m_materialReferenceIndex: 1
@@ -3150,8 +3151,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: XXXXX
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9cf624a67ddf18d4fa6a66c94b15c9e4, type: 2}
+  m_sharedMaterial: {fileID: 1280125385384741937, guid: 9cf624a67ddf18d4fa6a66c94b15c9e4,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3306,8 +3308,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'To get your manuals go to:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9cf624a67ddf18d4fa6a66c94b15c9e4, type: 2}
+  m_sharedMaterial: {fileID: 1280125385384741937, guid: 9cf624a67ddf18d4fa6a66c94b15c9e4,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4507,7 +4510,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 0
+  m_padding: 4.4674997
   m_canvasRenderer: {fileID: 2450607630705525506}
   m_TextComponent: {fileID: 2450607631440533185}
   m_materialReferenceIndex: 1
@@ -4576,8 +4579,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: http://missionoutofcontrol.com/
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9cf624a67ddf18d4fa6a66c94b15c9e4, type: 2}
+  m_sharedMaterial: {fileID: 1280125385384741937, guid: 9cf624a67ddf18d4fa6a66c94b15c9e4,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
