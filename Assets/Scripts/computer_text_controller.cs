@@ -17,6 +17,9 @@ public class computer_text_controller : MonoBehaviour
 
     IEnumerator UpdateComputerText()
     {
+        bool tagFlag = false;
+        string tagString = "";
+
         while (!game_controller.gameInstance.GetGameOver())
         {
             if (computerText.text != textBuffer)
@@ -24,9 +27,28 @@ public class computer_text_controller : MonoBehaviour
                 textUpdating = true;
 
                 for (int i = computerText.text.Length; i < textBuffer.Length; i++)
-                {
-                    computerText.text += textBuffer[i];
-                    yield return new WaitForSeconds(0.05f);
+                { 
+                    if( textBuffer[i] == '<')
+                    {
+                        tagString += textBuffer[i];
+                        tagFlag = true;
+                    }
+                    else if (textBuffer[i] == '>' && tagFlag)
+                    {
+                        tagString += textBuffer[i];
+                        computerText.text += tagString;
+                        tagFlag = false;
+                        tagString = "";
+                    }
+                    else if (tagFlag)
+                    {
+                        tagString += textBuffer[i];
+                    }
+                    else
+                    {
+                        computerText.text += textBuffer[i];
+                        yield return new WaitForSeconds(0.05f);
+                    }
                 }
             }
             else
@@ -40,22 +62,6 @@ public class computer_text_controller : MonoBehaviour
     public void AddText(string inputString)
     {
         this.textBuffer += inputString;
-    }
-
-    public void AddTextWithTag(string inputString)
-    {
-        StartCoroutine(WaitForText(inputString));
-    }
-
-    IEnumerator WaitForText(string inputString)
-    {
-        while (textUpdating)
-        {
-            yield return null;
-        }
-
-        computerText.text += inputString;
-        yield return null;
     }
 
     public void SetText(string inputString)
