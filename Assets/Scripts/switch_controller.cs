@@ -16,14 +16,46 @@ public class switch_controller : ParentControl
     private void Awake()
     {
         controlType = "switch";
-        value = "1";
         minValue = 0;
         maxValue = 1;
         dependantSource = true;
         dependantTarget = true;
     }
 
-    private void LateUpdate()
+    override public void SetValue(string value)
+    {
+        this.value = value;
+        UpdateScreen();
+        UpdateSwitch();
+    }
+
+    public void OnButtonPress()
+    {
+        valueChange = true;
+        ChangeValue();
+        UpdateScreen();
+        UpdateSwitch();
+    }
+
+    public void ChangeValue()
+    {
+        valueChange = true;
+        if (value == "0")
+        {
+            value = "1";
+        }
+        else if (value == "1")
+        {
+            value = "0";
+        }
+    }
+    public void UpdateScreen()
+    {
+        if (value == "1") screenText.text = "ON";
+        if (value == "0") screenText.text = "OFF";
+    }
+
+    public void UpdateSwitch()
     {
         if (value == "1")
         {
@@ -32,22 +64,6 @@ public class switch_controller : ParentControl
         else if (value == "0")
         {
             switchSprite.overrideSprite = switchOff;
-        }
-    }
-
-    public void OnButtonPress()
-    {
-        valueChange = true;
-
-        if (value == "0")
-        {
-            value = "1";
-            screenText.text = "ON";
-        }
-        else if (value == "1")
-        {
-            value = "0";
-            screenText.text = "OFF";
         }
     }
 }
