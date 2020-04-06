@@ -128,6 +128,7 @@ public class game_controller : MonoBehaviour
         if (instructionSucceeded) 
         {
             if (current.CheckSuccessTrigger()) current.TriggerSuccess();
+            AudioPlayer.audioPlayerInstance.PlayClip(AudioPlayer.audioPlayerInstance.audioClips[3], false, 0.4f);
             ui_controller.uiInstance.AddComputerLine("\n\t\t\t INSTRUCTION COMPLETE");
         }
         else
