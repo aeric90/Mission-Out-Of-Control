@@ -13,6 +13,7 @@ public class manual_canvas_controller : MonoBehaviour
     public TMPro.TextMeshProUGUI loadingText;
     public TMPro.TextMeshProUGUI manualCode;
 
+    public Button quitButton;
     public Button continueButton;
 
     private bool manualsReady = false;
@@ -44,8 +45,8 @@ public class manual_canvas_controller : MonoBehaviour
 
         HideLoadingPanel();
         ShowManualPanel();
-
         continueButton.interactable = true;
+        quitButton.interactable = true;
     }
 
     public void HideLoadingPanel()
