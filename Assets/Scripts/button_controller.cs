@@ -21,6 +21,7 @@ public class button_controller : ParentControl
     {
         ChangeValue();
         UpdateScreen();
+        GetComponent<AudioSource>().Play();
     }
 
     public void UpdateScreen()
