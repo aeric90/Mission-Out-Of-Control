@@ -43,5 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633f159a5aa197b46a71df571fef677d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraAnimator: {fileID: 0}
+  cameraMain: {fileID: 0}
+  blackScreen: {fileID: 0}
   gameTimer: 600

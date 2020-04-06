@@ -9,6 +9,8 @@ public class game_controller : MonoBehaviour
 
     public GameObject cameraMain;
 
+    public GameObject blackScreen;
+
     public int gameTimer;
 
     private bool confirmPressed = false;
@@ -174,13 +176,11 @@ public class game_controller : MonoBehaviour
 
         if (win)
         {
-            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU WIN!"); // Won't type to screen.
             WinLossMessage.winLossInstance.won = true;
-            StartCoroutine(GameOverCo());
+            // 
         }
         else
         {
-            ui_controller.uiInstance.AddComputerLine("\n\n\tYOU LOST!"); // Won't type to screen.
             WinLossMessage.winLossInstance.won = false;
             StartCoroutine(GameOverCo());
         }
@@ -198,8 +198,26 @@ public class game_controller : MonoBehaviour
 
     private IEnumerator GameOverCo()
     {
+        yield return new WaitForSeconds(2.0f);
+
+        blackScreen.SetActive(true);
+
+        DestroySoundObjects();
+        AudioPlayer.audioPlayerInstance.PlayClip(AudioPlayer.audioPlayerInstance.audioClips[2], false, 0.1f);
+
         yield return new WaitForSeconds(5.0f);
 
         SceneManager.LoadScene(3);
     }
+
+    void DestroySoundObjects()
+    {
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("SFX General");
+
+        for (var i = 0; i < gameObjects.Length; i++)
+        {
+            Destroy(gameObjects[i]);
+        }
+    }
+
 }
