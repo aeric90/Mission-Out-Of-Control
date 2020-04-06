@@ -23,6 +23,12 @@ public class game_controller : MonoBehaviour
         if (gameInstance == null) { gameInstance = this; }
     }
 
+    /* public void Start()
+    {
+        StartCoroutine(GameLoop());
+        MoveTowardsShip.moveTowardsShipInstance.StartPlanetMovement();
+    } */
+
     public void StartGame()
     {
         StartCoroutine(GameLoop());
@@ -113,7 +119,6 @@ public class game_controller : MonoBehaviour
                 ui_controller.uiInstance.AddComputerLineTag("<color=#FF0000>");
                 ui_controller.uiInstance.AddComputerLine("\n\t\t STEP " + (i + 1) + " -- ");
                 ui_controller.uiInstance.AddComputerLine("INCORRECT");
-                cameraMain.GetComponent<Animator>().Play("Shake");
                 break; 
             }
         }
@@ -125,6 +130,8 @@ public class game_controller : MonoBehaviour
         }
         else
         {
+            cameraMain.GetComponent<Animator>().Play("Shake");
+            AudioPlayer.audioPlayerInstance.PlayClip(AudioPlayer.audioPlayerInstance.audioClips[1], false, 0.3f);
             ui_controller.uiInstance.AddComputerLine("\n\t\t\t INSTRUCTION INCOMPLETE");
         }
 
