@@ -40,6 +40,7 @@ public class switch_controller : ParentControl
     public void ChangeValue()
     {
         valueChange = true;
+        GetComponent<AudioSource>().Play();
         if (value == "0")
         {
             value = "1";

@@ -210,7 +210,7 @@ public class game_controller : MonoBehaviour
         SceneManager.LoadScene(3);
     }
 
-    void DestroySoundObjects()
+    public void DestroySoundObjects()
     {
         GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("SFX General");
 
