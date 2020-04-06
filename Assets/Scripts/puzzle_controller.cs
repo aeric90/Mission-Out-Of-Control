@@ -5,6 +5,8 @@ using UnityEngine;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.IO;
+using System.Net;
 
 [XmlRoot("instructionCollection")]
 public class InstructionContainer
@@ -1077,9 +1079,8 @@ public class puzzle_controller : MonoBehaviour
     public void LoadInstructionsXML()
     {
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(InstructionContainer));
-        FileStream readStream = new FileStream(@".\Assets\XML\/mooc_Instructions.xml", FileMode.Open);
-        fileInstructions = xmlSerializer.Deserialize(readStream) as InstructionContainer;
-        readStream.Close();
+        Stream xmlDoc = FTPGet(@"/mooc_instructions.xml");
+        fileInstructions = xmlSerializer.Deserialize(xmlDoc) as InstructionContainer;
     }
 
     public void ChooseInstructions()
@@ -1115,5 +1116,19 @@ public class puzzle_controller : MonoBehaviour
     public string FindInstructionReverseTitle(string instructionTitle)
     {
         return fileInstructions.FindReverseTitle(instructionTitle);
+    }
+
+    public Stream FTPGet(string manualFileName)
+    {
+        // Get the object used to communicate with the server.
+        FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://213.190.6.173" + manualFileName);
+        request.Method = WebRequestMethods.Ftp.DownloadFile;
+
+        // This example assumes the FTP site uses anonymous logon.
+        request.Credentials = new NetworkCredential("u590740642", "moocmanuals");
+
+        FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+        Debug.Log(response.StatusDescription);
+        return response.GetResponseStream();
     }
 }
