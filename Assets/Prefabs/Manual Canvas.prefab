@@ -610,6 +610,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlayCanvas: {fileID: 5096344962818115808}
+  sliderOne: {fileID: 0}
+  sliderTwo: {fileID: 0}
 --- !u!1 &3773047120534860622
 GameObject:
   m_ObjectHideFlags: 0
