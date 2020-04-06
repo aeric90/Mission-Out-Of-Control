@@ -316,11 +316,6 @@
           <reverseControl>false</reverseControl>
         </step>
       </steps>
-      <successTriggers>
-        <successTrigger>
-          <function>DoABarrelRoll</function>
-        </successTrigger>
-      </successTriggers>
     </instruction>
     <instruction>
       <order>2</order>
@@ -375,11 +370,6 @@
           <reverseControl>false</reverseControl>
         </step>
       </steps>
-      <successTriggers>
-        <successTrigger>
-          <function>DoABarrelRoll</function>
-        </successTrigger>
-      </successTriggers>
     </instruction>
     <instruction>
       <order>3</order>

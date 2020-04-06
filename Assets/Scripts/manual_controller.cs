@@ -399,12 +399,14 @@ public class manual_controller : MonoBehaviour
 		int controlID0 = instruction.GetStepControl(0);
 		int controlID1 = instruction.GetDependantControlID(0);
 
-		ChangeManualTag(3, 0, "//*[@id=\"rdc_c0\"]", controlID0, "//*[@id=\"rdc_c1\"]", controlID1);
+		ChangeManualTag("//*[@id=\"rdc_c0\"]", controlID0);
+		ChangeManualTag("//*[@id=\"rdc_c1\"]", controlID1);
 
 		int controlID2 = instruction.GetStepControl(1);
 		int controlID3 = instruction.GetDependantControlID(1);
 
-		ChangeManualTag(3, 1, "//*[@id=\"rdc_c2\"]", controlID2, "//*[@id=\"rdc_c3\"]", controlID3);
+		ChangeManualTag("//*[@id=\"rdc_c2\"]", controlID2);
+		ChangeManualTag("//*[@id=\"rdc_c3\"]", controlID3);
 
 		string answer0 = instruction.GetAnswer(2);
 		int controlID4 = instruction.GetStepControl(2);

@@ -1489,7 +1489,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 5096344962559778198}
   m_OnClick:
     m_PersistentCalls:
@@ -1705,6 +1705,7 @@ MonoBehaviour:
   manualPanel: {fileID: 8342540337234225987}
   loadingText: {fileID: 9035555313593712110}
   manualCode: {fileID: 5096344961696122775}
+  quitButton: {fileID: 5096344962559778197}
   continueButton: {fileID: 3651952779701093992}
 --- !u!1 &7258558045990429309
 GameObject:
