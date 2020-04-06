@@ -304,6 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioClips:
   - {fileID: 8300000, guid: 14c4e0e51132fc441b663a2f2abc386b, type: 3}
+  - {fileID: 8300000, guid: ad3d643ff7e5dde4eb3eaa4366addc10, type: 3}
   sourcePrefab: {fileID: 5167440011028027781, guid: 5209cc6956c13134ea5fbecb0ae42531,
     type: 3}
 --- !u!4 &142396178
@@ -4769,46 +4770,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 557690493}
     m_Modifications:
-    - target: {fileID: 4142168776007179378, guid: 4607e5f1e16bcd543976d9c6a3473706,
-        type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142168776007179378, guid: 4607e5f1e16bcd543976d9c6a3473706,
-        type: 3}
-      propertyPath: m_firstOverflowCharacterIndex
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142168776007179378, guid: 4607e5f1e16bcd543976d9c6a3473706,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 107
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142168776007179378, guid: 4607e5f1e16bcd543976d9c6a3473706,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142168776007179378, guid: 4607e5f1e16bcd543976d9c6a3473706,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142168776007179378, guid: 4607e5f1e16bcd543976d9c6a3473706,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142168776007179378, guid: 4607e5f1e16bcd543976d9c6a3473706,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142168776007179378, guid: 4607e5f1e16bcd543976d9c6a3473706,
-        type: 3}
-      propertyPath: m_margin.x
-      value: 2.15625
-      objectReference: {fileID: 0}
     - target: {fileID: 4142168776007179379, guid: 4607e5f1e16bcd543976d9c6a3473706,
         type: 3}
       propertyPath: m_LocalPosition.x
