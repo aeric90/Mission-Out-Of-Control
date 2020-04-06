@@ -26,20 +26,6 @@ public class game_controller : MonoBehaviour
         if (gameInstance == null) { gameInstance = this; }
     }
 
-    /* public void Start()
-    {
-        StartCoroutine(GameLoop());
-        MoveTowardsShip.moveTowardsShipInstance.StartPlanetMovement();
-    } */
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GameOver(true);
-        }
-    }
-
     public void StartGame()
     {
         StartCoroutine(GameLoop());
