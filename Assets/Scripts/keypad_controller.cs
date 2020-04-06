@@ -7,6 +7,7 @@ public class keypad_controller : ParentControl
 {
     public TMPro.TextMeshProUGUI screenText;
 
+    public AudioClip[] audioSources;
     private void Awake()
     {
         controlType = "keypad";
@@ -30,6 +31,9 @@ public class keypad_controller : ParentControl
     {
         if (this.GetActive())
         {
+            GetComponent<AudioSource>().clip = audioSources[Random.Range(0, audioSources.Length)];
+            GetComponent<AudioSource>().Play();
+
             if (keyName == "clear")
             {
                 ClearScreen();
