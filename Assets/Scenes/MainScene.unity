@@ -2358,14 +2358,14 @@ PrefabInstance:
       objectReference: {fileID: 963194225}
     - target: {fileID: 5835183714440407774, guid: 2ccbf4a627908a54da980a1b57943eb9,
         type: 3}
+      propertyPath: whiteScreen
+      value: 
+      objectReference: {fileID: 966208433}
+    - target: {fileID: 5835183714440407774, guid: 2ccbf4a627908a54da980a1b57943eb9,
+        type: 3}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 104333711}
-    - target: {fileID: 5835183714440407774, guid: 2ccbf4a627908a54da980a1b57943eb9,
-        type: 3}
-      propertyPath: gameTimer
-      value: 600
-      objectReference: {fileID: 0}
     - target: {fileID: 5835183714440407775, guid: 2ccbf4a627908a54da980a1b57943eb9,
         type: 3}
       propertyPath: m_LocalPosition.x

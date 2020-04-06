@@ -9,6 +9,7 @@ public class game_controller : MonoBehaviour
 
     public GameObject cameraMain;
 
+    public GameObject whiteScreen;
     public GameObject blackScreen;
 
     public int gameTimer;
@@ -30,6 +31,14 @@ public class game_controller : MonoBehaviour
         StartCoroutine(GameLoop());
         MoveTowardsShip.moveTowardsShipInstance.StartPlanetMovement();
     } */
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            GameOver(true);
+        }
+    }
 
     public void StartGame()
     {
@@ -178,7 +187,7 @@ public class game_controller : MonoBehaviour
         if (win)
         {
             WinLossMessage.winLossInstance.won = true;
-            // 
+            StartCoroutine(GameWonCo());
         }
         else
         {
@@ -205,6 +214,20 @@ public class game_controller : MonoBehaviour
 
         DestroySoundObjects();
         AudioPlayer.audioPlayerInstance.PlayClip(AudioPlayer.audioPlayerInstance.audioClips[2], false, 0.1f);
+
+        yield return new WaitForSeconds(5.0f);
+
+        SceneManager.LoadScene(3);
+    }
+
+    private IEnumerator GameWonCo()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        whiteScreen.SetActive(true);
+
+        DestroySoundObjects();
+        AudioPlayer.audioPlayerInstance.PlayClip(AudioPlayer.audioPlayerInstance.audioClips[4], false, 0.3f);
 
         yield return new WaitForSeconds(5.0f);
 
