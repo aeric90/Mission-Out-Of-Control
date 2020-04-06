@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraMain: {fileID: 0}
+  whiteScreen: {fileID: 0}
   blackScreen: {fileID: 0}
   gameTimer: 600
