@@ -780,7 +780,7 @@ public class puzzle_controller : MonoBehaviour
 
         AddFinalStep();
 
-        manual_controller.manualInstance.CreateManual();
+        manual_controller.manualInstance.StartManualCreation();
     }
 
     private void AddFinalStep()

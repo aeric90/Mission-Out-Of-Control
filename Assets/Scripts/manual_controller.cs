@@ -45,7 +45,12 @@ public class manual_controller : MonoBehaviour
 		FTPDelete(manualFileName);
 	}
 
-	public void CreateManual()
+	public void StartManualCreation()
+	{
+		StartCoroutine(CreateManual());
+	}
+
+	IEnumerator CreateManual()
 	{
 		StreamReader headerText;
 		StreamReader instructionText;
@@ -88,6 +93,7 @@ public class manual_controller : MonoBehaviour
 
 			manualInsturctions.Add(randomInstruction);
 
+			yield return null;
 		} while (manualInsturctions.Count < puzzle_controller.puzzleInstance.GetSelectedInstructionCount());
 
 		instructionText = FTPGet(@"/instructions/mooc_re.html");
@@ -155,7 +161,7 @@ public class manual_controller : MonoBehaviour
 				default:
 					break;
 			}
-
+			yield return null;
 		}
 
 		PopulateMoocRE();
@@ -164,7 +170,8 @@ public class manual_controller : MonoBehaviour
 
 		FTPSend(outputStream.ToArray(), manualFileName);
 
-		manualCodeText.text = manualCode.ToString();
+		manual_canvas_controller.manualCanvasInstance.UpdateManualCode(manualCode.ToString());
+		manual_canvas_controller.manualCanvasInstance.SetManualsReady();
 	}
 
 	private void GenerateErrorList()
