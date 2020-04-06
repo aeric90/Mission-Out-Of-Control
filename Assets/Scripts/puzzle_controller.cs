@@ -624,6 +624,8 @@ public class puzzle_controller : MonoBehaviour
 
     private List<Color> colorList = new List<Color>();
 
+    private List<string> meterList = new List<string>();
+
     private List<int> controlValueSet = new List<int>();
 
     private void Awake()
@@ -657,6 +659,8 @@ public class puzzle_controller : MonoBehaviour
         Debug.Log("GENERATING COLOR DATA");
         InitializeColorList();
 
+        InitializeMeterList();
+        InitializeMeterName();
 
         StartCoroutine(CreateInstructions());
     }
@@ -776,9 +780,6 @@ public class puzzle_controller : MonoBehaviour
 
         AddFinalStep();
 
-        Debug.Log("     SETTING METER NAME");
-        ui_controller.uiInstance.SetControlLabel(2, "JAM LEVELS");
-
         manual_controller.manualInstance.CreateManual();
     }
 
@@ -827,6 +828,9 @@ public class puzzle_controller : MonoBehaviour
                             case "slider":
                             case "knob":
                                 answer = (6 - int.Parse(answer)).ToString();
+                                break;
+                            case "keypad":
+                                answer = "" + answer[2] + answer[1] + answer[0];
                                 break;
                         }
                     }
@@ -894,6 +898,25 @@ public class puzzle_controller : MonoBehaviour
         colorList.Add(new Color("GREEN", "MEDIUM", "3"));
         colorList.Add(new Color("YELLOW", "HIGH", "4"));
         colorList.Add(new Color("RED", "CRITICAL", "5"));
+    }
+
+    private void InitializeMeterList()
+    {
+        meterList.Add("JAM");
+        meterList.Add("GLUE");
+        meterList.Add("OOZE");
+        meterList.Add("SPAM");
+        meterList.Add("SODA");
+        meterList.Add("POP");
+        meterList.Add("GOO");
+    }
+
+    private void InitializeMeterName()
+    {
+        int randomID = Random.Range(0, meterList.Count);
+
+        Debug.Log("     SETTING METER NAME");
+        ui_controller.uiInstance.SetControlLabel(2, meterList[randomID] + " LEVELS");
     }
 
     public int GetGameInstructionCount()

@@ -128,14 +128,26 @@ public class manual_controller : MonoBehaviour
 				case "/mooc_astm.html":
 					PopulateMoocASTM();
 					break;
+				case "/mooc_rvmo.html":
+					PopulateMoocRVMO();
+					break;
 				case "/mooc_dlg.html":
 					PopulateMoocDLG();
 					break;
 				case "/mooc_jep.html":
 					PopulateMoocJEP();
 					break;
+				case "/mooc_dabr.html":
+					PopulateMoocDABR();
+					break;
+				case "/mooc_asbatt.html":
+					PopulateMoocASBATT();
+					break;
 				case "/mooc_frt.html":
 					PopulateMoocFRT();
+					break;
+				case "/mooc_rdc.html":
+					PopulateMoocRDC();
 					break;
 				case "/mooc_snc.html":
 					PopulateMoocSNC();
@@ -252,6 +264,18 @@ public class manual_controller : MonoBehaviour
 			ChangeManualTag(1, 1, "//*[@id=\"stm_c3\"]", controlID2);
 		}
 	}
+	private void PopulateMoocRVMO()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
+		int controlID0 = instruction.GetStepControl(0);
+		int controlID1 = instruction.GetDependantControlID(0);
+
+		ChangeManualTag(1, 0, "//*[@id=\"rvmo_c0\"]", controlID0, "//*[@id=\"rvmo_c1\"]", controlID1);
+
+		string answer0 = instruction.GetAnswer(1);
+		ChangeManualTag("//*[@id=\"rvmo_a0\"]", answer0);
+
+	}
 	private void PopulateMoocDLG()
 	{
 		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(1);
@@ -282,6 +306,48 @@ public class manual_controller : MonoBehaviour
 		int controlID4 = instruction.GetDependantControlID(2);
 
 		ChangeManualTag(2, 2, "//*[@id=\"jep_c3\"]", controlID3, "//*[@id=\"jep_c4\"]", controlID4);
+	}	  
+	private void PopulateMoocDABR()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(2);
+
+		int controlID0 = instruction.GetStepControl(0);
+		string answer0 = instruction.GetAnswer(0);
+
+		ChangeManualTag(2, 0, "//*[@id=\"dabr_c0\"]", controlID0, "//*[@id=\"dabr_a0\"]", answer0);
+
+		int controlID1 = instruction.GetStepControl(1);
+		string answer1 = instruction.GetAnswer(1);
+
+		ChangeManualTag(2, 1, "//*[@id=\"dabr_c1\"]", controlID1, "//*[@id=\"dabr_a1\"]", answer1);
+
+		string answer2 = instruction.GetAnswer(2);
+		int controlID2 = instruction.GetStepControl(2);
+		int controlID3 = instruction.GetDependantControlID(2);
+
+		ChangeManualTag(2, 2, "//*[@id=\"dabr_c2\"]", controlID2, "//*[@id=\"dabr_a2\"]", answer2);
+		ChangeManualTag("//*[@id=\"dabr_c3\"]", controlID3);
+	}
+	private void PopulateMoocASBATT()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(2);
+
+		int controlID0 = instruction.GetStepControl(0);
+		string answer0 = instruction.GetAnswer(0);
+
+		ChangeManualTag(2, 0, "//*[@id=\"asbatt_c0\"]", controlID0, "//*[@id=\"asbatt_a0\"]", answer0);
+
+		int controlID1 = instruction.GetStepControl(1);
+		string answer1 = instruction.GetAnswer(1);
+
+		ChangeManualTag(2, 1, "//*[@id=\"asbatt_c1\"]", controlID1, "//*[@id=\"asbatt_a1\"]", answer1);
+
+		string answer2 = instruction.GetAnswer(2);
+		int controlID2 = instruction.GetStepControl(2);
+		int controlID3 = instruction.GetDependantControlID(2);
+
+		ChangeManualTag(2, 2, "//*[@id=\"asbatt_c2\"]", controlID2, "//*[@id=\"asbatt_a2\"]", answer2);
+		ChangeManualTag("//*[@id=\"asbatt_c3\"]", controlID3);
 	}
 	private void PopulateMoocFRT()
 	{
@@ -318,6 +384,28 @@ public class manual_controller : MonoBehaviour
 
 		ChangeManualTag("//*[@id=\"frt_v1\"]", value1);
 		ChangeManualTag(3, 2, "//*[@id=\"frt_c3\"]", controlID3);
+	}
+	private void PopulateMoocRDC()
+	{
+		GameInstruction instruction = puzzle_controller.puzzleInstance.GetGameInstruction(3);
+
+		int controlID0 = instruction.GetStepControl(0);
+		int controlID1 = instruction.GetDependantControlID(0);
+
+		ChangeManualTag(3, 0, "//*[@id=\"rdc_c0\"]", controlID0, "//*[@id=\"rdc_c1\"]", controlID1);
+
+		int controlID2 = instruction.GetStepControl(1);
+		int controlID3 = instruction.GetDependantControlID(1);
+
+		ChangeManualTag(3, 1, "//*[@id=\"rdc_c2\"]", controlID2, "//*[@id=\"rdc_c3\"]", controlID3);
+
+		string answer0 = instruction.GetAnswer(2);
+		int controlID4 = instruction.GetStepControl(2);
+		int controlID5 = instruction.GetDependantControlID(2);
+
+		ChangeManualTag("//*[@id=\"rdc_v0\"]", answer0);
+		ChangeManualTag("//*[@id=\"rdc_c4\"]", controlID4);
+		ChangeManualTag(3, 2, "//*[@id=\"rdc_c5\"]", controlID5);
 	}
 	private void PopulateMoocSNC()
 	{

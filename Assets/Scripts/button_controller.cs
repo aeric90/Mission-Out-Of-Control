@@ -11,12 +11,10 @@ public class button_controller : ParentControl
     void Awake()
     {
         controlType = "button";
-        value = "0";
         maxValue = 1;
         minValue = 0;
         dependantSource = true;
         dependantTarget = true;
-        screenText.text = "OFF";
     }
 
     public void OnButtonPress()

@@ -7,6 +7,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" href="mooc_text_logo.png">
 </head>
 
 <body>
