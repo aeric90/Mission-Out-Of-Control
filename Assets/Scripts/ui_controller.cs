@@ -11,11 +11,21 @@ public class ui_controller : MonoBehaviour
 
     public TMPro.TextMeshProUGUI countDownText;
     public TMPro.TextMeshProUGUI computerText;
+    public TMPro.TextMeshProUGUI manualCodeText;
     public Button confirmButton;
+
+    public GameObject gameMenu;
 
     private void Awake()
     {
         if (uiInstance == null) { uiInstance = this; }
+    }
+    void OnGUI()
+    {
+        if (!game_controller.gameInstance.GetGameOver())
+        {
+            if (Event.current.Equals(Event.KeyboardEvent("[esc]"))) ToggleMenu();
+        }
     }
 
     public void UpdateCountDown(string timerString)
@@ -229,5 +239,15 @@ public class ui_controller : MonoBehaviour
     public void SetScreenModelText(string modelText)
     {
         screenControl.GetComponent<screen_controller>().SetModelText(modelText);
+    }
+
+    private void ToggleMenu()
+    {
+        gameMenu.SetActive(!gameMenu.activeSelf);
+    }
+
+    public void UpdateManualCode(string manualCode)
+    {
+        manualCodeText.text = manualCode;
     }
 }

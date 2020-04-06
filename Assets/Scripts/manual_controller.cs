@@ -171,6 +171,7 @@ public class manual_controller : MonoBehaviour
 		FTPSend(outputStream.ToArray(), manualFileName);
 
 		manual_canvas_controller.manualCanvasInstance.UpdateManualCode(manualCode.ToString());
+		ui_controller.uiInstance.UpdateManualCode(manualCode.ToString());
 		manual_canvas_controller.manualCanvasInstance.SetManualsReady();
 	}
 
